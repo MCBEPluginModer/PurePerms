@@ -4,25 +4,25 @@
 
 #include "ll/api/mod/RegisterHelper.h"
 
-namespace my_mod {
+namespace mcpm {
 
-static std::unique_ptr<MyMod> instance;
+static std::unique_ptr<PurePerms> instance;
 
-MyMod& MyMod::getInstance() { return *instance; }
+PurePerms& MyMod::getInstance() { return *instance; }
 
-bool MyMod::load() {
+bool PurePerms::load() {
     getSelf().getLogger().debug("Loading...");
     // Code for loading the mod goes here.
     return true;
 }
 
-bool MyMod::enable() {
+bool PurePerms::enable() {
     getSelf().getLogger().debug("Enabling...");
     // Code for enabling the mod goes here.
     return true;
 }
 
-bool MyMod::disable() {
+bool PurePerms::disable() {
     getSelf().getLogger().debug("Disabling...");
     // Code for disabling the mod goes here.
     return true;
@@ -30,4 +30,4 @@ bool MyMod::disable() {
 
 } // namespace my_mod
 
-LL_REGISTER_MOD(my_mod::MyMod, my_mod::instance);
+LL_REGISTER_MOD(PurePerms::MyMod, PurePerms::instance);
