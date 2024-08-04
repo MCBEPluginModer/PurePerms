@@ -2,14 +2,14 @@
 
 #include "ll/api/mod/NativeMod.h"
 
-namespace my_mod {
+namespace mcpm {
 
-class MyMod {
+class PurePerms {
 
 public:
-    static MyMod& getInstance();
+    static PurePerms& getInstance();
 
-    MyMod(ll::mod::NativeMod& self) : mSelf(self) {}
+    PurePerms(ll::mod::NativeMod& self) : mSelf(self) {}
 
     [[nodiscard]] ll::mod::NativeMod& getSelf() const { return mSelf; }
 
