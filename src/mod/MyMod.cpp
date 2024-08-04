@@ -8,7 +8,7 @@ namespace mcpm {
 
 static std::unique_ptr<PurePerms> instance;
 
-PurePerms& MyMod::getInstance() { return *instance; }
+PurePerms& PurePerms::getInstance() { return *instance; }
 
 bool PurePerms::load() {
     getSelf().getLogger().debug("Loading...");
