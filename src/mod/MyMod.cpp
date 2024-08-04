@@ -30,4 +30,4 @@ bool PurePerms::disable() {
 
 } // namespace my_mod
 
-LL_REGISTER_MOD(PurePerms::MyMod, PurePerms::instance);
+LL_REGISTER_MOD(mcpm::PurePerms, mcpm::instance);
