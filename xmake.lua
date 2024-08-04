@@ -6,12 +6,13 @@ add_repositories("liteldev-repo https://github.com/LiteLDev/xmake-repo.git")
 -- add_requires("levilamina develop") to use develop version
 -- please note that you should add bdslibrary yourself if using dev version
 add_requires("levilamina")
+add_requires("yaml-cpp")
 
 if not has_config("vs_runtime") then
     set_runtimes("MD")
 end
 
-target("my-mod") -- Change this to your mod name.
+target("PurePerms") -- Change this to your mod name.
     add_cxflags(
         "/EHa",
         "/utf-8",
@@ -27,6 +28,7 @@ target("my-mod") -- Change this to your mod name.
     add_files("src/**.cpp")
     add_includedirs("src")
     add_packages("levilamina")
+    add_packages("yaml-cpp")
     add_shflags("/DELAYLOAD:bedrock_server.dll") -- To use symbols provided by SymbolProvider.
     set_exceptions("none") -- To avoid conflicts with /EHa.
     set_kind("shared")
