@@ -42,8 +42,10 @@ void PPMessages::registerLanguages()
 {
         std::vector<std::string> result;
 
-        for (const auto& entry : fs::directory_iterator(directoryPath)) {
-            if (entry.is_regular_file()) {
+        for (auto& entry : fs::directory_iterator("plugins/PurePerms")) 
+        {
+            if (entry.is_regular_file()) 
+            {
                 std::string filename = entry.path().filename().string();
                 if (filename.find("messages-") == 0 && filename.size() >= 6) {
                     result.push_back(filename.substr(9, 2));
@@ -98,4 +100,5 @@ void PPMessages::loadMessages()
            logger.warn("Language resource " + defaultLang + " not found. Using default language resource by TheMrEnderBro.");
             language = "en";
     }
+    
 }
