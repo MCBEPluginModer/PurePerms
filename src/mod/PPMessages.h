@@ -13,7 +13,7 @@ class PPMessages
    string replaceString(string str, const string& from, const string& to);
    YAML::Node getNestedNode(const string& node);
 public:
-   PPMessage();
+   PPMessages();
    void registerLanguages();
    std::string getMessage(const string& node, const vector<string>& vars = {});
    inline string getVersion() {return messages["messages-version"].as<string>();}
