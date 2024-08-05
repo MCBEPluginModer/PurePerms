@@ -56,7 +56,7 @@ void PPMessages::registerLanguages()
         langList = result;
 }
 
-std::string PPMessages::getMessage(const std::string& node, const std::vector<std::string>& vars = {}) 
+std::string PPMessages::getMessage(const std::string& node, const std::vector<std::string>& vars) 
 {
         YAML::Node msgNode = getNestedNode(node);
 
