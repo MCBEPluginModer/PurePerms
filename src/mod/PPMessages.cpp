@@ -26,3 +26,9 @@ std::string PPMessages::replaceString(std::string str, const std::string& from, 
         }
         return str;
 }
+
+PPMessages::PPMessages()
+{
+        registerLanguages();
+        loadMessages();
+}
