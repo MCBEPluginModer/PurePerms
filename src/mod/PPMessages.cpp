@@ -106,3 +106,8 @@ void PPMessages::loadMessages()
     fout.close();
     logger.info("Setting default language to \'" + defaultLang + "'/");
 }
+
+void PPMessages::reloadMessages()
+{
+   messages = YAML::LoadFile("plugins/PurePerms/messages-" + language + ".yml");
+}
