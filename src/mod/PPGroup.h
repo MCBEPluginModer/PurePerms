@@ -36,4 +36,8 @@ public:
    void setDefault(string levelName = "");
    bool setGroupPermission(string permission,string levelName = "");
    void setNode(string node,variant<int,float,double,string> value);
+   void setWorldData(string levelName,tuple<bool,vector<string>> worldData);
+   void setWorldNode(string levelName,string node,variant<bool,vector<string>> value);
+   void sortPermissions();
+   bool unsetGroupPermission(string permission,string levelName = "");
 };
