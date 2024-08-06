@@ -1,6 +1,7 @@
 #include "PPMessages.h"
 #include <filesystem>
 #include <algorithm>
+#include <fstream>
 #include <ll/api/Logger.h>
 
 namespace fs = std::filesystem;
@@ -93,12 +94,15 @@ void PPMessages::loadMessages()
             break;
         }
     }
+    ll::Logger logger("PurePerms");
     if (language.empty())
     {
-            ll::Logger logger("PurePerms");
-
            logger.warn("Language resource " + defaultLang + " not found. Using default language resource by TheMrEnderBro.");
-            language = "en";
+           language = "en";
     }
-    
+    std::ofstream fout("plugins/PurePerms/messages-" + language + ".yml");
+    YAML::Node lng;
+    fout << lng;
+    fout.close();
+    logger.info("Setting default language to \'" + defaultLang + "'/");
 }
