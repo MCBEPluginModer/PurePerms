@@ -20,4 +20,10 @@ public:
    void addParent(PPGroup* parent);
    void createWorldData(string levelName);
    variant<YAML::Node,string> getAlias();
+   variant<PPGroup*,string> getData();
+   std::vector<string> getGroupPermissions(string levelName = "");
+   string getName() {return name;}
+   PPGroup* getNode(string node);
+   vector<PPGroup*> getParentGroups();
+   YAML::Node getWorldData(string levelName);
 };
