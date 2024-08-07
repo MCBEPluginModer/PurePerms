@@ -2,7 +2,7 @@
 
 void PPGroup::addParent(PPGroup* parent)
 {
-    if (this == &group || std::find(parentGroups.begin(), parentGroups.end(), group.getName()) != parentGroups.end()) {
+    if (this == parent || std::find(parentGroups.begin(), parentGroups.end(), parent->getName()) != parentGroups.end()) {
         return false;
     }
     data = getData(); 
