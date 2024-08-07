@@ -6,8 +6,8 @@ void PPGroup::addParent(PPGroup* parent)
         return false;
     }
     data = getData(); 
-    get<YAML::Node>(data)["inheritance"].push_back(parent->getName());
-    tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1(getName(), get<YAML::Node>(data)["alias"].as<string>(),get<YAML::Node>(data)["isDefault"].as<bool>(),get<YAML::Node>(data)["inheritance"].as<vector<string>>(),get<YAML::Node>(data)["permissions"].as<vector<string>>(),get<YAML::Node>(data)["worlds"]);
+    get<0>(data)["inheritance"].push_back(parent->getName());
+    tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1(getName(), get<0>(data)["alias"].as<string>(),get<0>(data)["isDefault"].as<bool>(),get<0>(data)["inheritance"].as<vector<string>>(),get<0>(data)["permissions"].as<vector<string>>(),get<0>(data)["worlds"].as<YAML::Node>());
     setData(data1);
     /*data = getData(); // Retrieve the current data
     data->push_back(group.getName()); // Add the group's name to the inheritance
