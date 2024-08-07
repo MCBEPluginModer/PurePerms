@@ -36,3 +36,13 @@ void PPGroup::createWorldData(string levelName)
         setData(data);
     }
 }
+
+std::variant<YAML::Node, std::string> PPGroup::getAlias()
+{
+        YAML::Node aliasNode = getNode("alias");
+        if (aliasNode.IsNull()) 
+        {
+            return "";
+        }
+        return aliasNode;
+}
