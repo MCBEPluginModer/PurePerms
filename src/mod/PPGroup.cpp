@@ -1,6 +1,6 @@
 #include "PPGroup.h"
 
-void PPGroup::addParent(PPGroup* parent)
+bool PPGroup::addParent(PPGroup* parent)
 {
     if (this == parent || std::find(parents.begin(), parents.end(), parent->getName()) != parents.end()) {
         return false;
