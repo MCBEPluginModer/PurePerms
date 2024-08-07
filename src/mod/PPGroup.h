@@ -18,7 +18,7 @@ class PPGroup
 public:
    PPGroup(mcpm::PurePerms* _plugin,std::string _name) : plugin(_plugin),name(_name) {}
    string __toString() {return name;}
-   void addParent(PPGroup* parent);
+   bool addParent(PPGroup* parent);
    void createWorldData(string levelName);
    variant<YAML::Node,string> getAlias();
    variant<YAML::Node,string> getData();
