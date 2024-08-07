@@ -45,3 +45,10 @@ std::variant<YAML::Node, std::string> PPGroup::getAlias()
         }
         return *aliasNode;
 }
+
+variant<YAML::Node,string> PPGroup::getData()
+{
+    YAML::Node data;
+//data = plugin->getProvider()->getGroupData(this);
+    return data;
+}
