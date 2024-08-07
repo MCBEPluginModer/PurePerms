@@ -26,13 +26,11 @@ bool PPGroup::addParent(PPGroup* parent)
 
 void PPGroup::createWorldData(string levelName)
 {
-    auto data = getData();
-    YAML::Node& worlds = std::get<0>(data)["worlds"];
-        
-    if (!worlds[levelName]) 
+    auto data = getData();   
+    if (!std::get<0>(data)["worlds"][levelName]) 
     {
-        worlds[levelName]["isDefault"] = false;
-        worlds[levelName]["permissions"] = YAML::Node(YAML::NodeType::Sequence);
+        std::get<0>(data)["worlds"][levelName]["isDefault"] = false;
+        std::get<0>(data)["worlds"][levelName]["permissions"] = YAML::Node(YAML::NodeType::Sequence);
         setData(data);
     }
 }
