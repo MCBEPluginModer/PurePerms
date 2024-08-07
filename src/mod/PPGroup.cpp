@@ -38,7 +38,7 @@ void PPGroup::createWorldData(string levelName)
 
 std::variant<YAML::Node, std::string> PPGroup::getAlias()
 {
-        YAML::Node aliasNode = getNode("alias");
+        YAML::Node* aliasNode = getNode("alias");
         if (aliasNode == nullptr) 
         {
             return "";
