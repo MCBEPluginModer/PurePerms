@@ -31,7 +31,8 @@ void PPGroup::createWorldData(string levelName)
     {
         std::get<0>(data)["worlds"][levelName]["isDefault"] = false;
         std::get<0>(data)["worlds"][levelName]["permissions"] = YAML::Node(YAML::NodeType::Sequence);
-        setData(data);
+        tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1 = std::make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(get<0>(data)["alias"].as<string>(),get<0>(data)["isDefault"].as<bool>(),get<0>(data)["inheritance"].as<vector<string>>(),get<0>(data)["permissions"].as<vector<string>>(),get<0>(data)["worlds"].as<YAML::Node>());
+        setData(data1);
     }
 }
 
