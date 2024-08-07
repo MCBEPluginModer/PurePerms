@@ -2,9 +2,9 @@
 
 bool PPGroup::addParent(PPGroup* parent)
 {
-    if (this == parent || std::find(parents.begin(), parents.end(), parent->getName()) != parents.end()) {
+    /*if (this == parent || std::find(parents.begin(), parents.end(), parent->getName()) != parents.end()) {
         return false;
-    }
+    }*/
     auto data = getData(); 
     get<0>(data)["inheritance"].push_back(parent->getName());
     tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1 = std::make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(get<0>(data)["alias"].as<string>(),get<0>(data)["isDefault"].as<bool>(),get<0>(data)["inheritance"].as<vector<string>>(),get<0>(data)["permissions"].as<vector<string>>(),get<0>(data)["worlds"].as<YAML::Node>());
