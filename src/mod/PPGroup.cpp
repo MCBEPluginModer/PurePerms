@@ -13,7 +13,7 @@ void PPGroup::addParent(PPGroup* parent)
     data->push_back(group.getName()); // Add the group's name to the inheritance
 
     setData(data); // Update the data*/
-    tuple<string,bool,vector<string>,vector<string>,YAML::Node> data;
+   // tuple<string,bool,vector<string>,vector<string>,YAML::Node> data;
     
     //plugin->updatePlayersInGroup(*this); // Notify the plugin to update players in this group
 
