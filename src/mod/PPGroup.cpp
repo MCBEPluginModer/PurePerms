@@ -79,5 +79,9 @@ std::vector<string> PPGroup::getGroupPermissions(string levelName)
 
 YAML::Node PPGroup::getNode(string node)
 {
-   return getData()[node];
+   YAML::Nod nul;
+   if (get_if<YAML::Node>(getData()))
+     return get<0>(getData())[node];
+   else
+     return nul;
 }
