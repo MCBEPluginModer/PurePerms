@@ -58,7 +58,7 @@ std::vector<string> PPGroup::getGroupPermissions(string levelName)
    std::vector<string> perms;
    if (levelName === "")
    {
-     perms = getNode("permissions"); 
+     perms = *getNode("permissions").as<vector<string>>(); 
    }
    else
      perms = getWorldData(levelName)["permissions"].as<vector<string>>();
