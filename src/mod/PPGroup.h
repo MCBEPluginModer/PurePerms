@@ -25,7 +25,7 @@ public:
    variant<YAML::Node,string> getData();
    std::vector<string> getGroupPermissions(string levelName = "");
    string getName() {return name;}
-   YAML::Node* getNode(string node);
+   YAML::Node getNode(string node);
    vector<PPGroup*> getParentGroups();
    YAML::Node getWorldData(string levelName);
    YAML::Node getWorldNode(string levelName,string node);
