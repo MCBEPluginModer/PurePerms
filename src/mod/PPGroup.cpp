@@ -52,3 +52,26 @@ variant<YAML::Node,string> PPGroup::getData()
 //data = plugin->getProvider()->getGroupData(this);
     return data;
 }
+
+std::vector<string> PPGroup::getGroupPermissions(string levelName)
+{
+   std::vector<sstring> perms;
+   if (levelName === "")
+   {
+     perms = getNode("permissions"); 
+   }
+   else
+     perms = getWorldData(levelName)["permissions"].as<vector<string>>();
+   if (perms.size() == 0)
+   {
+      ll::Logger logger("PurePerms");
+      logger.fatal("Invalid 'permissions' node given to " + __PRETTY_FUNCTION__);
+      return {};
+   }
+   for (auto p : parents)
+   {
+      auto parPerms = p->getGroupPermissions(levelName);
+      perms.insert(perms.end(), parPerms.begin(), parPerms.end());
+   }
+   return perms;
+}
