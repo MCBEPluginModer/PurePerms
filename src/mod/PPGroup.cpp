@@ -43,7 +43,7 @@ std::variant<YAML::Node, std::string> PPGroup::getAlias()
         {
             return "";
         }
-        return *aliasNode;
+        return aliasNode;
 }
 
 variant<YAML::Node,string> PPGroup::getData()
