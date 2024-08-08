@@ -55,7 +55,7 @@ variant<YAML::Node,string> PPGroup::getData()
 
 std::vector<string> PPGroup::getGroupPermissions(string levelName)
 {
-   std::vector<sstring> perms;
+   std::vector<string> perms;
    if (levelName === "")
    {
      perms = getNode("permissions"); 
