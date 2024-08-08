@@ -38,8 +38,8 @@ void PPGroup::createWorldData(string levelName)
 
 std::variant<YAML::Node, std::string> PPGroup::getAlias()
 {
-        YAML::Node* aliasNode = getNode("alias");
-        if (aliasNode == nullptr) 
+        YAML::Node aliasNode = getNode("alias");
+        if (aliasNode.IsNull()) 
         {
             return "";
         }
@@ -58,7 +58,7 @@ std::vector<string> PPGroup::getGroupPermissions(string levelName)
    std::vector<string> perms;
    if (levelName == "")
    {
-     perms = getNode("permissions")->as<vector<string>>(); 
+     perms = getNode("permissions").as<vector<string>>(); 
    }
    else
      perms = getWorldData(levelName)["permissions"].as<vector<string>>();
@@ -71,8 +71,13 @@ std::vector<string> PPGroup::getGroupPermissions(string levelName)
    }
    for (auto p : parents)
    {
-      auto parPerms = p->getGroupPermissions(levelName);
+      auto parPerms = p.getGroupPermissions(levelName);
       perms.insert(perms.end(), parPerms.begin(), parPerms.end());
    }
    return perms;
+}
+
+YAML::Node PPGroup::getNode(string node)
+{
+   return getData()[node];
 }
