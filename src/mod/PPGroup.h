@@ -8,6 +8,7 @@
 #include "MyMod.h"
 #include <variant>
 #include <tuple>
+#include <ll/api/Logger.h>
 using namespace std;
 
 class PPGroup
