@@ -71,7 +71,7 @@ std::vector<string> PPGroup::getGroupPermissions(string levelName)
    }
    for (auto p : parents)
    {
-      auto parPerms = p.getGroupPermissions(levelName);
+      auto parPerms = p-ЮgetGroupPermissions(levelName);
       perms.insert(perms.end(), parPerms.begin(), parPerms.end());
    }
    return perms;
