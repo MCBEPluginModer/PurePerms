@@ -65,7 +65,7 @@ std::vector<string> PPGroup::getGroupPermissions(string levelName)
    if (perms.size() == 0)
    {
       ll::Logger logger("PurePerms");
-      string s = "Invalid \'permissions'\ node given to " + __FUNCTION__;
+      string s = "Invalid \'permissions'\ node given to PPGroup::getGroupPermissions";
       logger.fatal(s);
       return {};
    }
