@@ -85,3 +85,25 @@ YAML::Node PPGroup::getNode(string node)
    else
      return nul;
 }
+
+vector<PPGroup*> PPGroup::getParentGroups()
+{
+    if (parents.empty()) {
+            YAML::Node inheritanceNode = node["inheritance"];
+            
+            if (!inheritanceNode || !inheritanceNode.IsSequence()) {
+                 ll::Logger logger("PurePerms");
+                logger.fatal("Invalid \'inheritance'\ node given to " + std::string(__FUNCTION__));
+                return {};
+            }
+
+            for (const auto& parentGroupName : inheritanceNode) {
+                auto parentGroup = plugin->getGroup(parentGroupName.as<std::string>());
+                if (parentGroup) {
+                    parents.push_back(parentGroup);
+                }
+            }
+        }
+
+        return parents;
+}
