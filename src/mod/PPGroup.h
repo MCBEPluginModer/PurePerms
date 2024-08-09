@@ -8,6 +8,7 @@
 #include "MyMod.h"
 #include <variant>
 #include <tuple>
+#include <optional>
 #include <ll/api/Logger.h>
 using namespace std;
 
@@ -28,7 +29,7 @@ public:
    YAML::Node getNode(string node);
    vector<PPGroup*> getParentGroups();
    YAML::Node getWorldData(string levelName);
-   YAML::Node getWorldNode(string levelName,string node);
+   std::optional<YAML::Node> getWorldNode(string levelName,string node);
    bool isDefault(string levelName = "");
    void removeNode(string node);
    bool removeParent(PPGroup* parent);
