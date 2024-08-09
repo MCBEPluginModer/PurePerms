@@ -153,3 +153,25 @@ void PPGroup::removeNode(string node)
         setData(data1); // Update the group data
     }
 }
+
+bool PPGroup::removeParent(PPGroup* parent)
+{
+    YAML::Node tempGroupData = get<0>(getData());
+
+        // Get the inheritance list and convert it to a vector of strings
+        std::vector<std::string> inheritance = tempGroupData["inheritance"].as<std::vector<std::string>>();
+
+        // Remove the parent's name from the inheritance list
+        inheritance.erase(std::remove(inheritance.begin(), inheritance.end(), parent->getName()), inheritance.end());
+
+        // Update the inheritance node
+        tempGroupData["inheritance"] = inheritance;
+ tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1 = std::make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(tempGroupData["alias"].as<string>(),tempGroupData["isDefault"].as<bool>(),tempGroupData["inheritance"].as<vector<string>>(),tempGroupData["permissions"].as<vector<string>>(),tempGroupData["worlds"].as<YAML::Node>());
+        // Set the modified data back to the group
+        setData(data1);
+
+        // Update the players in the group
+       // plugin->updatePlayersInGroup(*this);
+
+        return true;
+}
