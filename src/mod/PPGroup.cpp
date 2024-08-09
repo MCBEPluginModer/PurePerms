@@ -195,3 +195,17 @@ void PPGroup::setData(tuple<string,bool,vector<string>,vector<string>,YAML::Node
 {
     //plugin->getProvider()->setGroupData(this,data);
 }
+
+void PPGroup::setDefault(string levelName)
+{
+  if (levelName.empty()) 
+  {
+            setNode("isDefault", true);
+  } 
+  else
+  {
+            YAML::Node worldData = getWorldData(levelName);
+            worldData["isDefault"] = true;
+            setWorldData(levelName, worldData);
+  }
+}
