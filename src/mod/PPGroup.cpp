@@ -130,3 +130,15 @@ std::optional<YAML::Node> PPGroup::getWorldNode(string levelName,string node)
 
     return worldNode[node];
 }
+
+bool PPGroup::isDefault(string levelName)
+{
+    if (worldName.empty()) 
+    {
+        return getNode("isDefault").as<bool>(false);
+    } 
+    else 
+    {
+        return getWorldData(worldName)["isDefault"].as<bool>(false);
+    }
+}
