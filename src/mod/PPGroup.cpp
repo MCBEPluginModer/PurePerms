@@ -117,3 +117,16 @@ YAML::Node PPGroup::getWorldData(string levelName)
     createWorldData(levelName);
     return get<0>(getData())["worlds"][levelName];
 }
+
+std::optional<YAML::Node> PPGroup::getWorldNode(string levelName,string node)
+{
+    YAML::Node worldNode = getWorldData(worldName);
+
+        // Check if the node exists
+    if (worldNode.IsNull() || worldNode[node].IsNull()) 
+    {
+            return std::nullopt;  // Equivalent to returning null in PHP
+    }
+
+    return worldNode[node];
+}
