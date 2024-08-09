@@ -120,7 +120,7 @@ YAML::Node PPGroup::getWorldData(string levelName)
 
 std::optional<YAML::Node> PPGroup::getWorldNode(string levelName,string node)
 {
-    YAML::Node worldNode = getWorldData(worldName);
+    YAML::Node worldNode = getWorldData(levelName);
 
         // Check if the node exists
     if (worldNode.IsNull() || worldNode[node].IsNull()) 
@@ -139,6 +139,6 @@ bool PPGroup::isDefault(string levelName)
     } 
     else 
     {
-        return getWorldData(worldName)["isDefault"].as<bool>(false);
+        return getWorldData(levelName)["isDefault"].as<bool>(false);
     }
 }
