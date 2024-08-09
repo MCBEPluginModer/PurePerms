@@ -145,7 +145,7 @@ bool PPGroup::isDefault(string levelName)
 
 void PPGroup::removeNode(string node)
 {
-    YAML::Node tempGroupData = getData();
+    YAML::Node tempGroupData = get<0>(getData());
     if (tempGroupData[node]) 
     { // Check if the node exists
         tempGroupData.remove(node); // Remove the node
