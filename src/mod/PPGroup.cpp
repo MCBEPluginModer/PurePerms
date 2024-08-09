@@ -175,3 +175,18 @@ bool PPGroup::removeParent(PPGroup* parent)
 
         return true;
 }
+
+void PPGroup::removeWorldNode(string levelName,string node)
+{
+     YAML::Node worldData = getWorldData(levelName);
+
+        if (worldData[node]) {
+            worldData.remove(node); // Removing the node
+            tuple<bool,vector<string>> worldData1;
+            if (node == "isDefault")
+             worldData1 = make_tuple<bool,vector<string>>(false,worldData["permissions"].as<vector<string>>());
+            else if (node == "permissions")
+             worldData1 = make_tuple<bool,vector<string>>(worldData["isDefault"].as<bool>(),{});
+            setWorldData(levelName, worldData1);
+        }
+}
