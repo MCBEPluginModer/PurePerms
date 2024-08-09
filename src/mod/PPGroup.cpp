@@ -133,12 +133,23 @@ std::optional<YAML::Node> PPGroup::getWorldNode(string levelName,string node)
 
 bool PPGroup::isDefault(string levelName)
 {
-    if (worldName.empty()) 
+    if (levelName.empty()) 
     {
         return getNode("isDefault").as<bool>(false);
     } 
     else 
     {
         return getWorldData(levelName)["isDefault"].as<bool>(false);
+    }
+}
+
+void PPGroup::removeNode(string node)
+{
+    YAML::Node tempGroupData = getData();
+    if (tempGroupData[node]) 
+    { // Check if the node exists
+        tempGroupData.remove(node); // Remove the node
+            
+        setData(tempGroupData); // Update the group data
     }
 }
