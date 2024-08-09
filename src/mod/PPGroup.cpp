@@ -88,7 +88,8 @@ YAML::Node PPGroup::getNode(string node)
 
 vector<PPGroup*> PPGroup::getParentGroups()
 {
-    if (parents.empty()) {
+    if (parents.empty()) 
+    {
             YAML::Node inheritanceNode = node["inheritance"];
             
             if (!inheritanceNode || !inheritanceNode.IsSequence()) {
@@ -97,11 +98,12 @@ vector<PPGroup*> PPGroup::getParentGroups()
                 return {};
             }
 
-            for (const auto& parentGroupName : inheritanceNode) {
-                auto parentGroup = plugin->getGroup(parentGroupName.as<std::string>());
-                if (parentGroup) {
+            for (auto& parentGroupName : inheritanceNode) {
+                /*PPGroup parentGroup = plugin->getGroup(parentGroupName.as<std::string>());
+                if (parentGroup) 
+                {
                     parents.push_back(parentGroup);
-                }
+                }*/
             }
         }
 
