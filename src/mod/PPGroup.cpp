@@ -98,14 +98,22 @@ vector<PPGroup*> PPGroup::getParentGroups()
                 return {};
             }
 
-            for (auto& parentGroupName : inheritanceNode) {
-                /*PPGroup parentGroup = plugin->getGroup(parentGroupName.as<std::string>());
+            /*for (auto& parentGroupName : inheritanceNode) 
+            {
+                PPGroup parentGroup = plugin->getGroup(parentGroupName.as<std::string>());
                 if (parentGroup) 
                 {
                     parents.push_back(parentGroup);
-                }*/
-            }
-        }
+                }
+            }*/
+    }
+    return parents;
+}
 
-        return parents;
+YAML::Node PPGroup::getWorldData(string levelName)
+{
+    if (levelName == "")
+      return YAML::Node();
+    createWorldData(levelName);
+    return get<0>(getData())["worlds"][levelName];
 }
