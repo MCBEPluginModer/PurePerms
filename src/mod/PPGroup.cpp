@@ -90,7 +90,7 @@ vector<PPGroup*> PPGroup::getParentGroups()
 {
     if (parents.empty()) 
     {
-            YAML::Node inheritanceNode = node["inheritance"];
+            YAML::Node inheritanceNode = getNode("inheritance");
             
             if (!inheritanceNode || !inheritanceNode.IsSequence()) {
                  ll::Logger logger("PurePerms");
