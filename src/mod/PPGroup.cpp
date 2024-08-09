@@ -149,7 +149,7 @@ void PPGroup::removeNode(string node)
     if (tempGroupData[node]) 
     { // Check if the node exists
         tempGroupData.remove(node); // Remove the node
-            
-        setData(tempGroupData); // Update the group data
+        tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1 = std::make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(tempGroupData["alias"].as<string>(),tempGroupData["isDefault"].as<bool>(),tempGroupData["inheritance"].as<vector<string>>(),tempGroupData["permissions"].as<vector<string>>(),tempGroupData["worlds"].as<YAML::Node>());
+        setData(data1); // Update the group data
     }
 }
