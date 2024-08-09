@@ -80,7 +80,7 @@ std::vector<string> PPGroup::getGroupPermissions(string levelName)
 YAML::Node PPGroup::getNode(string node)
 {
    YAML::Node nul;
-   if (!get<0>(getData()).isNull())
+   if (!get<0>(getData()).IsNull())
      return get<0>(getData())[node];
    else
      return nul;
