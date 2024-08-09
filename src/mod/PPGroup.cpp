@@ -190,3 +190,8 @@ void PPGroup::removeWorldNode(string levelName,string node)
             setWorldData(levelName, worldData1);
         }
 }
+
+void PPGroup::setData(tuple<string,bool,vector<string>,vector<string>,YAML::Node> data)
+{
+    //plugin->getProvider()->setGroupData(this,data);
+}
