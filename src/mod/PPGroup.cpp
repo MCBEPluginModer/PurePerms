@@ -232,7 +232,7 @@ bool PPGroup::setGroupPermission(string permission,string levelName)
     return true;
 }
 
-void PPGroup::setNode(string node,variant<int,float,double,string,bool> value)
+void PPGroup::setNode(string node,std::variant<bool,int,float,double,string> value)
 {
     auto tempGroupData = get<0>(getData());
     tempGroupData[node] = value;
