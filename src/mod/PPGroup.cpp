@@ -253,3 +253,25 @@ void PPGroup::setWorldData(string levelName,tuple<bool,vector<string>> worldData
             setData(data1);
         }
 }
+
+void PPGroup::setWorldNode(string levelName,string node,variant<bool,vector<string>> value)
+{
+   YAML::Node worldData = getWorldData(levelName);
+
+        // Update the node in the world data based on the type of value
+        if (std::holds_alternative<bool>(value)) {
+            worldData[node] = std::get<bool>(value);
+        } else if (std::holds_alternative<std::vector<std::string>>(value)) {
+            worldData[node] = YAML::Node(YAML::NodeType::Sequence);
+            for (const auto& str : std::get<std::vector<std::string>>(value)) {
+                worldData[node].push_back(str);
+            }
+        }
+
+        // Prepare the tuple with isDefault (assumed bool) and permissions (vector<string>)
+        bool isDefault = worldData["isDefault"].as<bool>();
+        std::vector<std::string> permissions = worldData["permissions"].as<std::vector<std::string>>();
+        auto worldTuple = std::make_tuple(isDefault, permissions);
+
+        setWorldData(levelName, worldTuple);
+}
