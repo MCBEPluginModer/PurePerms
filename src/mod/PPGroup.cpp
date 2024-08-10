@@ -241,3 +241,14 @@ void PPGroup::setNode(string node,std::variant<bool,int,float,double,string> val
     tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1 = std::make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(tempGroupData["alias"].as<string>(),tempGroupData["isDefault"].as<bool>(),tempGroupData["inheritance"].as<vector<string>>(),tempGroupData["permissions"].as<vector<string>>(),tempGroupData["worlds"].as<YAML::Node>());
     setData(data1);
 }
+
+void PPGroup::setWorldData(string levelName,tuple<bool,vector<string>> worldData)
+{
+     YAML::Node data = get<0>(getData());
+
+        if (data["worlds"] && data["worlds"][WorldName]) {
+            data["worlds"][WorldName] = worldData;
+            tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1 = std::make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(data["alias"].as<string>(),data["isDefault"].as<bool>(),data["inheritance"].as<vector<string>>(),data["permissions"].as<vector<string>>(),data["worlds"].as<YAML::Node>());
+            setData(data1);
+        }
+}
