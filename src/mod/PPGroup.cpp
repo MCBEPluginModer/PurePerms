@@ -316,25 +316,35 @@ void PPGroup::sortPermissions()
 bool PPGroup::unsetGroupPermission(string permission,string levelName)
 {
     if (levelName.empty()) {
-            YAML::Node tempGroupData = get<0>(getData());
-            auto& permissions = tempGroupData["permissions"].as<std::vector<std::string>>();
+            YAML::Node tempGroupData = getData();
+            std::vector<std::string> permissions = tempGroupData["permissions"].as<std::vector<std::string>>();
 
             auto it = std::find(permissions.begin(), permissions.end(), permission);
             if (it == permissions.end()) return false; // Permission not found
 
-            permissions.erase(it);  // Remove the permission
-tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1 = std::make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(tempGroupData["alias"].as<string>(),tempGroupData["isDefault"].as<bool>(),tempGroupData["inheritance"].as<vector<string>>(),tempGroupData["permissions"].as<vector<string>>(),tempGroupData["worlds"].as<YAML::Node>());
+            permissions.erase(it); // Remove the permission
+
+            // Construct updated data tuple
+            auto data1 = std::make_tuple(
+                tempGroupData["alias"].as<std::string>(),
+                tempGroupData["isDefault"].as<bool>(),
+                tempGroupData["inheritance"].as<std::vector<std::string>>(),
+                permissions, // Use the updated permissions vector
+                tempGroupData["worlds"].as<YAML::Node>()
+            );
             setData(data1);
         } else {
             YAML::Node worldData = getWorldData(levelName);
-            auto& permissions = worldData["permissions"].as<std::vector<std::string>>();
+            std::vector<std::string> permissions = worldData["permissions"].as<std::vector<std::string>>();
 
             auto it = std::find(permissions.begin(), permissions.end(), permission);
             if (it == permissions.end()) return false; // Permission not found
 
-            permissions.erase(it);  // Remove the permission
+            permissions.erase(it); // Remove the permission
+
+            // Update world data
             bool isDefault = worldData["isDefault"].as<bool>();
-        auto worldTuple = std::make_tuple(isDefault, permissions);
+            auto worldTuple = std::make_tuple(isDefault, permissions);
             setWorldData(levelName, worldTuple);
         }
 
