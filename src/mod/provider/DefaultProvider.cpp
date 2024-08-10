@@ -131,8 +131,9 @@ tuple<string,vector<string>,YAML::Node,int> DefaultProvider::getPlayerData(Playe
             defaultData["permissions"] = YAML::Node(YAML::NodeType::Sequence);
             defaultData["worlds"] = YAML::Node(YAML::NodeType::Sequence);
             defaultData["time"] = -1;
-            return defaultData;
+            tuple<string,vector<string>,YAML::Node,int> t = make_tuple<string,vector<string>,YAML::Node,int>("player",{},YAML::Node(YAML::NodeType::Undefined),-1);
+            return t;
         }
-
-        return players[userName];
+        tuple<string,vector<string>,YAML::Node,int> t = make_tuple<string,vector<string>,YAML::Node,int>(players[userName]["group"].as<string>(),players[userName]["permissions"].as<vector<string>>(),players[userName]["worlds"],players[userName]["time"].as<int>());
+        return t;
 }
