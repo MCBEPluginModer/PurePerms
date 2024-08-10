@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <yaml-cpp/yaml.h>
 
 class PPGroup; // Forward declaration
 
