@@ -3,7 +3,7 @@
 #include <ll/api/Logger.h>
 #include <mc/world/actor/player/Player.h>
 #include "../MyMod.h"
-#include "PPGroup.h"
+#include "../PPGroup.h"
 #include <unordered_map>
 
 class DefaultProvider : public ProviderInterface
