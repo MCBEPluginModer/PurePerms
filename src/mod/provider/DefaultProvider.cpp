@@ -91,7 +91,30 @@ DefaultProvider::DefaultProvider(mcpm::PurePerms* _plugin)
 
     // Сохраняем в файл
     std::ofstream fout("plugins/PurePerms/ranks.yaml");
-    fout << root;
+    fout << groups;
+    fout.close();
+    YAML::Node user;
+    user["group"] = "Guest";
+    user["permissions"] = YAML::Node(YAML::NodeType::Sequence);  // Пустая последовательность для permissions
+    user["worlds"] = YAML::Node(YAML::NodeType::Sequence);       // Пустая последовательность для worlds
+
+    // Вставляем в корневой узел
+    players["TheMrEnderBro"] = user;
+    fout.open("plugins/PurePerms/players.yaml");
+    fout << players;
     fout.close();
   }
+}
+
+YAML::Node DefaultProvider::getGroupData(PPGroup group)
+{
+  std::string groupName = group.getName();
+  YAML::Node groupsData = getGroupsData();
+
+        // Проверка наличия данных для группы
+  if (!groupsData[groupName] || !groupsData[groupName].IsMap()) {
+      return YAML::Node(YAML::NodeType::Undefined); // Возвращаем неопределенный узел
+  }
+
+  return groupsData[groupName];
 }
