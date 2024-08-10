@@ -299,7 +299,7 @@ void PPGroup::sortPermissions()
             auto dimss = ll::service::bedrock::getLevel()->getDimensionManager().mDimensions;
             for (auto world : dimss)
             {
-               auto WorldName = world->mName;
+               auto WorldName = world.second->mName;
                if (tempGroupData["worlds"][WorldName]) {
                     std::vector<std::string> worldPermissions = tempGroupData["worlds"][WorldName]["permissions"].as<std::vector<std::string>>();
                     std::set<std::string> uniqueWorldPermissions(worldPermissions.begin(), worldPermissions.end());
