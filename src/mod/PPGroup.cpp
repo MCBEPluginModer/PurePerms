@@ -210,3 +210,24 @@ void PPGroup::setDefault(string levelName)
             setWorldData(levelName, worldData1);
   }
 }
+
+bool PPGroup::setGroupPermission(string permission,string levelName)
+{
+    if (levelName.empty()) 
+    {
+        auto tempGroupData = getData();
+        tempGroupData["permissions"].push_back(permission);
+        tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1 = std::make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(tempGroupData["alias"].as<string>(),tempGroupData["isDefault"].as<bool>(),tempGroupData["inheritance"].as<vector<string>>(),tempGroupData["permissions"].as<vector<string>>(),tempGroupData["worlds"].as<YAML::Node>());
+        setData(data1);
+    } 
+    else 
+    {
+        auto worldData = getWorldData(levelName);
+        worldData["permissions"].push_back(permission);
+        tuple<bool,vector<string>> worldData1 = make_tuple<bool,vector<string>>(worldData["isDefault"].as<bool>(),worldData["permissions"].as<vector<string>>());
+        setWorldData(levelName, worldData1);
+    }
+    //plugin->updatePlayersInGroup(*this);
+    
+    return true;
+}
