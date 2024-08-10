@@ -118,3 +118,21 @@ YAML::Node DefaultProvider::getGroupData(PPGroup group)
 
   return groupsData[groupName];
 }
+
+tuple<string,vector<string>,YAML::Node,int> DefaultProvider::getPlayerData(Player* player)
+{
+  std::string userName = toLowerCase(player->getRealName());
+
+        // Проверяем наличие данных для игрока
+        if (!players[userName]) {
+            // Возвращаем дефолтные данные
+            YAML::Node defaultData;
+            defaultData["group"] = "player";
+            defaultData["permissions"] = YAML::Node(YAML::NodeType::Sequence);
+            defaultData["worlds"] = YAML::Node(YAML::NodeType::Sequence);
+            defaultData["time"] = -1;
+            return defaultData;
+        }
+
+        return players[userName];
+}
