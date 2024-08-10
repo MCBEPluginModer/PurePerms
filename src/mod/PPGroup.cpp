@@ -1,4 +1,7 @@
 #include "PPGroup.h"
+#include <mc/world/level/Level.h>
+#include <mc/world/level/dimension/DimensionManager.h>
+#include <ll/api/service/Bedrock.h>
 
 bool PPGroup::addParent(PPGroup* parent)
 {
@@ -292,6 +295,8 @@ void PPGroup::sortPermissions()
         // Check if multi-world permissions are enabled
         bool isMultiWorldPermsEnabled = YAML::LoadFile("plugins/PurePerms/config.yml")["enable-multiworld-perms"].as<bool>();
         if (isMultiWorldPermsEnabled && tempGroupData["worlds"]) {
+            auto dimss = ll::service::bedrock::getLevel().getDimensionManager();
+            //std::function<bool(class Dimension&)> callback = [](
             /*for (const auto& world : getWorlds()) {
                 std::string WorldName = world.getDisplayName();
                 if (tempGroupData["worlds"][WorldName]) {
