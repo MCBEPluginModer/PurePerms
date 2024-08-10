@@ -137,3 +137,31 @@ tuple<string,vector<string>,YAML::Node,int> DefaultProvider::getPlayerData(Playe
         tuple<string,vector<string>,YAML::Node,int> t = make_tuple<string,vector<string>,YAML::Node,int>(players[userName]["group"].as<string>(),players[userName]["permissions"].as<vector<string>>(),players[userName]["worlds"],players[userName]["time"].as<int>());
         return t;
 }
+
+optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers()
+{
+ unordered_map<string, tuple<string, vector<string>, YAML::Node, int>> users;
+
+        // Проверка, если данные отсутствуют
+        if (players.IsNull() || players.size() == 0) 
+        {
+            return nullopt;  // Возвращаем std::nullopt, если данных нет
+        }
+
+        // Обход всех игроков в YAML файле
+        for (auto it = players.begin(); it != players.end(); ++it) {
+            string username = it->first.as<string>();
+
+            // Извлекаем данные для каждого игрока
+            YAML::Node userData = it->second;
+            string group = userData["group"].as<string>("player");
+            vector<string> permissions = userData["permissions"] ? userData["permissions"].as<vector<string>>() : vector<string>();
+            YAML::Node worlds = userData["worlds"] ? userData["worlds"] : YAML::Node(YAML::NodeType::Sequence);
+            int time = userData["time"] ? userData["time"].as<int>() : -1;
+
+            // Добавляем данные в карту
+            users[username] = make_tuple(group, permissions, worlds, time);
+        }
+
+        return users;
+}
