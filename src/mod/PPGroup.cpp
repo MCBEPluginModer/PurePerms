@@ -307,19 +307,38 @@ void PPGroup::sortPermissions()
                     std::sort(worldPermissions.begin(), worldPermissions.end());
                     tempGroupData["worlds"][WorldName]["permissions"] = worldPermissions;
                 }
-            }
-            /*for (const auto& world : getWorlds()) {
-                std::string WorldName = world.getDisplayName();
-                if (tempGroupData["worlds"][WorldName]) {
-                    std::vector<std::string> worldPermissions = tempGroupData["worlds"][WorldName]["permissions"].as<std::vector<std::string>>();
-                    std::set<std::string> uniqueWorldPermissions(worldPermissions.begin(), worldPermissions.end());
-                    worldPermissions.assign(uniqueWorldPermissions.begin(), uniqueWorldPermissions.end());
-                    std::sort(worldPermissions.begin(), worldPermissions.end());
-                    tempGroupData["worlds"][WorldName]["permissions"] = worldPermissions;
-                }
-            }*/
-            
+            }    
         }
  tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1 = std::make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(tempGroupData["alias"].as<string>(),tempGroupData["isDefault"].as<bool>(),tempGroupData["inheritance"].as<vector<string>>(),tempGroupData["permissions"].as<vector<string>>(),tempGroupData["worlds"].as<YAML::Node>());
         setData(data1);
+}
+
+bool PPGroup::unsetGroupPermission(string permission,string levelName)
+{
+    if (WorldName.empty()) {
+            YAML::Node tempGroupData = get<0>(getData());
+            auto& permissions = tempGroupData["permissions"].as<std::vector<std::string>>();
+
+            auto it = std::find(permissions.begin(), permissions.end(), permission);
+            if (it == permissions.end()) return false; // Permission not found
+
+            permissions.erase(it);  // Remove the permission
+tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1 = std::make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(tempGroupData["alias"].as<string>(),tempGroupData["isDefault"].as<bool>(),tempGroupData["inheritance"].as<vector<string>>(),tempGroupData["permissions"].as<vector<string>>(),tempGroupData["worlds"].as<YAML::Node>());
+            setData(data1);
+        } else {
+            YAML::Node worldData = getWorldData(levelName);
+            auto& permissions = worldData["permissions"].as<std::vector<std::string>>();
+
+            auto it = std::find(permissions.begin(), permissions.end(), permission);
+            if (it == permissions.end()) return false; // Permission not found
+
+            permissions.erase(it);  // Remove the permission
+            bool isDefault = worldData["isDefault"].as<bool>();
+        std::vector<std::string> permissions = worldData["permissions"].as<std::vector<std::string>>();
+        auto worldTuple = std::make_tuple(isDefault, permissions);
+            setWorldData(levelName, worldTuple);
+        }
+
+       // plugin->updatePlayersInGroup(*this);  // Call the function to update players in the group
+        return true;
 }
