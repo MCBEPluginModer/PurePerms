@@ -316,7 +316,7 @@ void PPGroup::sortPermissions()
 bool PPGroup::unsetGroupPermission(string permission,string levelName)
 {
     if (levelName.empty()) {
-            YAML::Node tempGroupData = getData();
+            YAML::Node tempGroupData = get<0>(getData());
             std::vector<std::string> permissions = tempGroupData["permissions"].as<std::vector<std::string>>();
 
             auto it = std::find(permissions.begin(), permissions.end(), permission);
