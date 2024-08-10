@@ -315,7 +315,7 @@ void PPGroup::sortPermissions()
 
 bool PPGroup::unsetGroupPermission(string permission,string levelName)
 {
-    if (WorldName.empty()) {
+    if (levelName.empty()) {
             YAML::Node tempGroupData = get<0>(getData());
             auto& permissions = tempGroupData["permissions"].as<std::vector<std::string>>();
 
