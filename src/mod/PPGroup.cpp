@@ -206,6 +206,7 @@ void PPGroup::setDefault(string levelName)
   {
             YAML::Node worldData = getWorldData(levelName);
             worldData["isDefault"] = true;
-            setWorldData(levelName, worldData);
+            tuple<bool,vector<string>> worldData1 = make_tuple<bool,vector<string>>(worldData["isDefault"].as<bool>(),worldData["permissions"].as<vector<string>>());
+            setWorldData(levelName, worldData1);
   }
 }
