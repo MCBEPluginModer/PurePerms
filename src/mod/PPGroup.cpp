@@ -334,7 +334,6 @@ tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1 = std::make_tu
 
             permissions.erase(it);  // Remove the permission
             bool isDefault = worldData["isDefault"].as<bool>();
-        std::vector<std::string> permissions = worldData["permissions"].as<std::vector<std::string>>();
         auto worldTuple = std::make_tuple(isDefault, permissions);
             setWorldData(levelName, worldTuple);
         }
