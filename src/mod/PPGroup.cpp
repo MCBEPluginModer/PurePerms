@@ -246,8 +246,8 @@ void PPGroup::setWorldData(string levelName,tuple<bool,vector<string>> worldData
 {
      YAML::Node data = get<0>(getData());
 
-        if (data["worlds"] && data["worlds"][WorldName]) {
-            data["worlds"][WorldName] = worldData;
+        if (data["worlds"] && data["worlds"][levelName]) {
+            data["worlds"][levelName] = worldData;
             tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1 = std::make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(data["alias"].as<string>(),data["isDefault"].as<bool>(),data["inheritance"].as<vector<string>>(),data["permissions"].as<vector<string>>(),data["worlds"].as<YAML::Node>());
             setData(data1);
         }
