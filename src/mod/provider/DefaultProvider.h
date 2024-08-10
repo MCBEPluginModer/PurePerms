@@ -5,6 +5,7 @@
 #include "../MyMod.h"
 #include "../PPGroup.h"
 #include <unordered_map>
+#include <optional>
 
 class DefaultProvider : public ProviderInterface
 {
@@ -22,7 +23,7 @@ public:
    YAML::Node getGroupsConfig() {return groups;}
    YAML::Node getGroupsData() {return groups;}
    tuple<string,vector<string>,YAML::Node,int> getPlayerData(Player* player);
-   unordered_map<string,tuple<string,vector<string>,YAML::Node,int>> getUsers();
+   optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers();
    void setGroupData(PPGroup group,tuple<string,vector<string>,YAML::Node,int> data);
    void setGroupsData(unordered_map<string,tuple<string,vector<string>,YAML::Node,int>> data);
    void setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data);
