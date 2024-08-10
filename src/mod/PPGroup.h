@@ -37,7 +37,7 @@ public:
    void setData(tuple<string,bool,vector<string>,vector<string>,YAML::Node> data);
    void setDefault(string levelName = "");
    bool setGroupPermission(string permission,string levelName = "");
-   void setNode(string node,variant<int,float,double,string.bool> value);
+   void setNode(string node,variant<int,float,double,string,bool> value);
    void setWorldData(string levelName,tuple<bool,vector<string>> worldData);
    void setWorldNode(string levelName,string node,variant<bool,vector<string>> value);
    void sortPermissions();
