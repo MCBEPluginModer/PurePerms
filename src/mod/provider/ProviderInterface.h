@@ -3,6 +3,7 @@
 #include <vector>
 #include <unordered_map>
 #include <yaml-cpp/yaml.h>
+using namespace std;
 
 class PPGroup; // Forward declaration
 
