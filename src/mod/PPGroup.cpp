@@ -231,3 +231,11 @@ bool PPGroup::setGroupPermission(string permission,string levelName)
     
     return true;
 }
+
+void PPGroup::setNode(string node,variant<int,float,double,string,bool> value)
+{
+    auto tempGroupData = get<0>(getData());
+    tempGroupData[node] = value;
+    tuple<string,bool,vector<string>,vector<string>,YAML::Node> data1 = std::make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(tempGroupData["alias"].as<string>(),tempGroupData["isDefault"].as<bool>(),tempGroupData["inheritance"].as<vector<string>>(),tempGroupData["permissions"].as<vector<string>>(),tempGroupData["worlds"].as<YAML::Node>());
+    setData(data1);
+}
