@@ -1,5 +1,5 @@
 #include "DefaultProvider.h"
-#include "PPMessages.h"
+#include "../PPMessages.h"
 #include <fstream>
 
 DefaultProvider::DefaultProvider(mcpm::PurePerms* _plugin)
