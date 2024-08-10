@@ -275,3 +275,35 @@ void PPGroup::setWorldNode(string levelName,string node,variant<bool,vector<stri
 
         setWorldData(levelName, worldTuple);
 }
+
+void PPGroup::sortPermissions()
+{
+    YAML::Node tempGroupData = get<0>(getData());
+
+        // Sort and remove duplicates from the permissions array
+        if (tempGroupData["permissions"]) {
+            std::vector<std::string> permissions = tempGroupData["permissions"].as<std::vector<std::string>>();
+            std::set<std::string> uniquePermissions(permissions.begin(), permissions.end());
+            permissions.assign(uniquePermissions.begin(), uniquePermissions.end());
+            std::sort(permissions.begin(), permissions.end());
+            tempGroupData["permissions"] = permissions;
+        }
+
+        // Check if multi-world permissions are enabled
+        bool isMultiWorldPermsEnabled = YAML::LoadFile("plugins/PurePerms/config.yml")["enable-multiworld-perms"].as<bool>();
+        if (isMultiWorldPermsEnabled && tempGroupData["worlds"]) {
+            /*for (const auto& world : getWorlds()) {
+                std::string WorldName = world.getDisplayName();
+                if (tempGroupData["worlds"][WorldName]) {
+                    std::vector<std::string> worldPermissions = tempGroupData["worlds"][WorldName]["permissions"].as<std::vector<std::string>>();
+                    std::set<std::string> uniqueWorldPermissions(worldPermissions.begin(), worldPermissions.end());
+                    worldPermissions.assign(uniqueWorldPermissions.begin(), uniqueWorldPermissions.end());
+                    std::sort(worldPermissions.begin(), worldPermissions.end());
+                    tempGroupData["worlds"][WorldName]["permissions"] = worldPermissions;
+                }
+            }*/
+            
+        }
+
+        setData(tempGroupData);
+}
