@@ -10,6 +10,12 @@ class DefaultProvider : public ProviderInterface
 {
    mcpm::PurePerms* plugin;
    YAML::Node groups,players;
+   inline std::string toLowerCase(const std::string& str) const 
+   {
+        std::string result = str;
+        std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+        return result;
+    }
 public:
    DefaultProvider(mcpm::PurePerms* _plugin);
    YAML::Node getGroupData(PPGroup group);
