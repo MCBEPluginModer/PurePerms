@@ -190,4 +190,54 @@ std::tuple<std::string, std::vector<std::string>, YAML::Node, int> JsonProvider:
 
         // Возвращаем данные в виде кортежа
         return std::make_tuple(userConfig["group"].as<std::string>(), permissions, userConfig, time);
-    }
+}
+
+optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> JsonProvider::getUsers()
+{
+  std::unordered_map<std::string, std::tuple<std::string, std::vector<std::string>, YAML::Node, int>> users;
+
+        // Путь к директории с файлами игроков
+        std::string playersDir = "plugins/PurePerms/players/";
+
+        // Проверка на существование директории
+        if (!std::filesystem::exists(playersDir)) {
+            return std::nullopt;
+        }
+
+        // Итерация по всем файлам в директории
+        for (const auto& entry : std::filesystem::directory_iterator(playersDir)) {
+            if (entry.is_regular_file() && entry.path().extension() == ".json") {
+                // Получаем имя файла (никнейм игрока)
+                std::string fileName = entry.path().filename().stem().string();
+
+                // Загружаем данные из JSON файла
+                Json::Value jsonData;
+                std::ifstream configFile(entry.path(), std::ifstream::binary);
+                configFile >> jsonData;
+
+                // Извлекаем необходимые данные
+                std::string group = jsonData["group"].asString();
+                std::vector<std::string> permissions;
+                for (const auto& perm : jsonData["permissions"]) {
+                    permissions.push_back(perm.asString());
+                }
+                int time = jsonData["time"].asInt();
+
+                // Конвертация данных из JSON в YAML::Node
+                YAML::Node yamlData;
+                for (const auto& key : jsonData.getMemberNames()) {
+                    yamlData[key] = jsonData[key].asString();  // Конвертируем в строковый формат
+                }
+
+                // Добавляем данные в карту
+                users[fileName] = std::make_tuple(group, permissions, yamlData, time);
+            }
+        }
+
+        // Проверка, если карта users не пуста, вернуть её, иначе вернуть std::nullopt
+        if (!users.empty()) {
+            return users;
+        } else {
+            return std::nullopt;
+        }
+}
