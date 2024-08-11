@@ -187,3 +187,25 @@ void DefaultProvider::setGroupData(PPGroup& group, tuple<string,vector<string>,Y
         fout << groups;
         fout.close();
 }
+
+void DefaultProvider::setGroupsData(const std::vector<std::unordered_map<std::string, std::string>>& tempGroupsData)
+{
+  groups = YAML::Node(YAML::NodeType::Map);
+
+        // Проходим по каждому элементу в unordered_map
+        for (const auto& [groupName, groupData] : data) {
+            YAML::Node groupNode;
+
+            // Заполняем узел группы данными из tuple
+            groupNode["alias"] = std::get<0>(groupData);
+            groupNode["permissions"] = std::get<1>(groupData);
+            groupNode["worlds"] = std::get<2>(groupData);
+            groupNode["time"] = std::get<3>(groupData);
+
+            // Добавляем узел группы в общий узел groups
+            groups[groupName] = groupNode;
+        }
+   ofstream fout("plugins/PuePerms/ranks.yaml");
+   fout << groups;
+   fout.close();
+}
