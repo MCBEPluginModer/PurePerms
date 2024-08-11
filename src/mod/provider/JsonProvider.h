@@ -6,7 +6,12 @@
 #include "../PPGroup.h"
 #include <unordered_map>
 #include <optional>
-#include <json/json.h>
+#include <rapidjson/document.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/istreamwrapper.h>
+#include <rapidjson/ostreamwrapper.h>
+#include <rapidjson/prettywriter.h>
 
 class JsonProvider : public ProviderInterface
 {
@@ -24,28 +29,15 @@ class JsonProvider : public ProviderInterface
         struct stat buffer;
         return (stat(filePath.c_str(), &buffer) == 0);
     }
-    Json::Value loadConfig(const std::string& filePath) {
-        Json::Value config;
-        std::ifstream file(filePath, std::ifstream::binary);
-        if (file) {
-            file >> config;
-        }
-        return config;
-    }
-
-    void saveConfig(const std::string& filePath, const Json::Value& config) {
-        std::ofstream file(filePath, std::ofstream::binary);
-        if (file) {
-            Json::StreamWriterBuilder writer;
-            file << Json::writeString(writer, config);
-        }
-    }
+    void saveConfig(const std::string& filePath, const rapidjson::Document& config);
+    rapidjson::Document loadConfig(const std::string& filePath);
+    rapidjson::Value convertYamlToJson(const YAML::Node& yamlNode, rapidjson::Document::AllocatorType& allocator);
 public:
    JsonProvider(mcpm::PurePerms* _plugin);
    YAML::Node getGroupData(PPGroup group);
    YAML::Node getGroupsConfig() {return groups;}
    YAML::Node getGroupsData() {return groups;}
-   Json::Value getPlayerConfig(Player* player, bool onUpdate = false);
+   rapidjson::Document getPlayerConfig(Player* player, bool onUpdate = false);
    tuple<string,vector<string>,YAML::Node,int> getPlayerData(Player* player);
    optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers();
    void setGroupData(PPGroup& group,tuple<string,vector<string>,YAML::Node,int>& data);
