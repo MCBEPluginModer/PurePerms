@@ -1,7 +1,7 @@
 #include "JsonProvider.h"
 #include <fstream>
 #include <filesystem>
-using fs = std::filesystem;
+namespace fs = std::filesystem;
 
 JsonProvider::JsonProvider(mcpm::PurePerms* _plugin)
 {
