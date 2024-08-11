@@ -19,6 +19,11 @@ class JsonProvider : public ProviderInterface
         std::transform(result.begin(), result.end(), result.begin(), ::tolower);
         return result;
     }
+    bool fileExists(const std::string& filePath) 
+    {
+        struct stat buffer;
+        return (stat(filePath.c_str(), &buffer) == 0);
+    }
 public:
    JsonProvider(mcpm::PurePerms* _plugin);
    YAML::Node getGroupData(PPGroup group);
