@@ -148,6 +148,7 @@ rapidjson::Document JsonProvider::getPlayerConfig(Player* player, bool onUpdate)
     }
 
     return userConfig;
+}
 
 std::tuple<std::string, std::vector<std::string>, YAML::Node, int> JsonProvider::getPlayerData(Player* player) 
 {
