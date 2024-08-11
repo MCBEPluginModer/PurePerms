@@ -18,7 +18,7 @@ public:
     virtual tuple<string,vector<string>,YAML::Node,int> getPlayerData(const Player* player) = 0;
     virtual optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers() = 0;
     virtual void setGroupData(PPGroup& group,tuple<string,vector<string>,YAML::Node,int>& data) = 0;
-    virtual void setGroupsData(const std::vector<std::unordered_map<std::string, std::string>>& tempGroupsData) = 0;
+    virtual void setGroupsData(unordered_map<string,tuple<string,vector<string>,YAML::Node,int>> data) = 0;
     virtual void setPlayerData(const Player* player, const std::unordered_map<std::string, std::string>& tempPlayerData) = 0;
     virtual void close() = 0;
 };
