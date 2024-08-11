@@ -209,3 +209,25 @@ void DefaultProvider::setGroupsData(unordered_map<string,tuple<string,vector<str
    fout << groups;
    fout.close();
 }
+
+void DefaultProvider::setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data)
+{
+  std::string userName = toLower(player->getRealName());
+
+        // Если игрока нет в данных, создаем запись с дефолтными значениями
+        if (!players[userName]) {
+            players[userName]["group"] = plugin->getDefaultGroup();
+            players[userName]["permissions"] = std::vector<std::string>{};
+            players[userName]["worlds"] = YAML::Node(YAML::NodeType::Sequence);
+            players[userName]["time"] = -1;
+        }
+
+        // Обновляем данные игрока
+        players[userName]["group"] = std::get<0>(tempUserData);
+        players[userName]["permissions"] = std::get<1>(tempUserData);
+        players[userName]["worlds"] = std::get<2>(tempUserData);
+        players[userName]["time"] = std::get<3>(tempUserData);
+  ofstream fout("plugins/PuePerms/ranks.yaml");
+  fout << groups;
+  fout.close();
+}
