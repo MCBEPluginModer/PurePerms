@@ -2,6 +2,7 @@
 #include <fstream>
 #include <filesystem>
 namespace fs = std::filesystem;
+#pragma comment(lib, "yaml-cpp.lib")
 
 JsonProvider::JsonProvider(mcpm::PurePerms* _plugin)
 {
