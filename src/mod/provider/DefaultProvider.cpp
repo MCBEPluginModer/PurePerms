@@ -188,7 +188,7 @@ void DefaultProvider::setGroupData(PPGroup& group, tuple<string,vector<string>,Y
         fout.close();
 }
 
-void DefaultProvider::setGroupsData(const std::vector<std::unordered_map<std::string, std::string>>& tempGroupsData)
+void DefaultProvider::setGroupsData(unordered_map<string,tuple<string,vector<string>,YAML::Node,int>> data)
 {
   groups = YAML::Node(YAML::NodeType::Map);
 
