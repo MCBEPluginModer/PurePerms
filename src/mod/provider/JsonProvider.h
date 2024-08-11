@@ -29,7 +29,7 @@ public:
    YAML::Node getGroupData(PPGroup group);
    YAML::Node getGroupsConfig() {return groups;}
    YAML::Node getGroupsData() {return groups;}
-   Json::Value getPlayerConfig(Player* player, bool onUpdate = false)
+   Json::Value getPlayerConfig(Player* player, bool onUpdate = false);
    tuple<string,vector<string>,YAML::Node,int> getPlayerData(Player* player);
    optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers();
    void setGroupData(PPGroup& group,tuple<string,vector<string>,YAML::Node,int>& data);
