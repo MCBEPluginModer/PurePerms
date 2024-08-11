@@ -6,11 +6,13 @@
 #include "../PPGroup.h"
 #include <unordered_map>
 #include <optional>
+#include <json/json.h>
 
 class JsonProvider : public ProviderInterface
 {
    mcpm::PurePerms* plugin;
-   //YAML::Node groups,players;
+   YAML::Node groups;
+   std::string userDataFolder;
    inline std::string toLowerCase(const std::string& str) const 
    {
         std::string result = str;
@@ -20,8 +22,9 @@ class JsonProvider : public ProviderInterface
 public:
    JsonProvider(mcpm::PurePerms* _plugin);
    YAML::Node getGroupData(PPGroup group);
-   //YAML::Node getGroupsConfig() {return groups;}
-   //YAML::Node getGroupsData() {return groups;}
+   YAML::Node getGroupsConfig() {return groups;}
+   YAML::Node getGroupsData() {return groups;}
+   Json::Value getPlayerConfig(Player* player, bool onUpdate = false)
    tuple<string,vector<string>,YAML::Node,int> getPlayerData(Player* player);
    optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers();
    void setGroupData(PPGroup& group,tuple<string,vector<string>,YAML::Node,int>& data);
