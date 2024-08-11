@@ -286,3 +286,31 @@ void JsonProvider::setGroupsData(unordered_map<string,tuple<string,vector<string
    fout.close();
 }
 
+void JsonProvider::setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data)
+{
+  Json::Value userData = getPlayerConfig(player, true);
+
+        if (userData.isNull()) {
+            throw std::runtime_error("Failed to update player data: Invalid data type (null)");
+        }
+
+        // Unpack the tuple data
+        const std::string& group = std::get<0>(data);
+        const std::vector<std::string>& permissions = std::get<1>(data);
+        const Json::Value& worlds = std::get<2>(data);
+        int time = std::get<3>(data);
+
+        // Update the user's data
+        userData["group"] = group;
+        userData["permissions"] = Json::arrayValue;
+        for (const std::string& perm : permissions) {
+            userData["permissions"].append(perm);
+        }
+        userData["worlds"] = worlds;
+        userData["time"] = time;
+
+        // Save the updated configuration back to the file
+        std::string lowerUserName = toLower(player->getName());
+        std::string configFilePath = userDataFolder + lowerUserName + ".json";
+        saveConfig(configFilePath, userData);
+}
