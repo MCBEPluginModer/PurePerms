@@ -147,3 +147,36 @@ Json::Value JsonProvider::getPlayerConfig(Player* player, bool onUpdate)
 
         return userConfig;
 }
+
+std::tuple<std::string, std::vector<std::string>, YAML::Node, int> JsonProvider::getPlayerData(Player* player) 
+{
+        std::string userName = player->getName();
+        std::string lowerUserName = toLower(userName);
+
+        // Путь к файлу с данными игрока
+        std::string configFilePath = "./players/" + lowerUserName + ".yaml";
+
+        YAML::Node userConfig;
+        std::vector<std::string> permissions;
+        int time = -1;
+
+        // Проверяем, существует ли файл конфигурации
+        if (std::filesystem::exists(configFilePath)) {
+            userConfig = YAML::LoadFile(configFilePath);
+            if (userConfig["permissions"]) {
+                permissions = userConfig["permissions"].as<std::vector<std::string>>();
+            }
+            if (userConfig["time"]) {
+                time = userConfig["time"].as<int>();
+            }
+        } else {
+            // Если файл не существует, возвращаем данные по умолчанию
+            userConfig["userName"] = userName;
+            userConfig["group"] = "player";
+            permissions = {};  // Пустой список разрешений
+            time = -1;
+        }
+
+        // Возвращаем данные в виде кортежа
+        return std::make_tuple(userConfig["group"].as<std::string>(), permissions, userConfig, time);
+    }
