@@ -114,3 +114,36 @@ YAML::Node JsonProvider::getGroupData(PPGroup group)
 
   return groupsData[groupName];
 }
+
+Json::Value JsonProvider::getPlayerConfig(Player* player, bool onUpdate)
+{
+    std::string userName = player->getRealName();
+        std::string filePath = userDataFolder + toLowerCase(userName) + ".json";
+        Json::Value userConfig;
+
+        if (onUpdate) {
+            if (!fileExists(filePath)) {
+                userConfig["userName"] = userName;
+                userConfig["group"] = "player";
+                userConfig["permissions"] = Json::Value(Json::arrayValue);
+                userConfig["worlds"] = Json::Value(Json::arrayValue);
+                userConfig["time"] = -1;
+
+                saveConfig(filePath, userConfig);
+            } else {
+                userConfig = loadConfig(filePath);
+            }
+        } else {
+            if (fileExists(filePath)) {
+                userConfig = loadConfig(filePath);
+            } else {
+                userConfig["userName"] = userName;
+                userConfig["group"] = "player";
+                userConfig["permissions"] = Json::Value(Json::arrayValue);
+                userConfig["worlds"] = Json::Value(Json::arrayValue);
+                userConfig["time"] = -1;
+            }
+        }
+
+        return userConfig;
+}
