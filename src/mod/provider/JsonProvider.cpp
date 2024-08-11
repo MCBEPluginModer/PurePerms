@@ -116,7 +116,7 @@ YAML::Node JsonProvider::getGroupData(PPGroup group)
   return groupsData[groupName];
 }
 
-Json::Value JsonProvider::getPlayerConfig(Player* player, bool onUpdate)
+rapidjson::Document JsonProvider::getPlayerConfig(Player* player, bool onUpdate)
 {
     std::string userName = player->getRealName();
     std::string filePath = userDataFolder + toLowerCase(userName) + ".json";
