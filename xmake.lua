@@ -7,6 +7,7 @@ add_repositories("liteldev-repo https://github.com/LiteLDev/xmake-repo.git")
 -- please note that you should add bdslibrary yourself if using dev version
 add_requires("levilamina")
 add_requires("yaml-cpp")
+add_requires("jsoncpp")
 
 if not has_config("vs_runtime") then
     set_runtimes("MD")
@@ -29,7 +30,6 @@ target("PurePerms") -- Change this to your mod name.
     add_includedirs("src")
     add_packages("levilamina")
     add_packages("yaml-cpp")
-    add_requires("jsoncpp")
     add_packages("jsoncpp")
     add_shflags("/DELAYLOAD:bedrock_server.dll") -- To use symbols provided by SymbolProvider.
     set_exceptions("none") -- To avoid conflicts with /EHa.
