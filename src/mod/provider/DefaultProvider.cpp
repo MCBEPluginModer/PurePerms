@@ -166,7 +166,7 @@ optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> Defa
         return users;
 }
 
-void DefaultProvider::setGroupData(const PPGroup& group, const std::unordered_map<std::string, std::string>& tempGroupData)
+void DefaultProvider::setGroupData(PPGroup& group, tuple<string,vector<string>,YAML::Node,int>& tempGroupData)
 {
      std::string groupName = group.getName();
 
@@ -174,9 +174,10 @@ void DefaultProvider::setGroupData(const PPGroup& group, const std::unordered_ma
         YAML::Node groupNode;
 
         // Заполняем узел данными из tempGroupData
-        for (const auto& [key, value] : tempGroupData) {
-            groupNode[key] = value;
-        }
+        groupNode["alias"] = std::get<0>(tempGroupData);
+        groupNode["permissions"] = std::get<1>(tempGroupData);
+        groupNode["worlds"] = std::get<2>(tempGroupData);
+        groupNode["time"] = std::get<3>(tempGroupData);
 
         // Устанавливаем данные для группы в общем YAML узле
         groups[groupName] = groupNode;
