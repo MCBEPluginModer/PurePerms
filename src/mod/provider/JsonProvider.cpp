@@ -310,7 +310,7 @@ void JsonProvider::setPlayerData(Player* player,tuple<string,vector<string>,YAML
         userData["time"] = time;
 
         // Save the updated configuration back to the file
-        std::string lowerUserName = toLower(player->getName());
+        std::string lowerUserName = toLowerCase(player->getName());
         std::string configFilePath = userDataFolder + lowerUserName + ".json";
         saveConfig(configFilePath, userData);
 }
