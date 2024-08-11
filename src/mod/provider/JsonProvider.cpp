@@ -2,7 +2,7 @@
 #include <fstream>
 #include <filesystem>
 namespace fs = std::filesystem;
-#pragma comment(lib, "yaml-cpp.lib")
+#pragma comment(lib, "bedrock_server_api.lib")
 
 JsonProvider::JsonProvider(mcpm::PurePerms* _plugin)
 {
