@@ -286,7 +286,7 @@ void JsonProvider::setGroupsData(unordered_map<string,tuple<string,vector<string
    fout.close();
 }
 
-Json::Value convertYamlToJson(YAML::Node& yamlNode) 
+Json::Value convertYamlToJson(YAML::Node yamlNode) 
 {
     Json::Value jsonValue;
 
