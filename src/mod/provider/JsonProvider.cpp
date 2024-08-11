@@ -241,3 +241,48 @@ optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> Json
             return std::nullopt;
         }
 }
+
+void JsonProvider::setGroupData(PPGroup& group, tuple<string,vector<string>,YAML::Node,int>& tempGroupData)
+{
+     std::string groupName = group.getName();
+
+        // Создаем узел для группы
+        YAML::Node groupNode;
+
+        // Заполняем узел данными из tempGroupData
+        groupNode["alias"] = std::get<0>(tempGroupData);
+        groupNode["permissions"] = std::get<1>(tempGroupData);
+        groupNode["worlds"] = std::get<2>(tempGroupData);
+        groupNode["time"] = std::get<3>(tempGroupData);
+
+        // Устанавливаем данные для группы в общем YAML узле
+        groups[groupName] = groupNode;
+
+        // Сохраняем изменения в файл
+        ofstream fout("plugins/PuePerms/ranks.yaml");
+        fout << groups;
+        fout.close();
+}
+
+void JsonProvider::setGroupsData(unordered_map<string,tuple<string,vector<string>,YAML::Node,int>> data)
+{
+  groups = YAML::Node(YAML::NodeType::Map);
+
+        // Проходим по каждому элементу в unordered_map
+        for (const auto& [groupName, groupData] : data) {
+            YAML::Node groupNode;
+
+            // Заполняем узел группы данными из tuple
+            groupNode["alias"] = std::get<0>(groupData);
+            groupNode["permissions"] = std::get<1>(groupData);
+            groupNode["worlds"] = std::get<2>(groupData);
+            groupNode["time"] = std::get<3>(groupData);
+
+            // Добавляем узел группы в общий узел groups
+            groups[groupName] = groupNode;
+        }
+   ofstream fout("plugins/PuePerms/ranks.yaml");
+   fout << groups;
+   fout.close();
+}
+
