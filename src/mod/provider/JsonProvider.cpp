@@ -150,25 +150,36 @@ Json::Value JsonProvider::getPlayerConfig(Player* player, bool onUpdate)
 
 std::tuple<std::string, std::vector<std::string>, YAML::Node, int> JsonProvider::getPlayerData(Player* player) 
 {
-        std::string userName = player->getName();
-        std::string lowerUserName = toLower(userName);
+        std::string userName = player->getRealName();
+        std::string lowerUserName = toLowerCase(userName);
 
-        // Путь к файлу с данными игрока
-        std::string configFilePath = "./players/" + lowerUserName + ".yaml";
-
+        // Путь к JSON файлу с данными игрока
+        std::string jsonFilePath = "plugins/PurePerms/players/" + lowerUserName + ".json";
         YAML::Node userConfig;
         std::vector<std::string> permissions;
         int time = -1;
 
-        // Проверяем, существует ли файл конфигурации
-        if (std::filesystem::exists(configFilePath)) {
-            userConfig = YAML::LoadFile(configFilePath);
-            if (userConfig["permissions"]) {
-                permissions = userConfig["permissions"].as<std::vector<std::string>>();
+        // Проверяем, существует ли JSON файл конфигурации
+        if (std::filesystem::exists(jsonFilePath)) {
+            // Считываем данные из JSON файла
+            Json::Value jsonData;
+            std::ifstream configFile(jsonFilePath, std::ifstream::binary);
+            configFile >> jsonData;
+
+            // Преобразуем JSON данные в YAML::Node
+            if (jsonData.isMember("permissions")) {
+                for (const auto& perm : jsonData["permissions"]) {
+                    permissions.push_back(perm.asString());
+                }
             }
-            if (userConfig["time"]) {
-                time = userConfig["time"].as<int>();
+            if (jsonData.isMember("time")) {
+                time = jsonData["time"].asInt();
             }
+
+            userConfig["userName"] = jsonData["userName"].asString();
+            userConfig["group"] = jsonData["group"].asString();
+            userConfig["permissions"] = permissions;
+            userConfig["time"] = time;
         } else {
             // Если файл не существует, возвращаем данные по умолчанию
             userConfig["userName"] = userName;
