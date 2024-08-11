@@ -119,128 +119,109 @@ YAML::Node JsonProvider::getGroupData(PPGroup group)
 Json::Value JsonProvider::getPlayerConfig(Player* player, bool onUpdate)
 {
     std::string userName = player->getRealName();
-        std::string filePath = userDataFolder + toLowerCase(userName) + ".json";
-        Json::Value userConfig;
+    std::string filePath = userDataFolder + toLowerCase(userName) + ".json";
+    rapidjson::Document userConfig;
+    userConfig.SetObject();
 
-        if (onUpdate) {
-            if (!fileExists(filePath)) {
-                userConfig["userName"] = userName;
-                userConfig["group"] = "player";
-                userConfig["permissions"] = Json::Value(Json::arrayValue);
-                userConfig["worlds"] = Json::Value(Json::arrayValue);
-                userConfig["time"] = -1;
+    if (onUpdate) {
+        if (!fileExists(filePath)) {
+            userConfig.AddMember("userName", rapidjson::Value(userName.c_str(), userConfig.GetAllocator()), userConfig.GetAllocator());
+            userConfig.AddMember("group", "player", userConfig.GetAllocator());
+            userConfig.AddMember("permissions", rapidjson::kArrayType, userConfig.GetAllocator());
+            userConfig.AddMember("worlds", rapidjson::kArrayType, userConfig.GetAllocator());
+            userConfig.AddMember("time", -1, userConfig.GetAllocator());
 
-                saveConfig(filePath, userConfig);
-            } else {
-                userConfig = loadConfig(filePath);
-            }
+            saveConfig(filePath, userConfig);
         } else {
-            if (fileExists(filePath)) {
-                userConfig = loadConfig(filePath);
-            } else {
-                userConfig["userName"] = userName;
-                userConfig["group"] = "player";
-                userConfig["permissions"] = Json::Value(Json::arrayValue);
-                userConfig["worlds"] = Json::Value(Json::arrayValue);
-                userConfig["time"] = -1;
-            }
+            userConfig = loadConfig(filePath);
         }
+    } else {
+        if (fileExists(filePath)) {
+            userConfig = loadConfig(filePath);
+        } else {
+            userConfig.AddMember("userName", rapidjson::Value(userName.c_str(), userConfig.GetAllocator()), userConfig.GetAllocator());
+            userConfig.AddMember("group", "player", userConfig.GetAllocator());
+            userConfig.AddMember("permissions", rapidjson::kArrayType, userConfig.GetAllocator());
+            userConfig.AddMember("worlds", rapidjson::kArrayType, userConfig.GetAllocator());
+            userConfig.AddMember("time", -1, userConfig.GetAllocator());
+        }
+    }
 
-        return userConfig;
-}
+    return userConfig;
 
 std::tuple<std::string, std::vector<std::string>, YAML::Node, int> JsonProvider::getPlayerData(Player* player) 
 {
-        std::string userName = player->getRealName();
-        std::string lowerUserName = toLowerCase(userName);
+      std::string userName = player->getRealName();
+    std::string lowerUserName = toLowerCase(userName);
 
-        // Путь к JSON файлу с данными игрока
-        std::string jsonFilePath = "plugins/PurePerms/players/" + lowerUserName + ".json";
-        YAML::Node userConfig;
-        std::vector<std::string> permissions;
-        int time = -1;
+    std::string jsonFilePath = "plugins/PurePerms/players/" + lowerUserName + ".json";
+    YAML::Node userConfig;
+    std::vector<std::string> permissions;
+    int time = -1;
 
-        // Проверяем, существует ли JSON файл конфигурации
-        if (std::filesystem::exists(jsonFilePath)) {
-            // Считываем данные из JSON файла
-            Json::Value jsonData;
-            std::ifstream configFile(jsonFilePath, std::ifstream::binary);
-            configFile >> jsonData;
+    if (std::filesystem::exists(jsonFilePath)) {
+        rapidjson::Document jsonData = loadConfig(jsonFilePath);
 
-            // Преобразуем JSON данные в YAML::Node
-            if (jsonData.isMember("permissions")) {
-                for (const auto& perm : jsonData["permissions"]) {
-                    permissions.push_back(perm.asString());
-                }
+        if (jsonData.HasMember("permissions") && jsonData["permissions"].IsArray()) {
+            for (const auto& perm : jsonData["permissions"].GetArray()) {
+                permissions.push_back(perm.GetString());
             }
-            if (jsonData.isMember("time")) {
-                time = jsonData["time"].asInt();
-            }
-
-            userConfig["userName"] = jsonData["userName"].asString();
-            userConfig["group"] = jsonData["group"].asString();
-            userConfig["permissions"] = permissions;
-            userConfig["time"] = time;
-        } else {
-            // Если файл не существует, возвращаем данные по умолчанию
-            userConfig["userName"] = userName;
-            userConfig["group"] = "player";
-            permissions = {};  // Пустой список разрешений
-            time = -1;
+        }
+        if (jsonData.HasMember("time")) {
+            time = jsonData["time"].GetInt();
         }
 
-        // Возвращаем данные в виде кортежа
-        return std::make_tuple(userConfig["group"].as<std::string>(), permissions, userConfig, time);
+        userConfig["userName"] = jsonData["userName"].GetString();
+        userConfig["group"] = jsonData["group"].GetString();
+        userConfig["permissions"] = permissions;
+        userConfig["time"] = time;
+    } else {
+        userConfig["userName"] = userName;
+        userConfig["group"] = "player";
+        permissions = {};
+        time = -1;
+    }
+
+    return std::make_tuple(userConfig["group"].as<std::string>(), permissions, userConfig, time);
 }
 
 optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> JsonProvider::getUsers()
 {
   std::unordered_map<std::string, std::tuple<std::string, std::vector<std::string>, YAML::Node, int>> users;
 
-        // Путь к директории с файлами игроков
-        std::string playersDir = "plugins/PurePerms/players/";
+    std::string playersDir = "plugins/PurePerms/players/";
 
-        // Проверка на существование директории
-        if (!std::filesystem::exists(playersDir)) {
-            return std::nullopt;
-        }
+    if (!std::filesystem::exists(playersDir)) {
+        return std::nullopt;
+    }
 
-        // Итерация по всем файлам в директории
-        for (const auto& entry : std::filesystem::directory_iterator(playersDir)) {
-            if (entry.is_regular_file() && entry.path().extension() == ".json") {
-                // Получаем имя файла (никнейм игрока)
-                std::string fileName = entry.path().filename().stem().string();
+    for (const auto& entry : std::filesystem::directory_iterator(playersDir)) {
+        if (entry.is_regular_file() && entry.path().extension() == ".json") {
+            std::string fileName = entry.path().filename().stem().string();
 
-                // Загружаем данные из JSON файла
-                Json::Value jsonData;
-                std::ifstream configFile(entry.path(), std::ifstream::binary);
-                configFile >> jsonData;
+            rapidjson::Document jsonData = loadConfig(entry.path().string());
 
-                // Извлекаем необходимые данные
-                std::string group = jsonData["group"].asString();
-                std::vector<std::string> permissions;
-                for (const auto& perm : jsonData["permissions"]) {
-                    permissions.push_back(perm.asString());
-                }
-                int time = jsonData["time"].asInt();
-
-                // Конвертация данных из JSON в YAML::Node
-                YAML::Node yamlData;
-                for (const auto& key : jsonData.getMemberNames()) {
-                    yamlData[key] = jsonData[key].asString();  // Конвертируем в строковый формат
-                }
-
-                // Добавляем данные в карту
-                users[fileName] = std::make_tuple(group, permissions, yamlData, time);
+            std::string group = jsonData["group"].GetString();
+            std::vector<std::string> permissions;
+            for (const auto& perm : jsonData["permissions"].GetArray()) {
+                permissions.push_back(perm.GetString());
             }
-        }
+            int time = jsonData["time"].GetInt();
 
-        // Проверка, если карта users не пуста, вернуть её, иначе вернуть std::nullopt
-        if (!users.empty()) {
-            return users;
-        } else {
-            return std::nullopt;
+            YAML::Node yamlData;
+            for (auto& m : jsonData.GetObject()) {
+                yamlData[m.name.GetString()] = m.value.GetString();
+            }
+
+            users[fileName] = std::make_tuple(group, permissions, yamlData, time);
         }
+    }
+
+    if (!users.empty()) {
+        return users;
+    } else {
+        return std::nullopt;
+    }
 }
 
 void JsonProvider::setGroupData(PPGroup& group, tuple<string,vector<string>,YAML::Node,int>& tempGroupData)
@@ -287,50 +268,63 @@ void JsonProvider::setGroupsData(unordered_map<string,tuple<string,vector<string
    fout.close();
 }
 
-Json::Value convertYamlToJson(YAML::Node yamlNode) 
-{
-    Json::Value jsonValue;
+rapidjson::Value JsonProvider::convertYamlToJson(const YAML::Node& yamlNode, rapidjson::Document::AllocatorType& allocator) {
+    rapidjson::Value jsonValue;
 
     if (yamlNode.IsScalar()) {
-        jsonValue = yamlNode.as<std::string>();
+        jsonValue.SetString(yamlNode.Scalar().c_str(), allocator);
     } else if (yamlNode.IsSequence()) {
-        for (std::size_t i = 0; i < yamlNode.size(); ++i) {
-            jsonValue.append(convertYamlToJson(yamlNode[i]));
+        jsonValue.SetArray();
+        for (const auto& element : yamlNode) {
+            jsonValue.PushBack(convertYamlToJson(element, allocator), allocator);
         }
     } else if (yamlNode.IsMap()) {
-        for (YAML::const_iterator it = yamlNode.begin(); it != yamlNode.end(); ++it) {
-            jsonValue[it->first.as<std::string>()] = convertYamlToJson(it->second);
+        jsonValue.SetObject();
+        for (const auto& element : yamlNode) {
+            rapidjson::Value key(element.first.as<std::string>().c_str(), allocator);
+            jsonValue.AddMember(key, convertYamlToJson(element.second, allocator), allocator);
         }
     }
 
     return jsonValue;
 }
 
+void JsonProvider::saveConfig(const std::string& filePath, const rapidjson::Document& config) {
+    std::ofstream ofs(filePath);
+    rapidjson::OStreamWrapper osw(ofs);
+    rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+    config.Accept(writer);
+}
+
+// Method to load JSON configuration
+rapidjson::Document JsonProvider::loadConfig(const std::string& filePath) {
+    std::ifstream ifs(filePath);
+    rapidjson::IStreamWrapper isw(ifs);
+    rapidjson::Document config;
+    config.ParseStream(isw);
+    return config;
+}
+
 void JsonProvider::setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data)
 {
-   Json::Value userData = getPlayerConfig(player, true);
+  std::string userName = player->getRealName();
+    std::string filePath = userDataFolder + toLowerCase(userName) + ".json";
 
-    if (userData.isNull()) {
-        throw std::runtime_error("Failed to update player data: Invalid data type (null)");
+    rapidjson::Document userConfig;
+    userConfig.SetObject();
+    rapidjson::Document::AllocatorType& allocator = userConfig.GetAllocator();
+
+    userConfig.AddMember("userName", rapidjson::Value(userName.c_str(), allocator), allocator);
+    userConfig.AddMember("group", rapidjson::Value(std::get<0>(data).c_str(), allocator), allocator);
+
+    rapidjson::Value permissions(rapidjson::kArrayType);
+    for (const auto& perm : std::get<1>(data)) {
+        permissions.PushBack(rapidjson::Value(perm.c_str(), allocator), allocator);
     }
+    userConfig.AddMember("permissions", permissions, allocator);
 
-    // Unpack the tuple data
-    const std::string& group = std::get<0>(data);
-    const std::vector<std::string>& permissions = std::get<1>(data);
-   // const Json::Value& worlds = std::get<2>(data);  // This is now a Json::Value
-    int time = std::get<3>(data);
+    userConfig.AddMember("worlds", convertYamlToJson(std::get<2>(data), allocator), allocator);
+    userConfig.AddMember("time", std::get<3>(data), allocator);
 
-    // Update the user's data in the JSON object
-    userData["group"] = group;
-    userData["permissions"] = Json::arrayValue;
-    for (const std::string& perm : permissions) {
-        userData["permissions"].append(perm);
-    }
-    userData["worlds"] = convertYamlToJson(std::get<2>(data));  // Ensure that 'worlds' is correctly structured as a Json::Value
-    userData["time"] = time;
-
-    // Save the updated configuration back to the file
-    std::string lowerUserName = toLowerCase(player->getRealName());
-    std::string configFilePath = userDataFolder + lowerUserName + ".json";
-    saveConfig(configFilePath, userData);
+    saveConfig(filePath, userConfig);
 }
