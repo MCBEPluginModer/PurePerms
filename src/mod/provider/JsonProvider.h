@@ -24,6 +24,22 @@ class JsonProvider : public ProviderInterface
         struct stat buffer;
         return (stat(filePath.c_str(), &buffer) == 0);
     }
+    Json::Value loadConfig(const std::string& filePath) {
+        Json::Value config;
+        std::ifstream file(filePath, std::ifstream::binary);
+        if (file) {
+            file >> config;
+        }
+        return config;
+    }
+
+    void saveConfig(const std::string& filePath, const Json::Value& config) {
+        std::ofstream file(filePath, std::ofstream::binary);
+        if (file) {
+            Json::StreamWriterBuilder writer;
+            file << Json::writeString(writer, config);
+        }
+    }
 public:
    JsonProvider(mcpm::PurePerms* _plugin);
    YAML::Node getGroupData(PPGroup group);
