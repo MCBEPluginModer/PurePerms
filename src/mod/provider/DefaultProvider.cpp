@@ -138,7 +138,7 @@ tuple<string,vector<string>,YAML::Node,int> DefaultProvider::getPlayerData(Playe
         return t;
 }
 
-optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers()
+optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> DefaultProvider::getUsers()
 {
  unordered_map<string, tuple<string, vector<string>, YAML::Node, int>> users;
 
