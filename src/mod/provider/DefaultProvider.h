@@ -24,7 +24,7 @@ public:
    YAML::Node getGroupsData() {return groups;}
    tuple<string,vector<string>,YAML::Node,int> getPlayerData(Player* player);
    optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers();
-   void setGroupData(PPGroup group,tuple<string,vector<string>,YAML::Node,int> data);
+   void setGroupData(PPGroup& group,tuple<string,vector<string>,YAML::Node,int>& data);
    void setGroupsData(unordered_map<string,tuple<string,vector<string>,YAML::Node,int>> data);
    void setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data);
    void close() {}
