@@ -101,3 +101,16 @@ JsonProvider::JsonProvider(mcpm::PurePerms* _plugin)
     }
   }
 }
+
+YAML::Node JsonProvider::getGroupData(PPGroup group)
+{
+  std::string groupName = group.getName();
+  YAML::Node groupsData = getGroupsData();
+
+        // Проверка наличия данных для группы
+  if (!groupsData[groupName] || !groupsData[groupName].IsMap()) {
+      return YAML::Node(YAML::NodeType::Undefined); // Возвращаем неопределенный узел
+  }
+
+  return groupsData[groupName];
+}
