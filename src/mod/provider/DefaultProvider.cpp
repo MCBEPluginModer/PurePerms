@@ -165,3 +165,24 @@ optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> Defa
 
         return users;
 }
+
+void DefaultProvider::setGroupData(const PPGroup& group, const std::unordered_map<std::string, std::string>& tempGroupData)
+{
+     std::string groupName = group.getName();
+
+        // Создаем узел для группы
+        YAML::Node groupNode;
+
+        // Заполняем узел данными из tempGroupData
+        for (const auto& [key, value] : tempGroupData) {
+            groupNode[key] = value;
+        }
+
+        // Устанавливаем данные для группы в общем YAML узле
+        groups[groupName] = groupNode;
+
+        // Сохраняем изменения в файл
+        ofstream fout("plugins/PuePerms/ranks.yaml");
+        fout << groups;
+        fout.close();
+}
