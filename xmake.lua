@@ -8,6 +8,7 @@ add_repositories("liteldev-repo https://github.com/LiteLDev/xmake-repo.git")
 add_requires("levilamina")
 add_requires("yaml-cpp")
 add_requires("rapidjson")
+add_requires("sqlitecpp", {configs = {sqlite3 = true}})
 
 if not has_config("vs_runtime") then
     set_runtimes("MD")
@@ -31,6 +32,7 @@ target("PurePerms") -- Change this to your mod name.
     add_packages("levilamina")
     add_packages("yaml-cpp")
     add_packages("rapidjson")
+    add_packages("sqlitecpp")
     add_shflags("/DELAYLOAD:bedrock_server.dll") -- To use symbols provided by SymbolProvider.
     set_exceptions("none") -- To avoid conflicts with /EHa.
     set_kind("shared")
