@@ -29,6 +29,8 @@ target("PurePerms") -- Change this to your mod name.
     add_includedirs("src")
     add_packages("levilamina")
     add_packages("yaml-cpp")
+    add_requires("jsoncpp")
+    add_packages("jsoncpp")
     add_shflags("/DELAYLOAD:bedrock_server.dll") -- To use symbols provided by SymbolProvider.
     set_exceptions("none") -- To avoid conflicts with /EHa.
     set_kind("shared")
