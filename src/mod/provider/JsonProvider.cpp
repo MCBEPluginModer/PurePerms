@@ -286,6 +286,25 @@ void JsonProvider::setGroupsData(unordered_map<string,tuple<string,vector<string
    fout.close();
 }
 
+Json::Value convertYamlToJson(const YAML::Node& yamlNode) 
+{
+    Json::Value jsonValue;
+
+    if (yamlNode.IsScalar()) {
+        jsonValue = yamlNode.as<std::string>();
+    } else if (yamlNode.IsSequence()) {
+        for (std::size_t i = 0; i < yamlNode.size(); ++i) {
+            jsonValue.append(convertYamlToJson(yamlNode[i]));
+        }
+    } else if (yamlNode.IsMap()) {
+        for (YAML::const_iterator it = yamlNode.begin(); it != yamlNode.end(); ++it) {
+            jsonValue[it->first.as<std::string>()] = convertYamlToJson(it->second);
+        }
+    }
+
+    return jsonValue;
+}
+
 void JsonProvider::setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data)
 {
    Json::Value userData = getPlayerConfig(player, true);
@@ -306,7 +325,7 @@ void JsonProvider::setPlayerData(Player* player,tuple<string,vector<string>,YAML
     for (const std::string& perm : permissions) {
         userData["permissions"].append(perm);
     }
-    userData["worlds"] = worlds;  // Ensure that 'worlds' is correctly structured as a Json::Value
+    userData["worlds"] = convertYamlToJson(worlds);  // Ensure that 'worlds' is correctly structured as a Json::Value
     userData["time"] = time;
 
     // Save the updated configuration back to the file
