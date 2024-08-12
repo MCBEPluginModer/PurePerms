@@ -11,7 +11,7 @@ class PPRankExpiredEvent final : public Event {
     Level& mLevel;
     Player& mPlayer;
 public:
-    constexpr explicit ServerStoppingEvent(Level& level,Player& player) : mLevel(level),mPlayer(player) {}
+    constexpr explicit PPRankExpiredEvent(Level& level,Player& player) : mLevel(level),mPlayer(player) {}
 
     LLAPI void serialize(CompoundTag&) const override;
 
