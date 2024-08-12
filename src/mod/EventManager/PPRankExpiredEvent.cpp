@@ -11,6 +11,14 @@ void PPRankExpiredEvent::serialize(CompoundTag& nbt) const {
     nbt["player"] = (uintptr_t)&player();
 }
 
+Level& PPRankExpiredEvent::level() const {
+    return mLevel;
+}
+
+Player& PPRankExpiredEvent::player() const {
+    return mPlayer;
+}
+
 static std::unique_ptr<EmitterBase> emitterFactory(ListenerBase&);
 class PPRankExpiredEventEmitter : public Emitter<emitterFactory, PPRankExpiredEvent> 
 {
