@@ -4,6 +4,7 @@
 
 #include <mc/world/actor/player/Player.h>
 #include <mc/world/level/Level.h>
+#include <iostream>
 
 namespace ll::event::inline pp {
 class PPRankExpiredEvent final : public Event {
