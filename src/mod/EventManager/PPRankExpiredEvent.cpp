@@ -3,6 +3,7 @@
 
 #include <mc/nbt/CompoundTag.h>
 #include <iostream>
+#include <io.h>
 
 namespace ll::event::inline pp {
 
@@ -23,7 +24,7 @@ Player& PPRankExpiredEvent::player() const {
 static std::unique_ptr<EmitterBase> emitterFactory(ListenerBase&);
 class PPRankExpiredEventEmitter : public Emitter<emitterFactory, PPRankExpiredEvent> 
 {
-   std::cout << "Emit PPRankExpiredEvent\n";
+   printf("test\n");
 };
 
 static std::unique_ptr<EmitterBase> emitterFactory(ListenerBase&) {
