@@ -2,6 +2,7 @@
 #include <ll/api/event/Emitter.h>
 
 #include <mc/nbt/CompoundTag.h>
+#include <iostream>
 
 namespace ll::event::inline pp {
 
