@@ -21,7 +21,7 @@ Player& PPRankExpiredEvent::player() const {
     return mPlayer;
 }
 
-static std::unique_ptr<EmitterBase> emitterFactory(ListenerBase&);
+/*static std::unique_ptr<EmitterBase> emitterFactory(ListenerBase&);
 class PPRankExpiredEventEmitter : public Emitter<emitterFactory, PPRankExpiredEvent> 
 {
    ll::Logger logg("PurePerms");
@@ -30,7 +30,7 @@ class PPRankExpiredEventEmitter : public Emitter<emitterFactory, PPRankExpiredEv
 
 static std::unique_ptr<EmitterBase> emitterFactory(ListenerBase&) {
     return std::make_unique<PPRankExpiredEventEmitter>();
-}
+}*/
 }
 /*LL_TYPE_INSTANCE_HOOK(
     ServerStoppingEventHook,
