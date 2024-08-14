@@ -7,6 +7,14 @@
 
 namespace ll::event::inline pp {
 
+class PPRankExpiredEventEmitter : public Emitter<emitterFactory, PPRankExpiredEvent> {
+public:
+    PPRankExpiredEventEmitter(ListenerBase& listener) : Emitter(listener) {
+        ll::Logger logg("PurePerms");
+        logg.info("Emit!");
+    }
+};
+
 void PPRankExpiredEvent::serialize(CompoundTag& nbt) const {
     Event::serialize(nbt);
     nbt["world"] = (uintptr_t)&level();
@@ -21,18 +29,10 @@ Player& PPRankExpiredEvent::player() const {
     return mPlayer;
 }
 
-// Переименованная и исправленная функция. Переход от статической функции к правильному определению
+// Исправленная функция emitterFactory
 std::unique_ptr<EmitterBase> emitterFactory(ListenerBase& listener) {
     return std::make_unique<PPRankExpiredEventEmitter>(listener);
 }
-
-class PPRankExpiredEventEmitter : public Emitter<emitterFactory, PPRankExpiredEvent> {
-public:
-    PPRankExpiredEventEmitter(ListenerBase& listener) : Emitter(listener) {
-        ll::Logger logg("PurePerms");
-        logg.info("Emit!");
-    }
-};
 
 // Пример корректного использования
 std::unique_ptr<EmitterBase> createEmitter(ListenerBase& listener) {
