@@ -28,20 +28,6 @@ Level& PPRankExpiredEvent::level() const {
 Player& PPRankExpiredEvent::player() const {
     return mPlayer;
 }
-
-// Исправленная функция emitterFactory
-std::unique_ptr<EmitterBase> emitterFactory(ListenerBase& listener) {
-    return std::make_unique<PPRankExpiredEventEmitter>(listener);
-}
-
-// Пример корректного использования
-std::unique_ptr<EmitterBase> createEmitter(ListenerBase& listener) {
-    return std::make_unique<PPRankExpiredEventEmitter>(listener);
-}
-
-/*static std::unique_ptr<EmitterBase> emitterFactory(ListenerBase&) {
-    return std::make_unique<PPRankExpiredEventEmitter>();
-}*/
 }
 /*LL_TYPE_INSTANCE_HOOK(
     ServerStoppingEventHook,
