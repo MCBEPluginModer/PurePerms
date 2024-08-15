@@ -20,7 +20,8 @@
 #endif
 
 namespace ll::event::inline pp {
-class PPRankExpiredEvent final : public Cancellable< {
+class PPRankExpiredEvent final : public Cancellable<Event>
+{
     Level& mLevel;
     Player& mPlayer;
 public:
