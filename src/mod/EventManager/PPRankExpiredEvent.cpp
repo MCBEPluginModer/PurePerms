@@ -6,15 +6,6 @@
 #include <ll/api/Logger.h>
 
 namespace ll::event::inline pp {
-
-class PPRankExpiredEventEmitter : public Emitter<emitterFactory, PPRankExpiredEvent> {
-public:
-    PPRankExpiredEventEmitter(ListenerBase& listener) : Emitter(listener) {
-        ll::Logger logg("PurePerms");
-        logg.info("Emit!");
-    }
-};
-
 void PPRankExpiredEvent::serialize(CompoundTag& nbt) const {
     Event::serialize(nbt);
     nbt["world"] = (uintptr_t)&level();
