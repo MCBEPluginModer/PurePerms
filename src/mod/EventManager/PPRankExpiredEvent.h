@@ -20,13 +20,14 @@
 #endif
 
 namespace ll::event::inline pp {
-class PPRankExpiredEvent final : public Event {
+class PPRankExpiredEvent final : public Cancellable< {
     Level& mLevel;
     Player& mPlayer;
 public:
     constexpr explicit PPRankExpiredEvent(Level& level,Player& player) : mLevel(level),mPlayer(player) {}
 
     LLAPI void serialize(CompoundTag&) const override;
+    LLAPI void deserialize(CompoundTag const&) override;
 
     LLNDAPI Level& level() const;
     LLNDAPI Player& player() const;
