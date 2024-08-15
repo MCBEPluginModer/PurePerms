@@ -25,7 +25,7 @@ class PPRankExpiredEvent final : public Cancellable<Event>
     Level& mLevel;
     Player& mPlayer;
 public:
-    constexpr explicit PPRankExpiredEvent(Level& level,Player& player) : mLevel(level),mPlayer(player) {}
+    constexpr explicit PPRankExpiredEvent(Level& level,Player& player) : mLevel(level),mPlayer(player),Cancellable(player) {}
 
     LLAPI void serialize(CompoundTag&) const override;
     LLAPI void deserialize(CompoundTag const&) override;
