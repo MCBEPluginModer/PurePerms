@@ -12,6 +12,12 @@ void PPRankExpiredEvent::serialize(CompoundTag& nbt) const {
     nbt["player"] = (uintptr_t)&player();
 }
 
+void PPRankExpiredEvent::deserialize(CompoundTag const& nbt) {
+    Cancellable::deserialize(nbt);
+    level() = nbt["level"];
+    player() = nbt["player"];
+}
+
 Level& PPRankExpiredEvent::level() const {
     return mLevel;
 }
