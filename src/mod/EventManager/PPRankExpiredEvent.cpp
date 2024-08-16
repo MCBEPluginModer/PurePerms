@@ -5,7 +5,7 @@
 #include <iostream>
 #include <ll/api/Logger.h>
 
-namespace ll::event::inline pp {
+namespace pp {
 void PPRankExpiredEvent::serialize(CompoundTag& nbt) const {
     Event::serialize(nbt);
     nbt["world"] = (uintptr_t)&level();
