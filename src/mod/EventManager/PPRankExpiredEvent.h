@@ -19,7 +19,7 @@
 #   define LLNDAPI
 #endif*/
 
-namespace ll::event::inline pp {
+namespace pp {
 class PPRankExpiredEvent final : public Cancellable<Event>
 {
     Level& mLevel;
