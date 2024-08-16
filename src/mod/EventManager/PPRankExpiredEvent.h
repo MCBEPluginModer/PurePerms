@@ -6,7 +6,7 @@
 #include <mc/world/level/Level.h>
 #include <iostream>
 
-#ifdef _WIN32
+/*#ifdef _WIN32
 #   ifdef BUILDING_DLL
 #       define LLAPI __declspec(dllexport)
 #       define LLNDAPI __declspec(dllexport)
@@ -17,7 +17,7 @@
 #else
 #   define LLAPI
 #   define LLNDAPI
-#endif
+#endif*/
 
 namespace ll::event::inline pp {
 class PPRankExpiredEvent final : public Cancellable<Event>
