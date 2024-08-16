@@ -7,13 +7,13 @@
 
 namespace pp {
 void PPRankExpiredEvent::serialize(CompoundTag& nbt) const {
-    Event::serialize(nbt);
+    ll::event::Event::serialize(nbt);
     nbt["world"] = (uintptr_t)&level();
     nbt["player"] = (uintptr_t)&player();
 }
 
 void PPRankExpiredEvent::deserialize(CompoundTag const& nbt) {
-    Cancellable::deserialize(nbt);
+    ll::event::Cancellable::deserialize(nbt);
     level() = nbt["level"];
     player() = nbt["player"];
 }
