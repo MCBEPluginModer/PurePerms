@@ -19,5 +19,8 @@ public:
     void removeNode(Player* player,string node);
     void setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data);
     void setGroup(Player* player,PPGroup group,string levelname,int time = -1);
-    
+    void setNode(Player* player,string node,std::variant<bool,int,float,double,string> value);
+    void setPermission(Player* player,string permission,string levelName = "");
+    void setWorldData(Player* player,string levelName,tuple<bool,vector<string>> worldData);
+    void unsetPermission(Player* player,string permission,string levelName = "");
 };
