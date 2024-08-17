@@ -6,6 +6,13 @@
 #include <ll/api/Logger.h>
 
 namespace pp {
+Level& PPRankExpiredEvent::level() const {
+    return mLevel;
+}
+
+Player& PPRankExpiredEvent::player() const {
+    return mPlayer;
+}
 void PPRankExpiredEvent::serialize(CompoundTag& nbt) const {
     ll::event::Cancellable<RankEvent>::serialize(nbt); 
     nbt["world"] = (uintptr_t)&level();
@@ -19,13 +26,7 @@ void PPRankExpiredEvent::deserialize(CompoundTag const& nbt) {
     player() = *reinterpret_cast<Player*>(nbt["player"].getInt64());
 }
 
-Level& RankEvent::level() const {
-    return mLevel;
-}
 
-Player& RankEvent::player() const {
-    return mPlayer;
-}
 }
 /*LL_TYPE_INSTANCE_HOOK(
     ServerStoppingEventHook,
