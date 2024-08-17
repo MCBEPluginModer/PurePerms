@@ -30,8 +30,6 @@ public:
     constexpr explicit PPRankExpiredEvent(Level& level,Player& player) : mLevel(level),mPlayer(player), Cancellable() {}
     LLNDAPI Level& level() const;
     LLNDAPI Player& player() const;
-    LLAPI void serialize(CompoundTag&) const override;
-    LLAPI void deserialize(CompoundTag const&) override;
 
 };
 } // namespace ll::event::inline pp
