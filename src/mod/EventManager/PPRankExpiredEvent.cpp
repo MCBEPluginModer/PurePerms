@@ -15,8 +15,8 @@ Player* PPRankExpiredEvent::player() const {
 }
 void PPRankExpiredEvent::serialize(CompoundTag& nbt) const {
     ll::event::Cancellable<ll::event::Event>::serialize(nbt); 
-    nbt["world"] = (uintptr_t)level();
-    nbt["player"] = (uintptr_t)player();
+    nbt["world"] = (uintptr_t)&level();
+    nbt["player"] = (uintptr_t)&player();
 }
 
 void PPRankExpiredEvent::deserialize(CompoundTag const& nbt) {
