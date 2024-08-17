@@ -116,6 +116,7 @@ optional<YAML::Node> UserDataManager::getWorldData(Player* player,string levelna
             // Если данных для данного мира нет, возвращаем стандартные значения
             YAML::Node defaultData;
            // defaultData["group"] = this->plugin->getDefaultGroup(levelname)->getName();
+            defaultData["group"] ="player";
             defaultData["permissions"] = YAML::Node(YAML::NodeType::Sequence);  // Пустой список разрешений
             defaultData["expTime"] = -1;
             return defaultData;
