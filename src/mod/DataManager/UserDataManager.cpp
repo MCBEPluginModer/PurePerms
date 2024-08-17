@@ -25,12 +25,12 @@ std::optional<int> UserDataManager::getExpDate(Player* player,string levelname)
    return expDate;
 }
 
-optional<PPGroup> UserDataManager::getGroup(Player* player,string levelname = "")
+optional<PPGroup> UserDataManager::getGroup(Player* player,string levelname)
 {
   std::optional<std::string> groupName;
 
         if (!levelName.empty()) {
-            auto worldData = getWorldData(player, levelName);
+            auto worldData = getWorldData(player, levelname);
             if (worldData.has_value()) {
                 groupName = worldData.value()["group"].as<std::string>();
             }
@@ -55,5 +55,50 @@ optional<PPGroup> UserDataManager::getGroup(Player* player,string levelname = ""
         }
 
         return group;*/
+       return nullopt;
 }
 
+optional<YAML::Node> UserDataManager::getNode(Player* player,string node)
+{
+  // Получаем данные пользователя (например, из файла или базы данных)
+        YAML::Node userData = getData(player);
+        
+        // Проверяем наличие узла
+        if (userData[node]) 
+        {
+            return userData[node];
+        }
+        
+        // Если узел не найден, возвращаем std::nullopt
+        return std::nullopt;
+}
+
+vector<string> UserDataManager::getUserPermissions(Player* player,string levelname)
+{
+  YAML::Node permissions;
+        if (!levelname.empty()) {
+            auto worldData = getWorldData(player, levelname);
+            if (worldData && worldData->IsMap() && worldData->operator[]("permissions")) {
+                permissions = (*worldData)["permissions"];
+            }
+        } else {
+            auto node = getNode(player, "permissions");
+            if (node && node->IsSequence()) {
+                permissions = *node;
+            }
+        }
+
+        // Проверка на корректность данных permissions
+        if (!permissions || !permissions.IsSequence()) {
+           // std::cerr << "Invalid 'permissions' node given to getUserPermissions()" << std::endl;
+            return {}; // Возвращаем пустой вектор, если данные не корректны
+        }
+
+        // Преобразуем YAML::Node в std::vector<std::string>
+        std::vector<std::string> result;
+        for (const auto& perm : permissions) {
+            result.push_back(perm.as<std::string>());
+        }
+
+        return result;
+}
