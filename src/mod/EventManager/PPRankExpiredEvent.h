@@ -21,7 +21,7 @@
 
 namespace pp {
 
-class RankEvent final : public Event
+class RankEvent final : public ll::event::Event
 {
     Level& mLevel;
     Player& mPlayer;
