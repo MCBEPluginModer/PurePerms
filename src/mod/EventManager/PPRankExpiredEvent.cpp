@@ -22,8 +22,8 @@ void PPRankExpiredEvent::serialize(CompoundTag& nbt) const {
 void PPRankExpiredEvent::deserialize(CompoundTag const& nbt) {
     ll::event::Cancellable<ll::event::Event>::deserialize(nbt); // Вызов метода десериализации базового класса
     // Преобразование типов указателей
-    level() = (Level&)nbt["world"];
-    player() = (Player&)nbt["player"];
+    //level() = (Level&)nbt["world"];
+   // player() = (Player&)nbt["player"];
 }
 
 
