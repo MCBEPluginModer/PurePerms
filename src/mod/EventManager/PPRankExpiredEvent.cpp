@@ -14,13 +14,13 @@ Player& PPRankExpiredEvent::player() const {
     return mPlayer;
 }
 void PPRankExpiredEvent::serialize(CompoundTag& nbt) const {
-    ll::event::Cancellable<RankEvent>::serialize(nbt); 
+    ll::event::Cancellable<ll::event::Event>::serialize(nbt); 
     nbt["world"] = (uintptr_t)&level();
     nbt["player"] = (uintptr_t)&player();
 }
 
 void PPRankExpiredEvent::deserialize(CompoundTag const& nbt) {
-    ll::event::Cancellable<RankEvent>::deserialize(nbt); // Вызов метода десериализации базового класса
+    ll::event::Cancellable<ll::event::Event>::deserialize(nbt); // Вызов метода десериализации базового класса
     // Преобразование типов указателей
     level() = *reinterpret_cast<Level*>(nbt["world"].getInt64());
     player() = *reinterpret_cast<Player*>(nbt["player"].getInt64());
