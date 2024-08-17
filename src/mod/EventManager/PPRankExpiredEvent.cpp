@@ -17,7 +17,9 @@ Player& PPRankExpiredEvent::player() const {
 
 static std::unique_ptr<ll::event::EmitterBase> emitterFactory(ll::event::ListenerBase&);
 class PPRankExpiredEventEmitter : public ll::event::Emitter<emitterFactory, PPRankExpiredEvent> {
-    cout << "test\n";
+    PPRankExpiredEventEmitter() {
+        std::cout << "test\n";  // Правильное место для использования cout
+    }
 };
 
 static std::unique_ptr<ll::event::EmitterBase> emitterFactory(ll::event::ListenerBase&) {
