@@ -15,15 +15,15 @@ Player& PPRankExpiredEvent::player() const {
     return mPlayer;
 }
 
-static std::unique_ptr<ll::event::EmitterBase> emitterFactory(ll::event::ListenerBase&);
 class PPRankExpiredEventEmitter : public ll::event::Emitter<emitterFactory, PPRankExpiredEvent> {
+public:
     PPRankExpiredEventEmitter() {
-        std::cout << "test\n";  // Правильное место для использования cout
+        std::cout << "test\n";
     }
 };
 
 static std::unique_ptr<ll::event::EmitterBase> emitterFactory(ll::event::ListenerBase&) {
-    return std::make_unique<PPRankExpiredEventEmitter>();
+    return std::make_unique<PPRankExpiredEventEmitter>();  // Ошибка здесь
 }
 
 }
