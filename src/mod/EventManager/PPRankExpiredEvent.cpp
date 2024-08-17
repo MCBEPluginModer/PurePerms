@@ -6,6 +6,7 @@
 #include <ll/api/Logger.h>
 
 namespace pp {
+  using std::cout;
 Level& PPRankExpiredEvent::level() const {
     return mLevel;
 }
@@ -16,7 +17,7 @@ Player& PPRankExpiredEvent::player() const {
 
 static std::unique_ptr<ll::event::EmitterBase> emitterFactory(ll::event::ListenerBase&);
 class PPRankExpiredEventEmitter : public ll::event::Emitter<emitterFactory, PPRankExpiredEvent> {
-    std::cout << "test\n";
+    cout << "test\n";
 };
 
 static std::unique_ptr<ll::event::EmitterBase> emitterFactory(ll::event::ListenerBase&) {
