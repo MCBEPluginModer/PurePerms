@@ -15,17 +15,6 @@ Player& PPRankExpiredEvent::player() const {
     return mPlayer;
 }
 
-class PPRankExpiredEventEmitter : public ll::event::Emitter<emitterFactory, PPRankExpiredEvent> {
-public:
-    PPRankExpiredEventEmitter() {
-        std::cout << "test\n";
-    }
-};
-
-static std::unique_ptr<ll::event::EmitterBase> emitterFactory(ll::event::ListenerBase&) {
-    return std::make_unique<PPRankExpiredEventEmitter>();  // Ошибка здесь
-}
-
 }
 /*LL_TYPE_INSTANCE_HOOK(
     ServerStoppingEventHook,
