@@ -28,23 +28,17 @@ class RankEvent final : public ll::event::Event
 public:
     constexpr explicit PPRankExpiredEvent(Level& level,Player& player) : mLevel(level),mPlayer(player) {}
 
-    LLAPI void serialize(CompoundTag&) const override;
-
     LLNDAPI Level& level() const;
     LLNDAPI Player& player() const;
 };
 
 class PPRankExpiredEvent final : public ll::event::Cancellable<RankEvent>
 {
-    Level& mLevel;
-    Player& mPlayer;
 public:
-    constexpr explicit PPRankExpiredEvent(Level& level,Player& player) : mLevel(level),mPlayer(player),Cancellable(level,player) {}
+    constexpr explicit PPRankExpiredEvent(Level& level,Player& player) : ll::event::Cancellable<RankEvent>(level, player) {}
 
     LLAPI void serialize(CompoundTag&) const override;
     LLAPI void deserialize(CompoundTag const&) override;
 
-    LLNDAPI Level& level() const;
-    LLNDAPI Player& player() const;
 };
 } // namespace ll::event::inline pp
