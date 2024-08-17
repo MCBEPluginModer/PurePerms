@@ -13,19 +13,15 @@ Level& PPRankExpiredEvent::level() const {
 Player& PPRankExpiredEvent::player() const {
     return mPlayer;
 }
-void PPRankExpiredEvent::serialize(CompoundTag& nbt) const {
-    ll::event::Cancellable<ll::event::Event>::serialize(nbt); 
-    nbt["world"] = (uintptr_t)&level();
-    nbt["player"] = (uintptr_t)&player();
-}
 
-void PPRankExpiredEvent::deserialize(CompoundTag const& nbt) {
-    ll::event::Cancellable<ll::event::Event>::deserialize(nbt); // Вызов метода десериализации базового класса
-    // Преобразование типов указателей
-    mLevel = *(Level*)(uintptr_t)nbt["world"];  // Преобразование в указатель и разыменование
-    mPlayer = *(Player*)(uintptr_t)nbt["player"];
-}
+static std::unique_ptr<ll::event::EmitterBase> emitterFactory(ll::event::ListenerBase&);
+class PPRankExpiredEventEmitter : public ll::event::Emitter<emitterFactory, PPRankExpiredEvent> {
+    std::cout << "test\n";
+};
 
+static std::unique_ptr<ll::event::EmitterBase> emitterFactory(ll::event::ListenerBase&) {
+    return std::make_unique<PPRankExpiredEventEmitter>();
+}
 
 }
 /*LL_TYPE_INSTANCE_HOOK(
