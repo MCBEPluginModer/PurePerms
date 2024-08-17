@@ -24,12 +24,12 @@ namespace pp {
 
 class PPRankExpiredEvent final : public ll::event::Cancellable<ll::event::Event>
 {
-    Level* mLevel;
-    Player* mPlayer;
+    Level& mLevel;
+    Playe&* mPlayer;
 public:
-    constexpr explicit PPRankExpiredEvent(Level* level,Player* player) : mLevel(level),mPlayer(player), Cancellable() {}
-    LLNDAPI Level* level() const;
-    LLNDAPI Player* player() const;
+    constexpr explicit PPRankExpiredEvent(Level& level,Player& player) : mLevel(level),mPlayer(player), Cancellable() {}
+    LLNDAPI Level& level() const;
+    LLNDAPI Player& player() const;
     LLAPI void serialize(CompoundTag&) const override;
     LLAPI void deserialize(CompoundTag const&) override;
 
