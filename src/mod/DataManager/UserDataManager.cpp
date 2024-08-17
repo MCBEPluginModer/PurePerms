@@ -7,21 +7,23 @@ YAML::Node UserDataManager::getData(Player* player)
 
 std::optional<int> UserDataManager::getExpDate(Player* player,string levelname)
 {
-   std::optional<YAML::Node> expDate;
+   std::optional<int> expDate;
 
-   if (!levelname.empty()) {
+   if (!levelname.empty()) 
+   {
         auto worldData = getWorldData(player, levelname);
-        if (worldData.has_value()) {
+        if (worldData.has_value()) 
+        {
             expDate = worldData.value()["expTime"].as<int>();
         }
-        } 
-        else {
+        else 
+        {
           auto node = getNode(player, "expTime");
           if (node.has_value()) {
                 expDate = node.value().as<int>();
           }
         }
-
+   }
    return expDate;
 }
 
