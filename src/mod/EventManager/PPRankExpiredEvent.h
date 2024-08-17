@@ -25,7 +25,7 @@ namespace pp {
 class PPRankExpiredEvent final : public ll::event::Cancellable<ll::event::Event>
 {
     Level& mLevel;
-    Playe&* mPlayer;
+    Playe& mPlayer;
 public:
     constexpr explicit PPRankExpiredEvent(Level& level,Player& player) : mLevel(level),mPlayer(player), Cancellable() {}
     LLNDAPI Level& level() const;
