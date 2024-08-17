@@ -17,4 +17,7 @@ public:
     vector<string> getUserPermissions(Player* player,string node);
     optional<YAML::Node> getWorldData(Player* player,string levelname);
     void removeNode(Player* player,string node);
+    void setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data);
+    void setGroup(Player* player,PPGroup group,string levelname,int time = -1);
+    
 };
