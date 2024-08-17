@@ -102,3 +102,38 @@ vector<string> UserDataManager::getUserPermissions(Player* player,string levelna
 
         return result;
 }
+
+optional<YAML::Node> UserDataManager::getWorldData(Player* player,string levelname)
+{
+  if (levelname.empty()) {
+            levelname = "Overworld";
+        }
+
+        YAML::Node userData = getData(player);
+        if (!userData["worlds"] || !userData["worlds"][levelname]) {
+            // Если данных для данного мира нет, возвращаем стандартные значения
+            YAML::Node defaultData;
+           // defaultData["group"] = this->plugin->getDefaultGroup(levelname)->getName();
+            defaultData["permissions"] = YAML::Node(YAML::NodeType::Sequence);  // Пустой список разрешений
+            defaultData["expTime"] = -1;
+            return defaultData;
+        }
+
+        return userData["worlds"][levelname];
+}
+
+void UserDataManager::removeNode(Player* player,string node)
+{
+  YAML::Node tempUserData = getData(player);
+
+  if (tempUserData[node]) 
+  {  // Проверка на наличие узла
+      tempUserData.remove(node);  // Удаление узла
+      setData(player, tempUserData);
+  }
+}
+
+void UserDataManager::setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data)
+{
+  
+}
