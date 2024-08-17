@@ -12,7 +12,7 @@ class UserDataManager
 public:
     UserDataManager(mcpm::PurePerms* _plugin) : plugin(_plugin) {}
     YAML::Node getData(Player* player);
-    YAML::Node getExpDate(Player* player,string levelname = "");
+    std::optional<int> getExpDate(Player* player,string levelname = "");
     optional<PPGroup> getGroup(Player* player,string levelname = "");
     optional<YAML::Node> getNode(Player* player,string node);
     vector<string> getUserPermissions(Player* player,string node);
