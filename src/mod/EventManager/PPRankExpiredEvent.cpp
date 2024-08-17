@@ -6,7 +6,6 @@
 #include <ll/api/Logger.h>
 
 namespace pp {
-  using std::cout;
 Level& PPRankExpiredEvent::level() const {
     return mLevel;
 }
@@ -15,6 +14,18 @@ Player& PPRankExpiredEvent::player() const {
     return mPlayer;
 }
 
+Level& PPRankChangedEvent::level() const {
+    return mLevel;
+}
+
+Player& PPRankChangedEvent::player() const {
+    return mPlayer;
+}
+
+PPGroup& PPRankChangedEvent::group() const
+{
+  return mGroup;
+}
 }
 /*LL_TYPE_INSTANCE_HOOK(
     ServerStoppingEventHook,
