@@ -15,7 +15,7 @@ public:
     std::optional<int> getExpDate(Player* player,string levelname = "");
     optional<PPGroup> getGroup(Player* player,string levelname = "");
     optional<YAML::Node> getNode(Player* player,string node);
-    vector<string> getUserPermissions(Player* player,string node);
+    vector<string> getUserPermissions(Player* player,string levelname);
     optional<YAML::Node> getWorldData(Player* player,string levelname);
     void removeNode(Player* player,string node);
     void setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data);
