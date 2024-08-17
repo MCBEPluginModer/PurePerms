@@ -6,11 +6,11 @@
 #include <ll/api/Logger.h>
 
 namespace pp {
-Level* PPRankExpiredEvent::level() const {
+Level& PPRankExpiredEvent::level() const {
     return mLevel;
 }
 
-Player* PPRankExpiredEvent::player() const {
+Player& PPRankExpiredEvent::player() const {
     return mPlayer;
 }
 void PPRankExpiredEvent::serialize(CompoundTag& nbt) const {
@@ -22,8 +22,8 @@ void PPRankExpiredEvent::serialize(CompoundTag& nbt) const {
 void PPRankExpiredEvent::deserialize(CompoundTag const& nbt) {
     ll::event::Cancellable<ll::event::Event>::deserialize(nbt); // Вызов метода десериализации базового класса
     // Преобразование типов указателей
-    level() = (Level*)nbt["world"];
-    player() = (Player*)nbt["player"];
+    mLevel = *(Level*)(uintptr_t)nbt["world"];  // Преобразование в указатель и разыменование
+    mPlayer = *(Player*)(uintptr_t)nbt["player"];
 }
 
 
