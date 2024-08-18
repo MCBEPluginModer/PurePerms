@@ -4,6 +4,7 @@
 YAML::Node UserDataManager::getData(Player* player)
 {
   //return lugin->getProvider()->getPlayerData(player);
+  return YAML::Node();
 }
 
 std::optional<int> UserDataManager::getExpDate(Player* player,string levelname)
