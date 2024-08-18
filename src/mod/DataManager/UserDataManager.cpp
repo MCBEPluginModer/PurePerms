@@ -158,7 +158,8 @@ void UserDataManager::setGroup(Player* player,PPGroup group,string levelname,int
             {
                 (*worldData)["group"] = group.getName();
                 (*worldData)["expTime"] = time;
-                setWorldData(player, levelname, *worldData);
+                tuple<string,vector<string>,int> data1 = make_tuple<string,vector<string>,int>(group.getName(),(*worldData)["permissions"].as<vector<string>>(),time);
+                setWorldData(player, levelname, data1);
             }
         }
 
