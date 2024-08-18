@@ -24,6 +24,6 @@ public:
     void setGroup(Player* player,PPGroup group,string levelname,int time = -1);
     void setNode(Player* player,string node,std::variant<bool,int,float,double,string> value);
     void setPermission(Player* player,string permission,string levelName = "");
-    void setWorldData(Player* player,string levelName,tuple<bool,vector<string>> worldData);
+    void setWorldData(Player* player,string levelName,tuple<string,vector<string>,int> wordData);
     void unsetPermission(Player* player,string permission,string levelName = "");
 };
