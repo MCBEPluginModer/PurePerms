@@ -32,7 +32,7 @@ optional<PPGroup> UserDataManager::getGroup(Player* player,string levelname)
 {
   std::optional<std::string> groupName;
 
-        if (!levelName.empty()) {
+        if (!levelname.empty()) {
             auto worldData = getWorldData(player, levelname);
             if (worldData.has_value()) {
                 groupName = worldData.value()["group"].as<std::string>();
@@ -144,12 +144,16 @@ void UserDataManager::setPlayerData(Player* player,tuple<string,vector<string>,Y
 
 void UserDataManager::setGroup(Player* player,PPGroup group,string levelname,int time = -1)
 {
-    if (levelName.empty()) {
+    if (levelName.empty()) 
+    {
             setNode(player, "group", group.getName());
             setNode(player, "expTime", time);
-        } else {
+    } 
+    else 
+    {
             auto worldData = getWorldData(player, levelName);
-            if (worldData) {
+            if (worldData) 
+            {
                 (*worldData)["group"] = group.getName();
                 (*worldData)["expTime"] = time;
                 setWorldData(player, levelName, *worldData);
