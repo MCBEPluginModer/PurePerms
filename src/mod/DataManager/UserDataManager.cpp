@@ -1,4 +1,5 @@
 #include "UserDataManager.h"
+#include <mc/world/actor/player/Player.h>
 
 YAML::Node UserDataManager::getData(Player* player)
 {
