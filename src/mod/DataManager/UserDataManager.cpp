@@ -144,21 +144,21 @@ void UserDataManager::setPlayerData(Player* player,tuple<string,vector<string>,Y
      //plugin->getProvider()->setPlayerData($player, $data);
 }
 
-void UserDataManager::setGroup(Player* player,PPGroup group,string levelname,int time = -1)
+void UserDataManager::setGroup(Player* player,PPGroup group,string levelname,int time)
 {
-    if (levelName.empty()) 
+    if (levelname.empty()) 
     {
             setNode(player, "group", group.getName());
             setNode(player, "expTime", time);
     } 
     else 
     {
-            auto worldData = getWorldData(player, levelName);
+            auto worldData = getWorldData(player, levelname);
             if (worldData) 
             {
                 (*worldData)["group"] = group.getName();
                 (*worldData)["expTime"] = time;
-                setWorldData(player, levelName, *worldData);
+                setWorldData(player, levelname, *worldData);
             }
         }
 
