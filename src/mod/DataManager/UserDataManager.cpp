@@ -203,7 +203,7 @@ void UserDataManager::setPermission(Player* player,string permission,string leve
         //plugin->updatePermissions(player);
 }
 
-void UserDataManager::setWorldData(Player* player,string levelName,tuple<bool,vector<string>> worldData)
+void UserDataManager::setWorldData(Player* player,string levelName,tuple<string,vector<string>,int> worldData)
 {
      YAML::Node tempUserData = getData(player);
 
