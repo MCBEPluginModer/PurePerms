@@ -134,7 +134,8 @@ void UserDataManager::removeNode(Player* player,string node)
   if (tempUserData[node]) 
   {  // Проверка на наличие узла
       tempUserData.remove(node);  // Удаление узла
-      setData(player, tempUserData);
+      tuple<string,vector<string>,YAML::Node,int> data1 = std::make_tuple<string,vector<string>,YAML::Node,int>(tempUserData["group"].as<string>(),tempUserData["permissions"].as<vector<string>>(),tempUserData["worlds"].as<YAML::Node>(),tempUserData["time"].as<int>());
+      setData(player, data1);
   }
 }
 
@@ -181,8 +182,9 @@ void UserDataManager::setNode(Player* player,string node,std::variant<bool,int,f
         } else if (std::holds_alternative<std::string>(value)) {
             userData[node] = std::get<std::string>(value);
         }
-
-        setData(player, userData);
+        
+      tuple<string,vector<string>,YAML::Node,int> data1 = std::make_tuple<string,vector<string>,YAML::Node,int>(userData["group"].as<string>(),userData["permissions"].as<vector<string>>(),userData["worlds"].as<YAML::Node>(),userData["time"].as<int>());
+      setData(player, data1);
 }
 
 void UserDataManager::setPermission(Player* player,string permission,string levelName)
@@ -190,7 +192,8 @@ void UserDataManager::setPermission(Player* player,string permission,string leve
     if (levelName.empty()) {
             YAML::Node tempUserData = getData(player);
             tempUserData["permissions"].push_back(permission);
-            setData(player, tempUserData);
+            tuple<string,vector<string>,YAML::Node,int> data1 = std::make_tuple<string,vector<string>,YAML::Node,int>(tempUserData["group"].as<string>(),tempUserData["permissions"].as<vector<string>>(),tempUserData["worlds"].as<YAML::Node>(),tempUserData["time"].as<int>());
+            setData(player, data1);
         } else {
             YAML::Node worldData = getWorldData(player, levelName);
             worldData["permissions"].push_back(permission);
@@ -212,7 +215,8 @@ void UserDataManager::setWorldData(Player* player,string levelName,tuple<bool,ve
             tempUserData["worlds"][levelName]["permissions"] = YAML::Node(YAML::NodeType::Sequence);
             tempUserData["worlds"][levelName]["expTime"] = -1;
 
-            setData(player, tempUserData);
+            tuple<string,vector<string>,YAML::Node,int> data1 = std::make_tuple<string,vector<string>,YAML::Node,int>(tempUserData["group"].as<string>(),tempUserData["permissions"].as<vector<string>>(),tempUserData["worlds"].as<YAML::Node>(),tempUserData["time"].as<int>());
+            setData(player, data1);
         }
 
         // Устанавливаем переданные данные для мира
@@ -223,7 +227,8 @@ void UserDataManager::setWorldData(Player* player,string levelName,tuple<bool,ve
         }
         tempUserData["worlds"][levelName]["expTime"] = std::get<2>(worldData);
 
-        setData(player, tempUserData);
+        tuple<string,vector<string>,YAML::Node,int> data1 = std::make_tuple<string,vector<string>,YAML::Node,int>(tempUserData["group"].as<string>(),tempUserData["permissions"].as<vector<string>>(),tempUserData["worlds"].as<YAML::Node>(),tempUserData["time"].as<int>());
+        setData(player, data1);
 }
 
 void UserDataManager::unsetPermission(Player* player,string permission,string levelName)
@@ -237,7 +242,8 @@ void UserDataManager::unsetPermission(Player* player,string permission,string le
             auto it = std::remove(permissions.begin(), permissions.end(), permission);
             if (it != permissions.end()) {
                 permissions.erase(it, permissions.end());
-                setData(player, tempUserData);
+                tuple<string,vector<string>,YAML::Node,int> data1 = std::make_tuple<string,vector<string>,YAML::Node,int>(tempUserData["group"].as<string>(),tempUserData["permissions"].as<vector<string>>(),tempUserData["worlds"].as<YAML::Node>(),tempUserData["time"].as<int>());
+                setData(player, data1);
             }
         } else {
             auto worldDataOpt = getWorldData(player, levelName);
