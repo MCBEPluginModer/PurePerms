@@ -146,23 +146,20 @@ void UserDataManager::setPlayerData(Player* player,tuple<string,vector<string>,Y
 
 void UserDataManager::setGroup(Player* player,PPGroup group,string levelname,int time)
 {
-    if (levelname.empty()) 
-    {
-            setNode(player, "group", group.getName());
-            setNode(player, "expTime", time);
-    } 
-    else 
-    {
-            auto worldData = getWorldData(player, levelname);
-            if (worldData) 
-            {
-                int t = time;
-                (*worldData)["group"] = group.getName();
-                (*worldData)["expTime"] = time;
-                tuple<string,vector<string>,int> data1 = make_tuple<string,vector<string>,int>(group.getName(),(*worldData)["permissions"].as<vector<string>>(),t);
-                setWorldData(player, levelname, data1);
-            }
+   if (levelname.empty()) {
+        setNode(player, "group", group.getName());
+        setNode(player, "expTime", time);
+    } else {
+        auto worldDataOpt = getWorldData(player, levelname);
+        if (worldDataOpt) {
+            YAML::Node& worldData = *worldDataOpt;  // Извлекаем значение из std::optional<YAML::Node>
+            worldData["group"] = group.getName();
+            worldData["expTime"] = time;
+            
+            // Передаем YAML::Node напрямую в setWorldData
+            setWorldData(player, levelname, worldData);
         }
+    }
 
         //PPRankChangedEvent ev(player, group);
         //ev.call();
