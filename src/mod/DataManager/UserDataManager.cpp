@@ -200,7 +200,10 @@ void UserDataManager::setPermission(Player* player,string permission,string leve
         } else {
             YAML::Node worldData = getWorldData(player, levelName);
             worldData["permissions"].push_back(permission);
-            setWorldData(player, levelName, worldData);
+            if (worldData.has_value()) 
+            {
+               setWorldData(player, levelName, std::make_tuple(worldData["group"].as<std::string>(), worldData["permissions"].as<std::vector<std::string>>(), worldData["expTime"].as<int>()));
+            }
         }
 
         //plugin->updatePermissions(player);
