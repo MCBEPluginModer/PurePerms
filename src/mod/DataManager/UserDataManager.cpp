@@ -198,7 +198,7 @@ void UserDataManager::setPermission(Player* player,string permission,string leve
             tuple<string,vector<string>,YAML::Node,int> data1 = std::make_tuple<string,vector<string>,YAML::Node,int>(tempUserData["group"].as<string>(),tempUserData["permissions"].as<vector<string>>(),tempUserData["worlds"].as<YAML::Node>(),tempUserData["time"].as<int>());
             setData(player, data1);
         } else {
-            YAML::Node worldData = getWorldData(player, levelName);
+            YAML::Node worldData = *getWorldData(player, levelName);
             worldData["permissions"].push_back(permission);
             if (worldData.has_value()) 
             {
