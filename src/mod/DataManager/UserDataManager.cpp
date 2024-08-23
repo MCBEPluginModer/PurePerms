@@ -157,7 +157,11 @@ void UserDataManager::setGroup(Player* player,PPGroup group,string levelname,int
             worldData["expTime"] = time;
             
             // Передаем YAML::Node напрямую в setWorldData
-            setWorldData(player, levelname, worldData);
+           auto group = worldData["group"].as<std::string>();
+           auto permissions = worldData["permissions"].as<std::vector<std::string>>();
+           int expTime = worldData["expTime"].as<int>();
+
+           setWorldData(player, levelname, std::make_tuple(group, permissions, expTime));
         }
     }
 
