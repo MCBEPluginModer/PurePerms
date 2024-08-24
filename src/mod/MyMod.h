@@ -3,8 +3,9 @@
 #include "ll/api/mod/NativeMod.h"
 #include "PPMessages.h"
 #include "provider/ProviderInterface.h"
-#include "DataManager/UserDataManager.h"
 #include <unordered_map>
+
+class UserDataManager;
 
 namespace mcpm {
 
