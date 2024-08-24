@@ -203,7 +203,7 @@ void UserDataManager::setPermission(Player* player,string permission,string leve
         );
         setData(player, data1);
     } else {
-        YAML::Node worldData = getWorldData(player, levelName);
+        YAML::Node worldData = getWorldData(player, levelName).value();
         worldData["permissions"].push_back(permission);
         if (worldData.IsDefined()) 
         {
