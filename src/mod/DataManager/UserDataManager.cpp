@@ -253,13 +253,13 @@ void UserDataManager::unsetPermission(Player* player,string permission,string le
         YAML::Node tempUserData = getData(player);
         if (!tempUserData["permissions"].IsSequence()) return;
 
-        auto& permissions = tempUserData["permissions"];
+        auto permissions = tempUserData["permissions"].as<vector<string>();
         auto it = std::remove(permissions.begin(), permissions.end(), permission);
         if (it != permissions.end()) {
             permissions.erase(it, permissions.end());
             auto data1 = std::make_tuple(
                 tempUserData["group"].as<string>(),
-                tempUserData["permissions"].as<vector<string>>(),
+                permissions,
                 tempUserData["worlds"],
                 tempUserData["time"].as<int>()
             );
