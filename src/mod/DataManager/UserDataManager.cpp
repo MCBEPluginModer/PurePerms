@@ -275,7 +275,7 @@ void UserDataManager::unsetPermission(Player* player,string permission,string le
             permissions.erase(it, permissions.end());
             setWorldData(player, levelName, std::make_tuple(
                 worldDataOpt["group"].as<std::string>(),
-                permissions.as<std::vector<std::string>>(),
+                permissions,
                 worldDataOpt["expTime"].as<int>()
             ));
         }
