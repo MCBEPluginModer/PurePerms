@@ -2,8 +2,8 @@
 
 #include "ll/api/mod/NativeMod.h"
 #include "PPMessages.h"
-#include "provider/ProviderInterface.h"
-#include "DataManager/UserDataManager.h"
+//#include "provider/ProviderInterface.h"
+//#include "DataManager/UserDataManager.h"
 #include <unordered_map>
 
 namespace mcpm {
@@ -41,8 +41,8 @@ public:
 
     // Указатели на другие классы
     PPMessages* messages = nullptr;
-    ProviderInterface* provider = nullptr;
-    UserDataManager* userDataMgr = nullptr;
+   // ProviderInterface* provider = nullptr;
+   // UserDataManager* userDataMgr = nullptr;
     std::vector<std::string> attachments;
     std::vector<std::string> groups;
     std::unordered_map<std::string, std::string> bdsDefaultPerms;
