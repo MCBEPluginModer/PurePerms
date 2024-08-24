@@ -193,18 +193,27 @@ void UserDataManager::setNode(Player* player,string node,std::variant<bool,int,f
 void UserDataManager::setPermission(Player* player,string permission,string levelName)
 {
     if (levelName.empty()) {
-            YAML::Node tempUserData = getData(player);
-            tempUserData["permissions"].push_back(permission);
-            tuple<string,vector<string>,YAML::Node,int> data1 = std::make_tuple<string,vector<string>,YAML::Node,int>(tempUserData["group"].as<string>(),tempUserData["permissions"].as<vector<string>>(),tempUserData["worlds"].as<YAML::Node>(),tempUserData["time"].as<int>());
-            setData(player, data1);
-        } else {
-            YAML::Node worldData = *getWorldData(player, levelName);
-            worldData["permissions"].push_back(permission);
-            if (worldData.has_value()) 
-            {
-               setWorldData(player, levelName, std::make_tuple(worldData["group"].as<std::string>(), worldData["permissions"].as<std::vector<std::string>>(), worldData["expTime"].as<int>()));
-            }
+        YAML::Node tempUserData = getData(player);
+        tempUserData["permissions"].push_back(permission);
+        auto data1 = std::make_tuple(
+            tempUserData["group"].as<string>(),
+            tempUserData["permissions"].as<vector<string>>(),
+            tempUserData["worlds"],
+            tempUserData["time"].as<int>()
+        );
+        setData(player, data1);
+    } else {
+        YAML::Node worldData = getWorldData(player, levelName);
+        worldData["permissions"].push_back(permission);
+        if (worldData.IsDefined()) 
+        {
+           setWorldData(player, levelName, std::make_tuple(
+               worldData["group"].as<std::string>(), 
+               worldData["permissions"].as<std::vector<std::string>>(), 
+               worldData["expTime"].as<int>()
+           ));
         }
+    }
 
         //plugin->updatePermissions(player);
 }
@@ -241,30 +250,35 @@ void UserDataManager::unsetPermission(Player* player,string permission,string le
 {
     if (levelName.empty()) 
     {
-            YAML::Node tempUserData = getData(player);
-            if (!tempUserData["permissions"].IsSequence()) return;
+        YAML::Node tempUserData = getData(player);
+        if (!tempUserData["permissions"].IsSequence()) return;
 
-            auto& permissions = tempUserData["permissions"];
-            auto it = std::remove(permissions.begin(), permissions.end(), permission);
-            if (it != permissions.end()) {
-                permissions.erase(it, permissions.end());
-                tuple<string,vector<string>,YAML::Node,int> data1 = std::make_tuple<string,vector<string>,YAML::Node,int>(tempUserData["group"].as<string>(),tempUserData["permissions"].as<vector<string>>(),tempUserData["worlds"].as<YAML::Node>(),tempUserData["time"].as<int>());
-                setData(player, data1);
-            }
-        } else {
-            auto worldDataOpt = getWorldData(player, levelName);
-            if (!worldDataOpt.has_value() || !worldDataOpt->IsMap()) return;
-
-            auto& worldData = worldDataOpt.value();
-            if (!worldData["permissions"].IsSequence()) return;
-
-            auto& permissions = worldData["permissions"];
-            auto it = std::remove(permissions.begin(), permissions.end(), permission);
-            if (it != permissions.end()) {
-                permissions.erase(it, permissions.end());
-                setWorldData(player, levelName, worldData);
-            }
+        auto& permissions = tempUserData["permissions"];
+        auto it = std::remove(permissions.begin(), permissions.end(), permission);
+        if (it != permissions.end()) {
+            permissions.erase(it, permissions.end());
+            auto data1 = std::make_tuple(
+                tempUserData["group"].as<string>(),
+                tempUserData["permissions"].as<vector<string>>(),
+                tempUserData["worlds"],
+                tempUserData["time"].as<int>()
+            );
+            setData(player, data1);
         }
+    } else {
+        auto worldDataOpt = getWorldData(player, levelName);
+        if (!worldDataOpt.IsDefined() || !worldDataOpt["permissions"].IsSequence()) return;
 
+        auto& permissions = worldDataOpt["permissions"];
+        auto it = std::remove(permissions.begin(), permissions.end(), permission);
+        if (it != permissions.end()) {
+            permissions.erase(it, permissions.end());
+            setWorldData(player, levelName, std::make_tuple(
+                worldDataOpt["group"].as<std::string>(),
+                permissions.as<std::vector<std::string>>(),
+                worldDataOpt["expTime"].as<int>()
+            ));
+        }
+    }
         //plugin->updatePermissions(player);
 }
