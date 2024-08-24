@@ -71,6 +71,14 @@ public:
     void registerPlayer(Player* player);
     void registerPlayers();
     bool removeGroup(string groupName);
+    void setDefaultGroup(PPGroup* group,string levelname);
+    void setGroup(Player* player,PPGroup group,string levelname = "",int time = -1);
+    void sortGroupData();
+    void updateGroups();
+    void updatePermissions(Player* player,string levelname = "");
+    void updatePlayersInGroup(PPGroup* group);
+    void unregisterPlayer(Player* player);
+    void unregisterPlayers();
 private:
     ll::mod::NativeMod& mSelf;
 };
