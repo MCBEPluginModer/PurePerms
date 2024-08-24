@@ -251,9 +251,9 @@ void UserDataManager::unsetPermission(Player* player,string permission,string le
     if (levelName.empty()) 
     {
         YAML::Node tempUserData = getData(player);
-        if (!tempUserData["permissions"].IsSequence()) return;
-
-        auto permissions = tempUserData["permissions"].as<vector<string>();
+        if (!tempUserData["permissions"].IsSequence()) 
+          return;
+        auto permissions = tempUserData["permissions"].as<vector<string>>();
         auto it = std::remove(permissions.begin(), permissions.end(), permission);
         if (it != permissions.end()) {
             permissions.erase(it, permissions.end());
