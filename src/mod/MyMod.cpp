@@ -3,6 +3,8 @@
 #include <memory>
 
 #include "ll/api/mod/RegisterHelper.h"
+#include "PPGroup.h"
+#include "DataManager/UserDataManager.h"
 
 namespace mcpm {
 
@@ -18,14 +20,41 @@ bool PurePerms::load() {
 
 bool PurePerms::enable() {
     getSelf().getLogger().debug("Enabling...");
-    // Code for enabling the mod goes here.
+    YAML::Node config;
+    config["data-provider"] = "json";
+    config["disable-op"] = false;
+    config["enable-multiworld-perms"] = false;
+    vector<string> supadmranks = {"OP"};
+    config["superadmin-ranks"] = supadmranks;
+    ifstream fin("plugins/PurePerms/config.yml");
+    if (!fin.is_open())
+    {
+        fin.close();
+        ofstream fout("plugins/PurePerms/config.yml");
+        fout << config;
+        fout.cose();
+        messages = new PPMessages(this);
+        userDataMgr = new UserDataManager();
+    }
+    else
+        fin.close();
+    setProvider();
+    registerPlayers();
+    
     return true;
 }
 
 bool PurePerms::disable() {
     getSelf().getLogger().debug("Disabling...");
-    // Code for disabling the mod goes here.
+    delete messages;
+    delete userDataMgr;
+    delete provider;
     return true;
+}
+
+void PurePerms::setProvider(bool onEnab)
+{
+    
 }
 
 } // namespace my_mod
