@@ -269,7 +269,7 @@ void UserDataManager::unsetPermission(Player* player,string permission,string le
         auto worldDataOpt = getWorldData(player, levelName).value();
         if (!worldDataOpt.IsDefined() || !worldDataOpt["permissions"].IsSequence()) return;
 
-        auto& permissions = worldDataOpt["permissions"].as<vector<string>>();
+        auto permissions = worldDataOpt["permissions"].as<vector<string>>();
         auto it = std::remove(permissions.begin(), permissions.end(), permission);
         if (it != permissions.end()) {
             permissions.erase(it, permissions.end());
