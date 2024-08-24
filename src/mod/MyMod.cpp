@@ -5,6 +5,13 @@
 #include "ll/api/mod/RegisterHelper.h"
 #include "PPGroup.h"
 #include "DataManager/UserDataManager.h"
+#include "ll/api/schedule/Scheduler.h"
+
+using namespace ll::schedule;
+
+using namespace ll::chrono_literals;
+
+SystemTimeScheduler PPExpDateCheckTask;
 
 namespace mcpm {
 
