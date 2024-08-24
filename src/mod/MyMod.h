@@ -2,11 +2,11 @@
 
 #include "ll/api/mod/NativeMod.h"
 #include "PPMessages.h"
-#include "PPGroup.h"
 #include "provider/ProviderInterface.h"
 #include <unordered_map>
 
 class UserDataManager;
+class PPGroup;
 
 namespace mcpm {
 
