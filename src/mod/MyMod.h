@@ -2,6 +2,7 @@
 
 #include "ll/api/mod/NativeMod.h"
 #include "PPMessages.h"
+#include "PPGroup.h"
 #include "provider/ProviderInterface.h"
 #include <unordered_map>
 
@@ -38,7 +39,7 @@ public:
     const int INVALID_NAME = -1;
     const int ALREADY_EXISTS = 0;
     const int SUCCESS = 1;
-     bool isGroupsLoaded = false;
+    bool isGroupsLoaded = false;
 
     // Указатели на другие классы
     PPMessages* messages = nullptr;
@@ -47,6 +48,29 @@ public:
     std::vector<std::string> attachments;
     std::vector<std::string> groups;
     std::unordered_map<std::string, std::string> bdsDefaultPerms;
+    void setProvider(bool onEnab = true);
+    bool addGroup(string groupName);
+    int date2Int(string date);
+    vector<string> getAttachment(Player* player);
+    optional<variant<bool,int,double,string,YAML::Node>> getConfigValue(string key);
+    optional<PPGroup> getDefaultGroup(string levelname = "");
+    optional<PPGroup> getGroup(string groupName);
+    vector<PPGroup> getGroups();
+    template<typename... Args>
+    std::string getMessage(const std::string& node, Args&&... vars);
+    vector<Player*> getOnlinePlayersInGroup(PPGroup group);
+    vector<string> getPermissions(Player* player,string levelname);
+    Player* getPlayer(string nickname);
+    unordered_map<string,string> getBDSPerms();
+    string getLLVersion() {return "0.13.5";}
+    ProviderInterface* getProvider();
+    UserDataManager* getUserDataMgr() {return userDataMgr;}
+    string getValidUUID(Player* player);
+    int isValidGroupName(string groupName);
+    bool isValidProvider();
+    void registerPlayer(Player* player);
+    void registerPlayers();
+    bool removeGroup(string groupName);
 private:
     ll::mod::NativeMod& mSelf;
 };
