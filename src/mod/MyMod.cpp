@@ -31,7 +31,7 @@ public:
 
     void operator()() 
     {
-        ll::service::getLevel()->forEachPlayer([](Player& player) 
+        ll::service::getLevel()->forEachPlayer([](Player& player) -> bool
         {
             auto expTime = instance->getUserDataMgr()->getNode(&player, "expTime").value().as<int>();
             /*if (std::time(nullptr) == expTime) {
@@ -46,6 +46,7 @@ public:
                 pp::PPRankExpiredEvent event(plugin, player);
                 event.call();
             }*/
+            return true;
         })
     }
 };
