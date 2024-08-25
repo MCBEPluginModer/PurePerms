@@ -7,6 +7,7 @@
 #include "DataManager/UserDataManager.h"
 #include "ll/api/schedule/Scheduler.h"
 #include "ll/api/schedule/Task.h"
+#include "ll/api/service/Service.h"
 
 using namespace ll::schedule;
 
