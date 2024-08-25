@@ -6,12 +6,35 @@
 #include "PPGroup.h"
 #include "DataManager/UserDataManager.h"
 #include "ll/api/schedule/Scheduler.h"
+#include "ll/api/schedule/Task.h"
 
 using namespace ll::schedule;
 
 using namespace ll::chrono_literals;
 
-SystemTimeScheduler PPExpDateCheckTask;
+using namespace ll::schedule::task;
+
+SystemTimeScheduler scheduler;
+
+class PPExpDateCheckTask 
+{
+public:
+    PPExpDateCheckTask() {}
+
+    void operator()() 
+    {
+        /*auto players = plugin->getOnlinePlayers();
+        for (const auto& player : players) {
+            auto expTime = plugin->getUserDataMgr(player, "expTime")["expTime"];
+            if (std::time(nullptr) == expTime) {
+                std::string WorldName = plugin->getConfigValue("enable-multiworld-perms") ? player.getWorldDisplayName() : "";
+                PPRankExpiredEvent event(plugin, player, WorldName);
+                event.call();
+            }
+        }*/
+    }
+};
+
 
 namespace mcpm {
 
