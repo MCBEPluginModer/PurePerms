@@ -31,7 +31,7 @@ public:
 
     void operator()() 
     {
-        ll::service::getLevel().forEachPlayer([](Player& player) 
+        ll::service::getLevel()->forEachPlayer([](Player& player) 
         {
             auto expTime = instance->getUserDataMgr->getNode(player, "expTime")["expTime"].as<int>();
             if (std::time(nullptr) == expTime) {
