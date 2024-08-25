@@ -8,6 +8,7 @@
 #include "ll/api/schedule/Scheduler.h"
 #include "ll/api/schedule/Task.h"
 #include "ll/api/service/Service.h"
+#include "ll/api/service/Bedrock.h"
 
 using namespace ll::schedule;
 
