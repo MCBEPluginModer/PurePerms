@@ -16,6 +16,12 @@ using namespace ll::schedule::task;
 
 SystemTimeScheduler scheduler;
 
+namespace mcpm {
+
+static std::unique_ptr<PurePerms> instance;
+
+PurePerms& PurePerms::getInstance() { return *instance; }
+
 class PPExpDateCheckTask 
 {
 public:
@@ -23,24 +29,24 @@ public:
 
     void operator()() 
     {
-        /*auto players = plugin->getOnlinePlayers();
-        for (const auto& player : players) {
-            auto expTime = plugin->getUserDataMgr(player, "expTime")["expTime"];
+        ll::service::getLevel().forEachPlayer([](Player& player) 
+        {
+            auto expTime = instance->getUserDataMgr->getNode(player, "expTime")["expTime"].as<int>();
             if (std::time(nullptr) == expTime) {
-                std::string WorldName = plugin->getConfigValue("enable-multiworld-perms") ? player.getWorldDisplayName() : "";
-                PPRankExpiredEvent event(plugin, player, WorldName);
+                string WorldName;
+                auto mwp = YAML::LoadFile("plugins/PurePerms/config.yml")["enable-multiworld-perms"].as<bool>();
+                if (mwp)
+                {
+                    WorldName = player.getLevel().getDimension().mName;
+                }
+                else
+                    WorldName = "";
+                pp::PPRankExpiredEvent event(plugin, player);
                 event.call();
             }
-        }*/
+        })
     }
 };
-
-
-namespace mcpm {
-
-static std::unique_ptr<PurePerms> instance;
-
-PurePerms& PurePerms::getInstance() { return *instance; }
 
 bool PurePerms::load() {
     getSelf().getLogger().debug("Loading...");
