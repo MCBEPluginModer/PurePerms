@@ -33,8 +33,8 @@ public:
     {
         ll::service::getLevel()->forEachPlayer([](Player& player) 
         {
-            auto expTime = instance->getUserDataMgr().value()->getNode(player, "expTime").as<int>();
-            if (std::time(nullptr) == expTime) {
+            auto expTime = instance->getUserDataMgr()->getNode(player, "expTime").value().as<int>();
+            /*if (std::time(nullptr) == expTime) {
                 string WorldName;
                 auto mwp = YAML::LoadFile("plugins/PurePerms/config.yml")["enable-multiworld-perms"].as<bool>();
                 if (mwp)
@@ -45,7 +45,7 @@ public:
                     WorldName = "";
                 pp::PPRankExpiredEvent event(plugin, player);
                 event.call();
-            }
+            }*/
         })
     }
 };
