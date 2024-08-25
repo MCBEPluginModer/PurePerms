@@ -33,7 +33,7 @@ public:
     {
         ll::service::getLevel()->forEachPlayer([](Player& player) 
         {
-            auto expTime = instance->getUserDataMgr()->getNode(player, "expTime").value().as<int>();
+            auto expTime = instance->getUserDataMgr()->getNode(&player, "expTime").value().as<int>();
             /*if (std::time(nullptr) == expTime) {
                 string WorldName;
                 auto mwp = YAML::LoadFile("plugins/PurePerms/config.yml")["enable-multiworld-perms"].as<bool>();
