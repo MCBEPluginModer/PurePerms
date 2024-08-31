@@ -71,7 +71,7 @@ bool PurePerms::enable() {
         fin.close();
         ofstream fout("plugins/PurePerms/config.yml");
         fout << config;
-        fout.cose();
+        fout.close();
         messages = new PPMessages(this);
         userDataMgr = new UserDataManager();
     }
