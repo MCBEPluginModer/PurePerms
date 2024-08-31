@@ -102,7 +102,7 @@ void PurePerms::setProvider(bool onEnable)
         provider = new SQLite3Provider(this);
         if (onEnable)
         {
-            getSelf().getLogger().info(getSelf().getMessage("logger_messages.setProvider_SQLITE3"));
+            getSelf().getLogger().info(getMessage("logger_messages.setProvider_SQLITE3"));
         }
     }
     else if (providerName == "json")
@@ -110,7 +110,7 @@ void PurePerms::setProvider(bool onEnable)
         provider = new JsonProvider(this);
         if (onEnable)
         {
-            getSelf().getLogger().info(getSelf().getMessage("logger_messages.setProvider_JSON"));
+            getSelf().getLogger().info(getMessage("logger_messages.setProvider_JSON"));
         }
     }
     else
@@ -118,7 +118,7 @@ void PurePerms::setProvider(bool onEnable)
         provider = new DefaultProvider(this);
         if (onEnable)
         {
-            getSelf().getLogger().info(getSelf().getMessage("logger_messages.setProvider_NotFound","\'" + providerName + "'\"));
+            getSelf().getLogger().info(getMessage("logger_messages.setProvider_NotFound","\'" + providerName + "'\"));
         }
     }
     updateGroups();
