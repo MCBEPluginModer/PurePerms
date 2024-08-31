@@ -91,11 +91,41 @@ bool PurePerms::disable() {
     return true;
 }
 
-void PurePerms::setProvider(bool onEnab)
+void PurePerms::setProvider(bool onEnable)
+{
+    string providerName = YAML::LoadFile("plugins/PurePerms/config.yml")["data-provider"].as<string>();
+    if (providerName == "sqlite3")
+    {
+        provider = new SQLite3Provider(this);
+        if (onEnable)
+        {
+            getSelf().getLogger().info(getSelf().getMessage("logger_messages.setProvider_SQLITE3"));
+        }
+    }
+    else if (providerName == "json")
+    {
+        provider = new JsonProvider(this);
+        if (onEnable)
+        {
+            getSelf().getLogger().info(getSelf().getMessage("logger_messages.setProvider_JSON"));
+        }
+    }
+    else
+    {
+        provider = new DefaultProvider(this);
+        if (onEnable)
+        {
+            getSelf().getLogger().info(getSelf().getMessage("logger_messages.setProvider_NotFound","\'" + providerName + "'\"));
+        }
+    }
+    getSelf().updateGroups();
+}
+
+bool PurePerms::addGroup(string groupName)
 {
     
 }
-
+        
 } // namespace my_mod
 
 LL_REGISTER_MOD(mcpm::PurePerms, mcpm::instance);
