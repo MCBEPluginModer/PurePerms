@@ -9,6 +9,9 @@
 #include "ll/api/schedule/Task.h"
 #include "ll/api/service/Service.h"
 #include "ll/api/service/Bedrock.h"
+#include "provider/JsonProvider.h"
+#include "provider/SQLite3Provider.h"
+#include "provider/DefaultProvider.h"
 
 using namespace ll::schedule;
 
