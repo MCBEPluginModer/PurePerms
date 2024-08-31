@@ -73,7 +73,7 @@ bool PurePerms::enable() {
         fout << config;
         fout.close();
         messages = new PPMessages();
-        userDataMgr = new UserDataManager();
+        userDataMgr = new UserDataManager(this);
     }
     else
         fin.close();
