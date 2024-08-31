@@ -121,7 +121,7 @@ void PurePerms::setProvider(bool onEnable)
             getSelf().getLogger().info(getSelf().getMessage("logger_messages.setProvider_NotFound","\'" + providerName + "'\"));
         }
     }
-    getSelf().updateGroups();
+    updateGroups();
 }
 
 bool PurePerms::addGroup(string groupName)
