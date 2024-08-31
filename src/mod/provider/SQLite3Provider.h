@@ -28,11 +28,17 @@ class SQLite3Provider : public ProviderInterface
     rapidjson::Document loadConfig(const std::string& filePath);
     rapidjson::Value convertYamlToJson(const YAML::Node& yamlNode, rapidjson::Document::AllocatorType& allocator);
 public:
-   SQLite3Provider(mcpm::PurePerms* _plugin) : db("plugins/PurePerms/pureperms.db")  {
-     plugin = _plugin;
-     db.exec(""); 
-     loadGroupsData();
-   }
+   SQLite3Provider(mcpm::PurePerms* _plugin)
+    : plugin(_plugin), db(nullptr) { // Initialize db as nullptr first
+    try {
+        db = new SQLite::Database("plugins/PurePerms/pureperms.db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+        loadGroupsData();
+    } catch (const std::exception& e) {
+        // Handle database initialization failure
+        std::cerr << "Failed to open database: " << e.what() << std::endl;
+        db = nullptr; // Ensure db remains nullptr if initialization fails
+    }
+}
    void loadGroupsData() {}
    YAML::Node getGroupData(PPGroup group) {}
    YAML::Node getGroupsConfig() {return groups;}
