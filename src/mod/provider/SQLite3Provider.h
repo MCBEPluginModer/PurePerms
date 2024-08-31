@@ -33,7 +33,7 @@ public:
      db.exec(""); 
      loadGroupsData();
    }
-   void loadGroupData() {}
+   void loadGroupsData() {}
    YAML::Node getGroupData(PPGroup group) {}
    YAML::Node getGroupsConfig() {return groups;}
    YAML::Node getGroupsData() {return groups;}
