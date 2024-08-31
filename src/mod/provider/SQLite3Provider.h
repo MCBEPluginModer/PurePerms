@@ -43,11 +43,11 @@ public:
    YAML::Node getGroupData(PPGroup group) {return YAML::Node();}
    YAML::Node getGroupsConfig() {return groups;}
    YAML::Node getGroupsData() {return groups;}
-   rapidjson::Document getPlayerConfig(Player* player, bool onUpdate = false) {}
+   rapidjson::Document getPlayerConfig(Player* player, bool onUpdate = false) {return rapidjson::Document();}
    tuple<string,vector<string>,YAML::Node,int> getPlayerData(Player* player) {return {}; }
-   optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers() {}
-   void setGroupData(PPGroup& group,tuple<string,vector<string>,YAML::Node,int>& data) {}
-   void setGroupsData(unordered_map<string,tuple<string,vector<string>,YAML::Node,int>> data) {}
-   void setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data) {}
-   void close() {}
+   optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers() {return nullopt;}
+   void setGroupData(PPGroup& group,tuple<string,vector<string>,YAML::Node,int>& data) {return;}
+   void setGroupsData(unordered_map<string,tuple<string,vector<string>,YAML::Node,int>> data) {return;}
+   void setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data) {return;}
+   void close() {return;}
 };
