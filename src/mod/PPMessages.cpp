@@ -6,6 +6,10 @@
 
 namespace fs = std::filesystem;
 
+PPMessages::PPMessages()
+{
+}
+
 YAML::Node PPMessages::getNestedNode(const std::string& node) 
 {
         YAML::Node currentNode = messages;
