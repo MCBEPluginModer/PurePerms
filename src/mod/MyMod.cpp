@@ -118,7 +118,7 @@ void PurePerms::setProvider(bool onEnable)
         provider = new DefaultProvider(this);
         if (onEnable)
         {
-            getSelf().getLogger().info(getMessage("logger_messages.setProvider_NotFound","\'" + providerName + "'\"));
+            getSelf().getLogger().info(getMessage("logger_messages.setProvider_NotFound","\'" + providerName + "'"));
         }
     }
     updateGroups();
