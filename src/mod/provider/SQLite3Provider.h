@@ -8,7 +8,7 @@
 #include <optional>
 #include <SQLiteCpp/SQLiteCpp.h>
 
-class JsonProvider : public ProviderInterface
+class SQLite3Provider : public ProviderInterface
 {
    mcpm::PurePerms* plugin;
    SQLite::Database* db;
@@ -28,7 +28,7 @@ class JsonProvider : public ProviderInterface
     rapidjson::Document loadConfig(const std::string& filePath);
     rapidjson::Value convertYamlToJson(const YAML::Node& yamlNode, rapidjson::Document::AllocatorType& allocator);
 public:
-   JsonProvider(mcpm::PurePerms* _plugin) : db("plugins/PurePerms/pureperms.db")  {
+   SQLite3Provider(mcpm::PurePerms* _plugin) : db("plugins/PurePerms/pureperms.db")  {
      plugin = _plugin;
      db.exec(""); 
      loadGroupsData();
