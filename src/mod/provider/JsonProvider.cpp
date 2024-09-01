@@ -103,7 +103,7 @@ JsonProvider::JsonProvider(mcpm::PurePerms* _plugin)
   }
 }
 
-YAML::Node JsonProvider::getGroupData(PPGroup group)
+YAML::Node JsonProvider::getGroupData(const PPGroup& group)
 {
   std::string groupName = group.getName();
   YAML::Node groupsData = getGroupsData();
@@ -150,7 +150,7 @@ rapidjson::Document JsonProvider::getPlayerConfig(Player* player, bool onUpdate)
     return userConfig;
 }
 
-std::tuple<std::string, std::vector<std::string>, YAML::Node, int> JsonProvider::getPlayerData(Player* player) 
+std::tuple<std::string, std::vector<std::string>, YAML::Node, int> JsonProvider::getPlayerData(const Player* player) 
 {
       std::string userName = player->getRealName();
     std::string lowerUserName = toLowerCase(userName);
