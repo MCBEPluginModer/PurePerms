@@ -149,7 +149,31 @@ int PurePerms::addGroup(string groupName)
 
     return SUCCESS;
 }
+
+#include <regex>
         
+int PurePerms::date2Int(string date)
+{
+     std::regex pattern(R"((\d+)d(\d+)h(\d+)m)");
+        std::smatch result;
+
+        if (std::regex_match(date, result, pattern) && result.size() == 4) {
+            int days = std::stoi(result[1]);
+            int hours = std::stoi(result[2]);
+            int minutes = std::stoi(result[3]);
+
+            // Get the current time as time_t (seconds since epoch)
+            std::time_t currentTime = std::time(nullptr);
+
+            // Calculate the future time
+            std::time_t futureTime = currentTime + (days * 86400) + (hours * 3600) + (minutes * 60);
+
+            return static_cast<int>(futureTime); // Return as int
+        }
+
+        return -1; // Return -1 if the pattern does not match
+}
+
 } // namespace my_mod
 
 LL_REGISTER_MOD(mcpm::PurePerms, mcpm::instance);
