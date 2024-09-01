@@ -45,9 +45,10 @@ public:
    YAML::Node getGroupsData() override  {return groups;}
    rapidjson::Document getPlayerConfig(Player* player, bool onUpdate = false) override  {return rapidjson::Document();}
    tuple<string,vector<string>,YAML::Node,int> getPlayerData(Player* player) override  {return {}; }
-   optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers() override  {return nullopt;}
-   void setGroupData(PPGroup& group,tuple<string,vector<string>,YAML::Node,int>& data) override  {return;}
+   optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers() {return nullopt;}
+   void setGroupData(PPGroup& group,tuple<string,vector<string>,YAML::Node,int>& data) override {return;}
    void setGroupsData(unordered_map<string,tuple<string,vector<string>,YAML::Node,int>> data) override {return;}
    void setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data) override {return;}
    void close() override {return;}
+   ~SQLite3Provider() {delete db;}
 };
