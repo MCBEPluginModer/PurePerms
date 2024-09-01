@@ -135,7 +135,7 @@ int PurePerms::addGroup(string groupName)
     {
         return ALREADY_EXISTS;
     }
-    AML::Node newGroup;
+    YAML::Node newGroup;
     newGroup["alias"] = "";
     newGroup["isDefault"] = false;
     newGroup["inheritance"] = YAML::Node(YAML::NodeType::Sequence); // Empty list
