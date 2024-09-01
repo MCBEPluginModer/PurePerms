@@ -49,7 +49,7 @@ public:
     std::vector<std::string> groups;
     std::unordered_map<std::string, std::string> bdsDefaultPerms;
     void setProvider(bool onEnab = true);
-    bool addGroup(string groupName);
+    int addGroup(string groupName);
     int date2Int(string date);
     vector<string> getAttachment(Player* player);
     optional<variant<bool,int,double,string,YAML::Node>> getConfigValue(string key);
