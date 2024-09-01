@@ -106,7 +106,7 @@ DefaultProvider::DefaultProvider(mcpm::PurePerms* _plugin)
   }
 }
 
-YAML::Node DefaultProvider::getGroupData(PPGroup group)
+YAML::Node DefaultProvider::getGroupData(const PPGroup& group)
 {
   std::string groupName = group.getName();
   YAML::Node groupsData = getGroupsData();
@@ -119,7 +119,7 @@ YAML::Node DefaultProvider::getGroupData(PPGroup group)
   return groupsData[groupName];
 }
 
-tuple<string,vector<string>,YAML::Node,int> DefaultProvider::getPlayerData(Player* player)
+tuple<string,vector<string>,YAML::Node,int> DefaultProvider::getPlayerData(const Player* player)
 {
   std::string userName = toLowerCase(player->getRealName());
 
