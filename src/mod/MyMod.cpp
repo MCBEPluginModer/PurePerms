@@ -124,9 +124,30 @@ void PurePerms::setProvider(bool onEnable)
     updateGroups();
 }
 
-bool PurePerms::addGroup(string groupName)
+int PurePerms::addGroup(string groupName)
 {
-    
+    auto groupsData = getProvider()->getGroupsData();
+    if (!isValidGroupName(groupName))
+    {
+        return INVALID_NAME;
+    }
+    if (groupsData[groupName]) 
+    {
+        return ALREADY_EXISTS;
+    }
+    AML::Node newGroup;
+    newGroup["alias"] = "";
+    newGroup["isDefault"] = false;
+    newGroup["inheritance"] = YAML::Node(YAML::NodeType::Sequence); // Empty list
+    newGroup["permissions"] = YAML::Node(YAML::NodeType::Sequence); // Empty list
+    newGroup["worlds"] = YAML::Node(YAML::NodeType::Sequence); // Empty list
+
+    groupsData[groupName] = newGroup;
+
+    getProvider()->setGroupsData(groupsData);
+    updateGroups();
+
+    return SUCCESS;
 }
         
 } // namespace my_mod
