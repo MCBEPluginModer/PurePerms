@@ -143,7 +143,8 @@ int PurePerms::addGroup(string groupName)
     newGroup["worlds"] = YAML::Node(YAML::NodeType::Sequence); // Empty list
 
     groupsData[groupName] = newGroup;
-
+    unordered_map<string,tuple<string,vector<string>,YAML::Node,int>> data;
+    
     getProvider()->setGroupsData(groupsData);
     updateGroups();
 
