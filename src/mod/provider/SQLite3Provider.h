@@ -40,11 +40,11 @@ public:
     }
 }
    void loadGroupsData() {}
-   YAML::Node getGroupData(PPGroup group) override  {return YAML::Node();}
+   YAML::Node getGroupData(const PPGroup& group) override  {return YAML::Node();}
    YAML::Node getGroupsConfig() override  {return groups;}
    YAML::Node getGroupsData() override  {return groups;}
    rapidjson::Document getPlayerConfig(Player* player, bool onUpdate = false) override  {return rapidjson::Document();}
-   tuple<string,vector<string>,YAML::Node,int> getPlayerData(Player* player) override  {return {}; }
+   tuple<string,vector<string>,YAML::Node,int> getPlayerData(const Player* player) override  {return {}; }
    optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers() {return nullopt;}
    void setGroupData(PPGroup& group,tuple<string,vector<string>,YAML::Node,int>& data) override {return;}
    void setGroupsData(unordered_map<string,tuple<string,vector<string>,YAML::Node,int>> data) override {return;}
