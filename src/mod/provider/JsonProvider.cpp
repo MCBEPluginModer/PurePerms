@@ -225,7 +225,7 @@ optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> Json
     }
 }
 
-void JsonProvider::setGroupData(PPGroup& group, tuple<string,vector<string>,YAML::Node,int>& tempGroupData)
+void JsonProvider::setGroupData(PPGroup& group, tuple<string,bool,vector<string>,vector<string>,YAML::Node>& tempGroupData)
 {
      std::string groupName = group.getName();
 
@@ -233,11 +233,12 @@ void JsonProvider::setGroupData(PPGroup& group, tuple<string,vector<string>,YAML
         YAML::Node groupNode;
 
         // Заполняем узел данными из tempGroupData
-        groupNode["alias"] = std::get<0>(tempGroupData);
-        groupNode["permissions"] = std::get<1>(tempGroupData);
-        groupNode["worlds"] = std::get<2>(tempGroupData);
-        groupNode["time"] = std::get<3>(tempGroupData);
-
+         groupNode["alias"] = std::get<0>(tempGroupData);
+        groupNode["isDefault"] = std::get<1>(tempGroupData);
+        groupNode["inheritance"] = std::get<2>(tempGroupData);
+        groupNode["permissions"] = std::get<3>(tempGroupData);
+        groupNode["worlds"] = std::get<4>(tempGroupData);
+  
         // Устанавливаем данные для группы в общем YAML узле
         groups[groupName] = groupNode;
 
@@ -247,20 +248,23 @@ void JsonProvider::setGroupData(PPGroup& group, tuple<string,vector<string>,YAML
         fout.close();
 }
 
-void JsonProvider::setGroupsData(unordered_map<string,tuple<string,vector<string>,YAML::Node,int>> data)
+void JsonProvider::setGroupsData(unordered_map<string,PPGroup> data)
 {
   groups = YAML::Node(YAML::NodeType::Map);
 
         // Проходим по каждому элементу в unordered_map
-        for (const auto& [groupName, groupData] : data) {
+        for (auto& [groupName, groupData] : data) {
             YAML::Node groupNode;
 
             // Заполняем узел группы данными из tuple
-            groupNode["alias"] = std::get<0>(groupData);
-            groupNode["permissions"] = std::get<1>(groupData);
-            groupNode["worlds"] = std::get<2>(groupData);
-            groupNode["time"] = std::get<3>(groupData);
-
+            groupNode["alias"] = groupData.getName();
+        groupNode["isDefault"] = groupData.isDefault();
+        for (auto v : groupData.getParentsGroup())
+        {
+           groupNode["inheritance"] = v->getName();
+        }
+        groupNode["permissions"] = groupData.getGroupPermissions();
+        groupNode["worlds"] = groupData.getNode("worlds");
             // Добавляем узел группы в общий узел groups
             groups[groupName] = groupNode;
         }
