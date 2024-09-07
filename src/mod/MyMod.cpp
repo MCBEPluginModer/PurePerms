@@ -156,7 +156,7 @@ int PurePerms::addGroup(string groupName)
         std::vector<std::string> inheritance = group["inheritance"].as<std::vector<std::string>>();
         std::vector<std::string> permissions = group["permissions"].as<std::vector<std::string>>();
         YAML::Node worlds = group["worlds"];
-        auto t = make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(alias,isDefault,inheritance,permissions,worlds);
+        auto t = make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(group["alias"].as<std::string>(),isDefault,inheritance,permissions,worlds);
         data[groupName] = t;
     }
     getProvider()->setGroupsData(data);
