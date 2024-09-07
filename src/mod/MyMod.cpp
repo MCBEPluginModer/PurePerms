@@ -143,7 +143,7 @@ int PurePerms::addGroup(string groupName)
     newGroup["worlds"] = YAML::Node(YAML::NodeType::Sequence); // Empty list
 
     groupsData[groupName] = newGroup;
-    unordered_map<string,tuple<string,bool,vector<string>,vector<string>,YAML::Node>> data;
+    unordered_map<string,PPGroup> data;
     for (YAML::const_iterator it = groupsData.begin(); it != groupsData.end(); ++it) 
     {
         // Get the group name
@@ -152,7 +152,9 @@ int PurePerms::addGroup(string groupName)
 
         // Get the values of alias, inheritance, permissions, and worlds
         auto t = make_tuple<string,bool,vector<string>,vector<string>,YAML::Node>(group["alias"].as<std::string>(),group["isDefault"].as<bool>(),group["inheritance"].as<std::vector<std::string>>(),group["permissions"].as<std::vector<std::string>>(),group["worlds"]);
-        data[groupName] = t;
+        PPGroup group;
+        group.setData(t);
+        data[groupName] = group;
     }
     getProvider()->setGroupsData(data);
     updateGroups();
