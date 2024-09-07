@@ -150,7 +150,7 @@ int PurePerms::addGroup(string groupName)
         std::string groupName = it->first.as<std::string>();
         YAML::Node group = it->second;
         PPGroup gro;
-        auto tp = make_tuple<string,bool,vector<string>(),vector<string>(),YAML::Node>(group["alias"].as<string>(),group["isDefault"].as<bool>(),group["inheritance"].as<vector<sring>>(),group["permissions"].as<vector<sring>>(),group["worlds"]);
+        auto tp = make_tuple<string,bool,vector<string>(),vector<string>(),YAML::Node>(group["alias"].as<string>(),group["isDefault"].as<bool>(),group["inheritance"].as<vector<string>>(),group["permissions"].as<vector<string>>(),group["worlds"]);
         // Get the values of alias, inheritance, permissions, and worlds
         gro.setData(tp);
         data[groupName] = gro;
