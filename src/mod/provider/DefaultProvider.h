@@ -19,7 +19,7 @@ class DefaultProvider : public ProviderInterface
     }
 public:
    DefaultProvider(mcpm::PurePerms* _plugin);
-   YAML::Node getGroupData(const PPGroup& group);
+   YAML::Node getGroupData(PPGroup& group);
    YAML::Node getGroupsConfig() {return groups;}
    YAML::Node getGroupsData() {return groups;}
    tuple<string,vector<string>,YAML::Node,int> getPlayerData(const Player* player);
