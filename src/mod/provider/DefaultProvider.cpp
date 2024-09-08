@@ -106,7 +106,7 @@ DefaultProvider::DefaultProvider(mcpm::PurePerms* _plugin)
   }
 }
 
-YAML::Node DefaultProvider::getGroupData(const PPGroup& group)
+YAML::Node DefaultProvider::getGroupData(PPGroup& group)
 {
   std::string groupName = group.getName();
   YAML::Node groupsData = getGroupsData();
