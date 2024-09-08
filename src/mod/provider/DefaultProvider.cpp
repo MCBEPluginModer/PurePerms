@@ -209,6 +209,7 @@ void DefaultProvider::setGroupsData(unordered_map<string,PPGroup> data)
             // Добавляем узел группы в общий узел groups
             groups[groupName] = groupNode;
         }
+}
    ofstream fout("plugins/PuePerms/ranks.yaml");
    fout << groups;
    fout.close();
