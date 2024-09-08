@@ -1,6 +1,9 @@
 #include "mod/MyMod.h"
 
 #include <memory>
+#include <regex>
+#include <string>
+#include <ctime>
 
 #include "ll/api/mod/RegisterHelper.h"
 #include "PPGroup.h"
@@ -160,10 +163,6 @@ int PurePerms::addGroup(string groupName)
 
     return SUCCESS;
 }
-
-#include <regex>
-#include <string>
-#include <ctime>
 
 int PurePerms::date2Int(string date)
 {
