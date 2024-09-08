@@ -162,13 +162,15 @@ int PurePerms::addGroup(string groupName)
 }
 
 #include <regex>
-        
+#include <string>
+#include <ctime>
+
 int PurePerms::date2Int(string date)
 {
      std::regex pattern(R"((\d+)d(\d+)h(\d+)m)");
-        std::smatch result;
+     std::smatch result;
 
-        if (std::regex_match(date, result, pattern) && result.size() == 4) {
+    if (std::regex_match(date, result, pattern) && result.size() == 4) {
             int days = std::stoi(result[1]);
             int hours = std::stoi(result[2]);
             int minutes = std::stoi(result[3]);
@@ -180,7 +182,7 @@ int PurePerms::date2Int(string date)
             std::time_t futureTime = currentTime + (days * 86400) + (hours * 3600) + (minutes * 60);
 
             return static_cast<int>(futureTime); // Return as int
-        }
+    }
 
         return -1; // Return -1 if the pattern does not match
 }
