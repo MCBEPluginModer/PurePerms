@@ -103,7 +103,7 @@ JsonProvider::JsonProvider(mcpm::PurePerms* _plugin)
   }
 }
 
-YAML::Node JsonProvider::getGroupData(const PPGroup& group)
+YAML::Node JsonProvider::getGroupData(PPGroup& group)
 {
   std::string groupName = group.getName();
   YAML::Node groupsData = getGroupsData();
