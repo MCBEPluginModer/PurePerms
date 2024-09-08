@@ -34,7 +34,7 @@ class JsonProvider : public ProviderInterface
     rapidjson::Value convertYamlToJson(const YAML::Node& yamlNode, rapidjson::Document::AllocatorType& allocator);
 public:
    JsonProvider(mcpm::PurePerms* _plugin);
-   YAML::Node getGroupData(const PPGroup& group);
+   YAML::Node getGroupData(PPGroup& group);
    YAML::Node getGroupsConfig() {return groups;}
    YAML::Node getGroupsData() {return groups;}
    rapidjson::Document getPlayerConfig(Player* player, bool onUpdate = false);
