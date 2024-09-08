@@ -1,6 +1,7 @@
 #include "DefaultProvider.h"
 #include "../PPMessages.h"
 #include <fstream>
+#include <iostream>
 
 DefaultProvider::DefaultProvider(mcpm::PurePerms* _plugin)
 {
@@ -171,7 +172,7 @@ void DefaultProvider::setGroupData(PPGroup& group, tuple<string,bool,vector<stri
      std::string groupName = group.getName();
 
         // Создаем узел для группы
-        YAML::Node groupNode;
+        /*YAML::Node groupNode;
 
         // Заполняем узел данными из tempGroupData
          groupNode["alias"] = std::get<0>(tempGroupData);
@@ -186,7 +187,7 @@ void DefaultProvider::setGroupData(PPGroup& group, tuple<string,bool,vector<stri
         // Сохраняем изменения в файл
         ofstream fout("plugins/PuePerms/ranks.yaml");
         fout << groups;
-        fout.close();
+        fout.close();*/
 }
 
 void DefaultProvider::setGroupsData(unordered_map<string,PPGroup> data)
@@ -214,9 +215,6 @@ void DefaultProvider::setGroupsData(unordered_map<string,PPGroup> data)
    fout << groups;
    fout.close();
 }
-
-#include <fstream>
-#include <iostream>
 
 void DefaultProvider::setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data)
 {
