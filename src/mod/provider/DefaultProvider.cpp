@@ -223,7 +223,7 @@ void DefaultProvider::setPlayerData(Player* player,tuple<string,vector<string>,Y
   std::string userName = toLowerCase(player->getRealName());
 
         // Если игрока нет в данных, создаем запись с дефолтными значениями
-        if (!players[userName]) {
+       /* if (!players[userName]) {
             players[userName]["group"] = "player";
             players[userName]["permissions"] = std::vector<std::string>{};
             players[userName]["worlds"] = YAML::Node(YAML::NodeType::Sequence);
@@ -237,5 +237,5 @@ void DefaultProvider::setPlayerData(Player* player,tuple<string,vector<string>,Y
         players[userName]["time"] = std::get<3>(data);
   ofstream fout("plugins/PuePerms/ranks.yaml");
   fout << groups;
-  fout.close();
+  fout.close();*/
 }
