@@ -200,7 +200,7 @@ void DefaultProvider::setGroupsData(unordered_map<string,PPGroup> data)
             // Заполняем узел группы данными из tuple
             groupNode["alias"] = groupData.getName();
         groupNode["isDefault"] = groupData.isDefault();
-        for (auto v : groupData.getParentsGroup())
+        for (auto v : groupData.getParentGroups())
         {
            groupNode["inheritance"] = v->getName();
         }
