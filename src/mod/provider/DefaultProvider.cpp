@@ -195,22 +195,22 @@ void DefaultProvider::setGroupsData(unordered_map<string,PPGroup> data)
   groups = YAML::Node(YAML::NodeType::Map);
 
         // Проходим по каждому элементу в unordered_map
-        for (auto& [groupName, groupData] : data) {
+        for (auto& [groupName, groupData] : data) 
+        {
             YAML::Node groupNode;
 
             // Заполняем узел группы данными из tuple
             groupNode["alias"] = groupData.getName();
-        groupNode["isDefault"] = groupData.isDefault();
-        for (auto v : groupData.getParentGroups())
-        {
-           groupNode["inheritance"] = v->getName();
-        }
-        groupNode["permissions"] = groupData.getGroupPermissions();
-        groupNode["worlds"] = groupData.getNode("worlds");
+            groupNode["isDefault"] = groupData.isDefault();
+            for (auto v : groupData.getParentGroups())
+            {
+                 groupNode["inheritance"] = v->getName();
+            }
+            groupNode["permissions"] = groupData.getGroupPermissions();
+            groupNode["worlds"] = groupData.getNode("worlds");
             // Добавляем узел группы в общий узел groups
             groups[groupName] = groupNode;
         }
-}
    ofstream fout("plugins/PuePerms/ranks.yaml");
    fout << groups;
    fout.close();
