@@ -172,7 +172,7 @@ void DefaultProvider::setGroupData(PPGroup& group, tuple<string,bool,vector<stri
      std::string groupName = group.getName();
 
         // Создаем узел для группы
-        /*YAML::Node groupNode;
+        YAML::Node groupNode;
 
         // Заполняем узел данными из tempGroupData
          groupNode["alias"] = std::get<0>(tempGroupData);
@@ -187,7 +187,7 @@ void DefaultProvider::setGroupData(PPGroup& group, tuple<string,bool,vector<stri
         // Сохраняем изменения в файл
         ofstream fout("plugins/PuePerms/ranks.yaml");
         fout << groups;
-        fout.close();*/
+        fout.close();
 }
 
 void DefaultProvider::setGroupsData(unordered_map<string,PPGroup> data)
