@@ -186,6 +186,18 @@ int PurePerms::date2Int(string date)
         return -1; // Return -1 if the pattern does not match
 }
 
+vector<string> PurePerms::getAttachment(Player* player)
+{
+     std::string uniqueId = getValidUUID(player);
+
+        // Check if the uniqueId exists in the attachments map
+        if (attachments.find(uniqueId) == attachments.end()) {
+            throw std::runtime_error("Tried to calculate permissions on " + player.getName() + " using null attachment");
+        }
+
+        return attachments[uniqueId];
+}
+
 } // namespace my_mod
 
 LL_REGISTER_MOD(mcpm::PurePerms, mcpm::instance);
