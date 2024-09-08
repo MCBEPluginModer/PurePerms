@@ -40,7 +40,7 @@ public:
     }
 }
    void loadGroupsData() {}
-   YAML::Node getGroupData(const PPGroup& group) override  {return YAML::Node();}
+   YAML::Node getGroupData(PPGroup& group) override  {return YAML::Node();}
    YAML::Node getGroupsConfig() {return groups;}
    YAML::Node getGroupsData() override {return groups;}
    rapidjson::Document getPlayerConfig(Player* player, bool onUpdate = false) {return rapidjson::Document();}
