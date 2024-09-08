@@ -215,6 +215,9 @@ void DefaultProvider::setGroupsData(unordered_map<string,PPGroup> data)
    fout.close();
 }
 
+#include <fstream>
+#include <iostream>
+
 void DefaultProvider::setPlayerData(Player* player,tuple<string,vector<string>,YAML::Node,int> data)
 {
   std::string userName = toLowerCase(player->getRealName());
