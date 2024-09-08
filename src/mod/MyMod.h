@@ -45,7 +45,7 @@ public:
     PPMessages* messages = nullptr;
     ProviderInterface* provider = nullptr;
     UserDataManager* userDataMgr = nullptr;
-    std::vector<std::string> attachments;
+    std::unordered_map<std::string,vector<string>> attachments;
     std::vector<std::string> groups;
     std::unordered_map<std::string, std::string> bdsDefaultPerms;
     void setProvider(bool onEnab = true);
