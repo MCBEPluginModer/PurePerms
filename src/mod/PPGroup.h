@@ -19,6 +19,7 @@ class PPGroup
    mcpm::PurePerms* plugin;
    std::vector<PPGroup*> parents;
 public:
+   PPGroup() {}
    PPGroup(mcpm::PurePerms* _plugin,std::string _name) : plugin(_plugin),name(_name) {}
    string __toString() {return name;}
    bool addParent(PPGroup* parent);
