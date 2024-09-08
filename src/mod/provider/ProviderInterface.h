@@ -14,7 +14,7 @@ class ProviderInterface
 public:
     virtual ~ProviderInterface() = default;
 
-    virtual YAML::Node getGroupData(const PPGroup& group) = 0;
+    virtual YAML::Node getGroupData(PPGroup& group) = 0;
     virtual YAML::Node getGroupsData() = 0;
     virtual tuple<string,vector<string>,YAML::Node,int> getPlayerData(const Player* player) = 0;
     virtual optional<unordered_map<string,tuple<string,vector<string>,YAML::Node,int>>> getUsers() = 0;
