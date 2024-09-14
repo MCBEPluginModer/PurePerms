@@ -4,6 +4,7 @@
 #include <regex>
 #include <string>
 #include <ctime>
+#include <exception>
 
 #include "ll/api/mod/RegisterHelper.h"
 #include "PPGroup.h"
@@ -192,7 +193,7 @@ vector<string> PurePerms::getAttachment(Player* player)
 
         // Check if the uniqueId exists in the attachments map
         if (attachments.find(uniqueId) == attachments.end()) {
-            throw std::runtime_error("Tried to calculate permissions on " + player.getName() + " using null attachment");
+            throw std::runtime_error("Tried to calculate permissions on " + player->getRealName() + " using null attachment");
         }
 
         return attachments[uniqueId];
