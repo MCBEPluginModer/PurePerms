@@ -237,7 +237,7 @@ optional<PPGroup> PurePerms::getDefaultGroup(string levelname)
 
         // Find groups that are default for the given world name
         for (PPGroup group : getGroups()) {
-            if (group->isDefault(levelname)) {
+            if (group.isDefault(levelname)) {
                 defaultGroups.push_back(group);
             }
         }
@@ -257,7 +257,7 @@ optional<PPGroup> PurePerms::getDefaultGroup(string levelname)
             // Fallback: find a group with no parent groups
             for (PPGroup group : getGroups()) {
                 if (group.getParentGroups().empty()) {
-                    setDefaultGroup(group, worldName);
+                    setDefaultGroup(group, levelname);
                     return group;
                 }
             }
