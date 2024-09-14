@@ -199,6 +199,38 @@ vector<string> PurePerms::getAttachment(Player* player)
         return attachments[uniqueId];
 }
 
+optional<variant<bool,int,double,string,YAML::Node>> PurePerms::getConfigValue(string key)
+{
+    variant<bool,int,double,string,YAML::Node> ret;
+    YAML::Node config = YAML::LoadFromFile("plugins/PurePerms/config.yml");
+    if (key == "data-provider" && config["data-provider"].has_value())
+    {
+        ret = config["data-provider"].as<string>();
+        return ret;
+    }
+    else if (key == "disable-op" && config["disable-op"].has_value())
+    {
+        ret = config["disable-op"].as<bool>();
+        return ret;
+    }
+    else if (key == "default-language" && config["default-language"].has_value())
+    {
+        ret = config["default-language"].as<string>();
+        return ret;
+    }
+    else if (key == "enable-multiworld-perms" && config["enable-multiworld-perms"].has_value())
+    {
+        ret = config["enable-multiworld-perms"].as<bool>();
+        return ret;
+    }
+    else if (key == "superadmin-ranks" && config["superadmin-ranks"].has_value())
+    {
+        ret = config["superadmin-ranks"];
+        return ret;
+    }
+    return nullopt;
+}
+
 } // namespace my_mod
 
 LL_REGISTER_MOD(mcpm::PurePerms, mcpm::instance);
