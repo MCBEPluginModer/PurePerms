@@ -269,10 +269,9 @@ optional<PPGroup> PurePerms::getDefaultGroup(string levelname)
 
 optional<PPGroup> PurePerms::getGroup(string groupName)
 {
-    auto groups = getGroups();
-    for (auto group : groups)
+    for (auto gro : getGroups())
         {
-            if (group.getName() == groupName || group.getAlias() == groupName)
+            if (gro.getName() == groupName || gro.getAlias() == groupName)
             {
                 return group;
             }
