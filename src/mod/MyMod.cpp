@@ -267,6 +267,38 @@ optional<PPGroup> PurePerms::getDefaultGroup(string levelname)
         return std::nullopt;
 }
 
+optional<PPGroup> PurePerms::getGroup(string groupName)
+{
+    auto groups = getGroups();
+    for (auto group : groups)
+        {
+            if (group.getName() == groupName || group.getAlias() == groupName)
+            {
+                return group;
+            }
+        }
+    getSelf().getLogger().info(getMessage("logger_messages.getGroup_01", groupName));
+    return std::nullopt;
+    /*auto it = groups.find(groupName);
+        if (it != groups.end()) {
+            return it->second;
+        }
+
+        // If not found, iterate through groups and check for alias match
+        for (const auto& pair : groups) {
+            PPGroup* group = pair.second;
+            if (group->getAlias() == groupName) {
+                return group;
+            }
+        }
+
+        // Log debug message if no group was found
+        getLogger().debug(getMessage("logger_messages.getGroup_01", groupName));
+
+        // Return null equivalent (std::nullopt in C++)
+        return std::nullopt;*/
+}
+
 } // namespace my_mod
 
 LL_REGISTER_MOD(mcpm::PurePerms, mcpm::instance);
