@@ -257,7 +257,7 @@ optional<PPGroup> PurePerms::getDefaultGroup(string levelname)
             // Fallback: find a group with no parent groups
             for (PPGroup group : getGroups()) {
                 if (group.getParentGroups().empty()) {
-                    setDefaultGroup(group, levelname);
+                    setDefaultGroup(&group, levelname);
                     return group;
                 }
             }
