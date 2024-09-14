@@ -233,10 +233,10 @@ optional<variant<bool,int,double,string,YAML::Node>> PurePerms::getConfigValue(s
 
 optional<PPGroup> PurePerms::getDefaultGroup(string levelname)
 {
-    std::vector<PPGroup*> defaultGroups;
+    std::vector<PPGroup> defaultGroups;
 
         // Find groups that are default for the given world name
-        for (PPGroup* group : getGroups()) {
+        for (PPGroup group : getGroups()) {
             if (group->isDefault(levelname)) {
                 defaultGroups.push_back(group);
             }
@@ -247,16 +247,16 @@ optional<PPGroup> PurePerms::getDefaultGroup(string levelname)
             return defaultGroups[0];
         } else {
             if (defaultGroups.size() > 1) {
-                getSelf().getLogger().warning(getMessage("logger_messages.getDefaultGroup_01"));
+                getSelf().getLogger().info(getMessage("logger_messages.getDefaultGroup_01"));
             } else if (defaultGroups.empty()) {
-                getSelf().getLogger().warning(getMessage("logger_messages.getDefaultGroup_02"));
+                getSelf().getLogger().info(getMessage("logger_messages.getDefaultGroup_02"));
             }
 
             getSelf().getLogger().info(getMessage("logger_messages.getDefaultGroup_03"));
 
             // Fallback: find a group with no parent groups
-            for (PPGroup* group : getGroups()) {
-                if (group->getParentGroups().empty()) {
+            for (PPGroup group : getGroups()) {
+                if (group.getParentGroups().empty()) {
                     setDefaultGroup(group, worldName);
                     return group;
                 }
