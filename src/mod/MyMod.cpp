@@ -202,13 +202,13 @@ vector<string> PurePerms::getAttachment(Player* player)
 optional<variant<bool,int,double,string,YAML::Node>> PurePerms::getConfigValue(string key)
 {
     variant<bool,int,double,string,YAML::Node> ret;
-    YAML::Node config = YAML::LoadFromFile("plugins/PurePerms/config.yml");
+    YAML::Node config = YAML::LoadFile("plugins/PurePerms/config.yml");
     if (key == "data-provider" && !config["data-provider"].IsNull())
     {
         ret = config["data-provider"].as<string>();
         return ret;
     }
-    else if (key == "disable-op" && !config["disable-op"].has_value())
+    else if (key == "disable-op" && !config["disable-op"].IsNull())
     {
         ret = config["disable-op"].as<bool>();
         return ret;
