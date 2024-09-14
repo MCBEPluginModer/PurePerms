@@ -203,27 +203,27 @@ optional<variant<bool,int,double,string,YAML::Node>> PurePerms::getConfigValue(s
 {
     variant<bool,int,double,string,YAML::Node> ret;
     YAML::Node config = YAML::LoadFromFile("plugins/PurePerms/config.yml");
-    if (key == "data-provider" && config["data-provider"].has_value())
+    if (key == "data-provider" && !config["data-provider"].IsNull())
     {
         ret = config["data-provider"].as<string>();
         return ret;
     }
-    else if (key == "disable-op" && config["disable-op"].has_value())
+    else if (key == "disable-op" && !config["disable-op"].has_value())
     {
         ret = config["disable-op"].as<bool>();
         return ret;
     }
-    else if (key == "default-language" && config["default-language"].has_value())
+    else if (key == "default-language" && !config["default-language"].IsNull())
     {
         ret = config["default-language"].as<string>();
         return ret;
     }
-    else if (key == "enable-multiworld-perms" && config["enable-multiworld-perms"].has_value())
+    else if (key == "enable-multiworld-perms" && !config["enable-multiworld-perms"].IsNull())
     {
         ret = config["enable-multiworld-perms"].as<bool>();
         return ret;
     }
-    else if (key == "superadmin-ranks" && config["superadmin-ranks"].has_value())
+    else if (key == "superadmin-ranks" && !config["superadmin-ranks"].IsNull())
     {
         ret = config["superadmin-ranks"];
         return ret;
