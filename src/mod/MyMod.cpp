@@ -273,9 +273,10 @@ optional<PPGroup> PurePerms::getGroup(string groupName)
 {
     for (auto gro : getGroups())
         {
-            if (gro.__toString() == groupName || gro.getAlias() == groupName)
+            auto n = gro.__toString(),n1 = gro.getAlias();
+            if (n == groupName || n1 == groupName)
             {
-                return group;
+                return gro;
             }
         }
     getSelf().getLogger().info(getMessage("logger_messages.getGroup_01", groupName));
