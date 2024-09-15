@@ -267,11 +267,13 @@ optional<PPGroup> PurePerms::getDefaultGroup(string levelname)
         return std::nullopt;
 }
 
+#include "PPGroup.h"
+
 optional<PPGroup> PurePerms::getGroup(string groupName)
 {
     for (auto gro : getGroups())
         {
-            if (gro.getName() == groupName || gro.getAlias() == groupName)
+            if (gro.__toString() == groupName || gro.getAlias() == groupName)
             {
                 return group;
             }
