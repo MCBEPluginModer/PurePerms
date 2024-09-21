@@ -299,7 +299,7 @@ vector<PPGroup> PurePerms::getGroups()
         YAML::Node groupNode = it->second;
          // Iterate over the parameters inside each group
         gr.alias = grs[groupName]["alias"].as<string>();
-        gr.isDefault = grs[groupName]["isDefault"].as<bool>();
+        gr.IsDefault = grs[groupName]["isDefault"].as<bool>();
         gr.permissions = grs[groupName]["permissions"].as<vector<string>>();
         for (auto gs : grs[groupName]["inheritance"].as<vector<string>>())
         {
