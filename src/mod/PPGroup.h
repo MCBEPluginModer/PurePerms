@@ -17,7 +17,7 @@ class PPGroup
 {
 public:
    std::string name,alias;
-   bool isDefault;
+   bool IsDefault;
    vector<string> permissions;
    YAML::Node worlds;
    mcpm::PurePerms* plugin;
