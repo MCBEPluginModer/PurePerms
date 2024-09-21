@@ -281,24 +281,33 @@ optional<PPGroup> PurePerms::getGroup(string groupName)
         }
     getSelf().getLogger().info(getMessage("logger_messages.getGroup_01", groupName));
     return std::nullopt;
-    /*auto it = groups.find(groupName);
-        if (it != groups.end()) {
-            return it->second;
+}
+
+vector<PPGroup> PurePerms::getGroups()
+{
+    vector<PPGroup> grups;
+    YAML::Node grs = YAML::LoadFile("plugins/PurePerms/ranks.yml");
+    if (!isGroupsLoaded)
+    {
+        throw std::runtime_error("No groups loaded, maybe a provider error?");
+    }
+    for (YAML::const_iterator it = grs.begin(); it != grs.end(); ++it) 
+    {
+        std::string groupName = it->first.as<std::string>(); // Get the group name (key)
+        PPGroup gr;
+        gr.name = groupName;
+        YAML::Node groupNode = it->second;
+         // Iterate over the parameters inside each group
+        gr.alias = grs[groupName]["alias"].as<string>();
+        gr.isDefault = grs[groupName]["isDefault"].as<bool>();
+        gr.permissions = grs[groupName]["permissions"].as<vector<string>>();
+        for (auto gs : grs[groupName]["inheritance"].as<vector<string>>())
+        {
+            PPGroup par;
+            par.name = gs;
+            
         }
-
-        // If not found, iterate through groups and check for alias match
-        for (const auto& pair : groups) {
-            PPGroup* group = pair.second;
-            if (group->getAlias() == groupName) {
-                return group;
-            }
-        }
-
-        // Log debug message if no group was found
-        getLogger().debug(getMessage("logger_messages.getGroup_01", groupName));
-
-        // Return null equivalent (std::nullopt in C++)
-        return std::nullopt;*/
+    }
 }
 
 } // namespace my_mod
