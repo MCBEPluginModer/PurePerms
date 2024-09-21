@@ -305,7 +305,7 @@ vector<PPGroup> PurePerms::getGroups()
         {
             for (auto gs : grs[groupName]["inheritance"].as<vector<string>>())
             {
-               PPGroup par = getGroup(gs);
+               PPGroup par = get<0>(getGroup(gs));
                par.name = gs;
                parents.push_back(&par);
             }
