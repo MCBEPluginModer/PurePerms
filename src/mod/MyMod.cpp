@@ -301,12 +301,16 @@ vector<PPGroup> PurePerms::getGroups()
         gr.alias = grs[groupName]["alias"].as<string>();
         gr.IsDefault = grs[groupName]["isDefault"].as<bool>();
         gr.permissions = grs[groupName]["permissions"].as<vector<string>>();
-        for (auto gs : grs[groupName]["inheritance"].as<vector<string>>())
+        if (!grs[groupName]["inheritance"].IsNull())
         {
-            PPGroup par;
-            par.name = gs;
-            
+            for (auto gs : grs[groupName]["inheritance"].as<vector<string>>())
+            {
+               PPGroup par = getGroup(gs);
+               par.name = gs;
+               parents.push_back(&par);
+            }
         }
+        gr.worlds = grs[groupName]["worlds"];
     }
 }
 
