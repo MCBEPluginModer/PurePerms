@@ -307,7 +307,7 @@ vector<PPGroup> PurePerms::getGroups()
             {
                PPGroup par = getGroup(gs);
                par.name = gs;
-               parents.push_back(&par);
+               par.parents.push_back(&par);
             }
         }
         gr.worlds = grs[groupName]["worlds"];
