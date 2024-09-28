@@ -314,6 +314,12 @@ vector<PPGroup> PurePerms::getGroups()
     }
 }
 
+template<typename... Args>
+std::string PurePerms::getMessage(const std::string& node, Args&&... vars)
+{
+    
+}
+
 } // namespace my_mod
 
 LL_REGISTER_MOD(mcpm::PurePerms, mcpm::instance);
