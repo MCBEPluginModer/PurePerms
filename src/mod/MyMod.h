@@ -56,8 +56,6 @@ public:
     optional<PPGroup> getDefaultGroup(string levelname = "");
     optional<PPGroup> getGroup(string groupName);
     vector<PPGroup> getGroups();
-    template<typename... Args>
-    std::string getMessage(const std::string& node, Args&&... vars);
     vector<Player*> getOnlinePlayersInGroup(PPGroup group);
     vector<string> getPermissions(Player* player,string levelname);
     Player* getPlayer(string nickname);
