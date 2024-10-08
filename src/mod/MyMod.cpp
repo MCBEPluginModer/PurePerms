@@ -314,6 +314,18 @@ vector<PPGroup> PurePerms::getGroups()
     }
 }
 
+vector<Player*> PurePerms::getOnlinePlayersInGroup(PPGroup group)
+{
+    vector<Player*> users;
+     ll::service::getLevel()->forEachPlayer([](Player& player) -> bool
+        {
+            if (userDataMgr->getGroup(&player,player.getLeve().getLevelId()))
+             users.push_back(&player);
+            return true;
+        });
+    return users;
+}
+
 } // namespace my_mod
 
 LL_REGISTER_MOD(mcpm::PurePerms, mcpm::instance);
