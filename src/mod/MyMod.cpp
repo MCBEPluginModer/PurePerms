@@ -106,7 +106,7 @@ void PurePerms::setProvider(bool onEnable)
         provider = new SQLite3Provider(this);
         if (onEnable)
         {
-            getSelf().getLogger().info(getMessage("logger_messages.setProvider_SQLITE3"));
+            getSelf().getLogger().info(messages->getMessage("logger_messages.setProvider_SQLITE3"));
         }
     }
     else if (providerName == "json")
@@ -114,7 +114,7 @@ void PurePerms::setProvider(bool onEnable)
         provider = new JsonProvider(this);
         if (onEnable)
         {
-            getSelf().getLogger().info(getMessage("logger_messages.setProvider_JSON"));
+            getSelf().getLogger().info(messages->getMessage("logger_messages.setProvider_JSON"));
         }
     }
     else
@@ -122,7 +122,7 @@ void PurePerms::setProvider(bool onEnable)
         provider = new DefaultProvider(this);
         if (onEnable)
         {
-            getSelf().getLogger().info(getMessage("logger_messages.setProvider_NotFound","\'" + providerName + "'"));
+            getSelf().getLogger().info(messages->getMessage("logger_messages.setProvider_NotFound","\'" + providerName + "'"));
         }
     }
     updateGroups();
@@ -247,12 +247,12 @@ optional<PPGroup> PurePerms::getDefaultGroup(string levelname)
             return defaultGroups[0];
         } else {
             if (defaultGroups.size() > 1) {
-                getSelf().getLogger().info(getMessage("logger_messages.getDefaultGroup_01"));
+                getSelf().getLogger().info(messages->getMessage("logger_messages.getDefaultGroup_01"));
             } else if (defaultGroups.empty()) {
-                getSelf().getLogger().info(getMessage("logger_messages.getDefaultGroup_02"));
+                getSelf().getLogger().info(messages->getMessage("logger_messages.getDefaultGroup_02"));
             }
 
-            getSelf().getLogger().info(getMessage("logger_messages.getDefaultGroup_03"));
+            getSelf().getLogger().info(messages->getMessage("logger_messages.getDefaultGroup_03"));
 
             // Fallback: find a group with no parent groups
             for (PPGroup group : getGroups()) {
@@ -279,7 +279,7 @@ optional<PPGroup> PurePerms::getGroup(string groupName)
                 return gro;
             }
         }
-    getSelf().getLogger().info(getMessage("logger_messages.getGroup_01", groupName));
+    getSelf().getLogger().info(messages->getMessage("logger_messages.getGroup_01", groupName));
     return std::nullopt;
 }
 
@@ -319,7 +319,7 @@ vector<Player*> PurePerms::getOnlinePlayersInGroup(PPGroup group)
     vector<Player*> users;
      ll::service::getLevel()->forEachPlayer([](Player& player) -> bool
         {
-            if (userDataMgr->getGroup(&player,player.getLeve().getLevelId()))
+            if (userDataMgr->getGroup(&player,player.getLevel().getLevelId()))
              users.push_back(&player);
             return true;
         });
